@@ -1,0 +1,99 @@
+﻿@model IEnumerable<UVirtualClass.DataContext.ViewDocentes>
+
+@{
+    ViewBag.Title = "ListaDocente";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="banner-listados-logo">
+    <img src="~/img/Logi2.png" />
+    <h2>Listado de Docentes</h2>
+</div>
+
+<p class="btn btn-primary">
+    @Html.ActionLink("Crear Nuevo Docente", "CrearDocente")
+</p>
+<table class="table table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Apellido)
+        </th>
+        <th>
+            @*@Html.DisplayNameFor(model => model.Fecha_de_Nacimiento)*@
+            <strong>Fecha de Nacimiento</strong>
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Género)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Usuario)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Correo)
+        </th>
+        <th>
+            @*@Html.DisplayNameFor(model => model.Tipo_Usuario)*@
+            <strong>Tipo de Usuario</strong>
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Apellido)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Fecha_de_Nacimiento)
+        </td>
+        <td>
+            @*@Html.DisplayFor(modelItem => item.Género)*@
+            @if (item.Género == 'M')
+                {
+                <p>Masculino</p>
+            }
+            else
+            {
+                <p>Femenino</p>
+            }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Usuario)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Correo)
+        </td>
+        <td>
+            @*@Html.DisplayFor(modelItem => item.Tipo_Usuario)*@
+            <p>Docente</p>
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */}, new { @class = "btn btn-success" })
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */}, new { @class = "btn btn-primary" })
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ }, new { @class = "btn btn-danger" })
+        </td>
+    </tr>
+}
+
+</table>
+<input id="MiAccion" type="hidden" value="@ViewBag.Accion" />
+@section Scripts{
+
+    <script type="text/javascript">
+            var accion = $('#MiAccion').val();
+            $(document).ready(function () {
+                if (accion == "Crear") {
+                    swal("Exito!", "El Docente se ha creado con éxito.", "success");
+                } if (accion == "Error") {
+                    swal("¡Lo Sentimos!", "Parece que algo salió mal, vuelve a intentarlo", "warning");
+                };
+            });
+    </script>
+
+}

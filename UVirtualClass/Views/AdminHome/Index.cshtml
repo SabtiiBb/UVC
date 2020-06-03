@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="banner-listados-logo">
+    <img src="~/img/Logi2.png" />
+    <h2>Administrador</h2>
+</div>
+
+<a href='@Url.Action("ListaDocente", "AdminHome")'><img src="~/img/Usuarios.png" class="img-thumbnail"></a>
+
+<a href='@Url.Action("ListaDocente", "AdminHome")'><img src='@Url.Content("~/img/Docentes.png")' class="img-thumbnail" /></a>
+
+<a href='@Url.Action("ListaAlumnos", "AdminHome")'><img src='@Url.Content("~/img/Alumnos.png")' class="img-thumbnail" /></a>
+
+<a href='@Url.Action("ListaCurso", "AdminHome")'><img src='@Url.Content("~/img/Cursos.png")' class="img-thumbnail" /></a>
+

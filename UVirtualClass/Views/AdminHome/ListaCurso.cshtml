@@ -1,0 +1,75 @@
+﻿@model IEnumerable<UVirtualClass.DataContext.ViewCurso>
+
+@{
+    ViewBag.Title = "ListaCurso";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="banner-listados-logo">
+    <img src="~/img/Logi2.png" />
+    <h2>Listado de Cursos</h2>
+</div>
+
+<p class="btn btn-primary">
+    @Html.ActionLink("Crear Nuevo Curso", "CrearCurso")
+</p>
+<table class="table table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Descripción)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Recursos)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Costo)
+        </th>
+        <th>
+            @*@Html.DisplayNameFor(model => model.Nombre_Docente)*@    
+            <strong>Nombre Docente</strong>       
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Descripción)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Recursos)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Costo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre_Docente)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */}, new { @class = "btn btn-success" })
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ }, new { @class = "btn btn-danger" })
+        </td>
+    </tr>
+}
+
+</table>
+@section Scripts{
+
+    <script type="text/javascript">
+            var accion = $('#MiAccion').val();
+            $(document).ready(function () {
+                if (accion == "Crear") {
+                    swal("Exito!", "El Curso se ha creado con éxito.", "success");
+                } if (accion == "Error") {
+                    swal("¡Lo Sentimos!", "Parece que algo salió mal, vuelve a intentarlo", "warning");
+                };
+            });
+    </script>
+
+}

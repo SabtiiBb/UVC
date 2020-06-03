@@ -1,0 +1,156 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>@ViewBag.Title Virtual Class Mantenimiento</title>
+
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/Swal")
+    @*@Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/bootstrap")*@
+
+    
+
+    <!-- Bootstrap CSS-->
+    @*<link href="~/Content/bootstrap.min.css" rel="stylesheet" />*@
+    <link href="~/Content/fontawesome.min.css" rel="stylesheet" />
+
+
+    <!-- Mi CSS -->
+    @*<link href="~/Content/style.css" rel="stylesheet" />*@
+    <script src="~/scripts/fontawesome.min.js"></script>
+
+
+    <!-- Sweet Alert CSS -->
+    @*<link href="~/Content/sweetalert.css" rel="stylesheet" />*@
+
+    <!-- Sweet Alerts JS -->
+    @*<script src="~/Scripts/sweetalert.min.js"></script>*@
+    @*<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>*@
+
+    <!-- Font Awesome JS -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+
+
+
+</head>
+
+
+<body style="background-color:#FFED7C">
+        <div class="wrapper" style="background-color:#FFED7C">
+            <!-- Sidebar  -->
+            <nav id="sidebar" class="bg-dark active">
+                <div class="sidebar-header">
+                    <button type="button" id="sidebarCollapse" class="btn btn-info">
+                        <i class="fas fa-align-justify"></i>
+                    </button>
+                </div>
+
+                <ul class="list-unstyled components">
+                    <li>                        
+                    <a href="@Url.Action("Index", "AdminHome")"><i class="fas fa-home"></i> Menú</a>
+                    </li>
+                    <li class="active">
+                        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle bg-dark">
+                            <i class="fas fa-table"></i>
+                            Tablas
+                        </a>
+                        <ul class="collapse list-unstyled" id="homeSubmenu">
+                            <li>
+                                <a href="@Url.Action("ListaAlumnos", "AdminHome")">Alumnos</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("ListaCurso", "AdminHome")">Cursos</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("ListaDocente", "AdminHome")">Docentes</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("ListaUsuarios", "AdminHome")">Usuarios</a>
+                            </li>                            
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Cerrar", "AdminHome")"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
+                    </li>
+                  </ul>
+                    @*<ul class="list-unstyled CTAs">
+                        <li>
+                            <a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a>
+                        </li>
+                        <li>
+                            <a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a>
+                        </li>
+                    </ul>*@
+            </nav>
+
+            <!-- Page Content  -->
+            <div id="content">
+                @*<nav class="navbar navbar-expand-lg navbar-light bg-dark">
+                    <div class="container-fluid">
+                        <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <i class="fas fa-align-justify"></i>
+                        </button>
+
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="nav navbar-nav mr-auto">
+                                <li class="nav-item active">
+                                    <a class="nav-link text-white" href="#">Page</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="#">Page</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="#">Page</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" href="#">Page</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>*@
+                <div>
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/modernizr")
+        @Scripts.Render("~/bundles/bootstrap")
+        @Scripts.Render("~/bundles/jqueryval")
+        @Scripts.Render("~/ContentSwal/Swal")
+        @RenderSection("scripts", required: false)
+
+
+        <!-- Page Content  -->
+        <!-- jQuery CDN - Slim version (=without AJAX) -->
+        @*<script src="~/Scripts/jquery-3.0.0.slim.min.js"></script>*@
+        <!-- Popper.JS -->
+        @*<script src="~/Scripts/esm/popper.js"></script>*@
+        <!--<script src="~/Scripts/popper.js"></script>-->
+        <!-- Bootstrap JS -->
+        @*<script src="~/Scripts/bootstrap.min.js"></script>*@
+
+
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $('#sidebarCollapse').on('click', function () {
+                        $('#sidebar').toggleClass('active');
+                        });
+                });
+
+                //$(document).ready(function () {
+                //    $('#ProbandoSwal').on('click', function () {
+                //        swal("Sos Paloma!", "Funciona Prro!", "success");
+                //        alert("Cuidado");
+                //    });
+                //});
+            </script>
+    </body>
+</html>
