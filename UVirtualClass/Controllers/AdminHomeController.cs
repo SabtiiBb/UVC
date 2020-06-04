@@ -83,6 +83,7 @@ namespace UVirtualClass.Controllers
         public ActionResult CrearAlumno(FormCollection c, Alumno Alum, Usuario Usu)
         {
             Usu.tipo = 3;
+            Usu.Activo = 1;
             string message;
             try
             {
@@ -94,6 +95,7 @@ namespace UVirtualClass.Controllers
                 if (LastUser1 != null)
                 {
                     Alum.idUsuario = LastUser1.IdUsuario;
+                    Alum.Activo = 1;
                     db.Alumno.InsertOnSubmit(Alum);
                     db.SubmitChanges();
                 }
@@ -124,6 +126,47 @@ namespace UVirtualClass.Controllers
         {
             return View();
         }
+
+        [HttpGet]
+        public ActionResult EditaAlumno(int id)
+        {
+            CrearAlumnoVM Alum = new CrearAlumnoVM();
+
+            using (var DataContext = new ContextDbDataContext())
+            {
+                Alumno DataAlum = (from db in DataContext.Alumno where db.IdAlumno == id select db).Single();
+                Usuario DataUser = (from db in DataContext.Usuario where db.IdUsuario == DataAlum.idUsuario select db).Single();
+
+                Alum.idUsuario = int.Parse(DataAlum.idUsuario.ToString());
+                Alum.Usuario1 = DataAlum.Usuario.ToString();
+                Alum.correo = DataUser.correo.ToString();
+                Alum.nombre = DataAlum.nombre;
+                Alum.apellido = DataAlum.apellido;
+                Alum.contraseña = "DummyPass";
+                Alum.ConfirmarContraseña = "DummyPass";
+                Alum.fecha_n = Convert.ToDateTime(DataAlum.fecha_n);
+                Alum.genero = Convert.ToChar(DataAlum.genero);
+                Alum.tipo = int.Parse(DataUser.tipo.ToString());
+            }
+
+                return View(Alum);
+        }
+
+        public JsonResult EliminarAlumno(int idAlumno)
+        {
+            using (var dbContext = new ContextDbDataContext())
+            {
+                Alumno Alum = (from dbD in dbContext.Alumno where dbD.IdAlumno == idAlumno select dbD).Single();
+                Usuario User = (from dbD in dbContext.Usuario where dbD.IdUsuario == Alum.idUsuario select dbD).Single();
+
+                dbContext.SP_ModificaAlumno(Alum.IdAlumno, Alum.nombre, Alum.apellido, Alum.fecha_n, Alum.genero, 0);
+                dbContext.SP_ModificaUsuario(User.IdUsuario, User.Usuario1, User.correo, User.contraseña, 0, User.tipo);
+            }
+
+            return Json( new{ exito = true }, JsonRequestBehavior.AllowGet );
+        }
+
+
 
         //--------------------------- VALIDATIONS CLIENT'S SIDE ---------------------------
         [HttpPost]

@@ -75,15 +75,19 @@
             </td>
             <td>
                 <button type="submit" class="btn-dark" id="ProbandoSwal">Touch ME</button>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */}, new { @class = "btn btn-success" })
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */}, new { @class = "btn btn-primary" })
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ }, new { @class = "btn btn-danger" })
+                @Html.ActionLink("Editar", "EditaAlumno", new { id=item.IdAlumno }, new { @class = "btn btn-success" })
+                @*@Html.ActionLink("Delete", "Delete", new { id=item.IdAlumno }, new { @class = "btn btn-danger" })*@
+                <button type="submit" id="btn-Eliminar" class="btn btn-danger" data-codigo="@item.IdAlumno">Eliminar</button>
             </td>
         </tr>
     }
 
+
 </table>
 <input id="MiAccion" type="hidden" value="@ViewBag.Accion" />
+
+<input type="hidden" id="AccionEliminarAlumno" value="@Url.Action("EliminarAlumno", "AdminHome")" />
+
 @section Scripts{
 
     <script type="text/javascript">
@@ -95,6 +99,48 @@
                     swal("Lo Sentimos!", "Parece que algo salio mal, vuelve a intentarlo", "warning");
                 };
             });
+
+            $("#btn-Eliminar").on("click", function (e) {
+                e.preventDefault();
+                var id = $(this).data('codigo');
+
+                swal({
+                    title: "¿Está seguro?",
+                    text: "Este Alumno sera eliminado y tambien su usuario!",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Sí, eliminarlo!",
+                    closeOnConfirm: false,
+                    closeOnCancel: true
+                },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            $.ajax({
+                                type: "post",
+                                url: $("#AccionEliminarAlumno").val(),
+                                dataType: "json",
+                                data: { idAlumno: id },
+                                success: function (res) {
+
+                                    //swal("Exito", "El registro se elimino correctamente!", "success");
+                                    swal({
+                                        title: "Exito",
+                                        text: "El registro se elimino correctamente!",
+                                        type: "success"
+                                    }, function () {
+                                        window.location.reload();
+                                    });
+
+                                },
+                                error: function (er) {
+                                    swal("Oops!", "Ha Ocurrido un problema y no se pudo eliminar el registro!", "error");
+                                }
+                            });
+                        }
+                    });
+            })
+
      </script>
 
 }

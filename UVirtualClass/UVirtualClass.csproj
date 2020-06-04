@@ -388,6 +388,7 @@
     <Content Include="Views\AdminHome\CrearCurso.cshtml" />
     <Content Include="Views\AdminHome\ListaDocente.cshtml" />
     <Content Include="Views\AdminHome\ListaCurso.cshtml" />
+    <Content Include="Views\AdminHome\EditaAlumno.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

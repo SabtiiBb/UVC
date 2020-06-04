@@ -30,9 +30,6 @@ namespace UVirtualClass.DataContext
 		
     #region Definiciones de métodos de extensibilidad
     partial void OnCreated();
-    partial void InsertAlumno(Alumno instance);
-    partial void UpdateAlumno(Alumno instance);
-    partial void DeleteAlumno(Alumno instance);
     partial void Insertcompras(compras instance);
     partial void Updatecompras(compras instance);
     partial void Deletecompras(compras instance);
@@ -57,6 +54,9 @@ namespace UVirtualClass.DataContext
     partial void InsertTemario(Temario instance);
     partial void UpdateTemario(Temario instance);
     partial void DeleteTemario(Temario instance);
+    partial void InsertAlumno(Alumno instance);
+    partial void UpdateAlumno(Alumno instance);
+    partial void DeleteAlumno(Alumno instance);
     partial void InsertUsuario(Usuario instance);
     partial void UpdateUsuario(Usuario instance);
     partial void DeleteUsuario(Usuario instance);
@@ -90,14 +90,6 @@ namespace UVirtualClass.DataContext
 				base(connection, mappingSource)
 		{
 			OnCreated();
-		}
-		
-		public System.Data.Linq.Table<Alumno> Alumno
-		{
-			get
-			{
-				return this.GetTable<Alumno>();
-			}
 		}
 		
 		public System.Data.Linq.Table<compras> compras
@@ -164,27 +156,11 @@ namespace UVirtualClass.DataContext
 			}
 		}
 		
-		public System.Data.Linq.Table<Usuario> Usuario
-		{
-			get
-			{
-				return this.GetTable<Usuario>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Inscripciones_del_Curso> Inscripciones_del_Curso
 		{
 			get
 			{
 				return this.GetTable<Inscripciones_del_Curso>();
-			}
-		}
-		
-		public System.Data.Linq.Table<ViewAlumnos> ViewAlumnos
-		{
-			get
-			{
-				return this.GetTable<ViewAlumnos>();
 			}
 		}
 		
@@ -204,11 +180,28 @@ namespace UVirtualClass.DataContext
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.SP_ModificaAlumno")]
-		public ISingleResult<SP_ModificaAlumnoResult> SP_ModificaAlumno([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> idAlumno, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(30)")] string nombre, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(30)")] string apellido, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="DateTime")] System.Nullable<System.DateTime> fecha_n, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Char(1)")] System.Nullable<char> genero)
+		public System.Data.Linq.Table<Alumno> Alumno
 		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), idAlumno, nombre, apellido, fecha_n, genero);
-			return ((ISingleResult<SP_ModificaAlumnoResult>)(result.ReturnValue));
+			get
+			{
+				return this.GetTable<Alumno>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Usuario> Usuario
+		{
+			get
+			{
+				return this.GetTable<Usuario>();
+			}
+		}
+		
+		public System.Data.Linq.Table<ViewAlumnos> ViewAlumnos
+		{
+			get
+			{
+				return this.GetTable<ViewAlumnos>();
+			}
 		}
 		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.SP_ModificaCursos")]
@@ -239,290 +232,18 @@ namespace UVirtualClass.DataContext
 			return ((ISingleResult<SP_ModificaTemariosResult>)(result.ReturnValue));
 		}
 		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.SP_ModificaAlumno")]
+		public ISingleResult<SP_ModificaAlumnoResult> SP_ModificaAlumno([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> idAlumno, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(30)")] string nombre, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(30)")] string apellido, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="DateTime")] System.Nullable<System.DateTime> fecha_n, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Char(1)")] System.Nullable<char> genero, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Activo", DbType="Int")] System.Nullable<int> activo)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), idAlumno, nombre, apellido, fecha_n, genero, activo);
+			return ((ISingleResult<SP_ModificaAlumnoResult>)(result.ReturnValue));
+		}
+		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.SP_ModificaUsuario")]
-		public ISingleResult<SP_ModificaUsuarioResult> SP_ModificaUsuario([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> idUsuario, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Usuario", DbType="VarChar(60)")] string usuario, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(60)")] string correo, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(30)")] string contraseña, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> tipo)
+		public ISingleResult<SP_ModificaUsuarioResult> SP_ModificaUsuario([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> idUsuario, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Usuario", DbType="VarChar(60)")] string usuario, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(60)")] string correo, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(30)")] string contraseña, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Activo", DbType="Int")] System.Nullable<int> activo, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> tipo)
 		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), idUsuario, usuario, correo, contraseña, tipo);
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), idUsuario, usuario, correo, contraseña, activo, tipo);
 			return ((ISingleResult<SP_ModificaUsuarioResult>)(result.ReturnValue));
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Alumno")]
-	public partial class Alumno : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _IdAlumno;
-		
-		private string _nombre;
-		
-		private string _apellido;
-		
-		private System.Nullable<System.DateTime> _fecha_n;
-		
-		private System.Nullable<char> _genero;
-		
-		private System.Nullable<int> _idUsuario;
-		
-		private EntitySet<CursoAlumno> _CursoAlumno;
-		
-		private EntitySet<Pagos> _Pagos;
-		
-		private EntityRef<Usuario> _Usuario;
-		
-    #region Definiciones de métodos de extensibilidad
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdAlumnoChanging(int value);
-    partial void OnIdAlumnoChanged();
-    partial void OnnombreChanging(string value);
-    partial void OnnombreChanged();
-    partial void OnapellidoChanging(string value);
-    partial void OnapellidoChanged();
-    partial void Onfecha_nChanging(System.Nullable<System.DateTime> value);
-    partial void Onfecha_nChanged();
-    partial void OngeneroChanging(System.Nullable<char> value);
-    partial void OngeneroChanged();
-    partial void OnidUsuarioChanging(System.Nullable<int> value);
-    partial void OnidUsuarioChanged();
-    #endregion
-		
-		public Alumno()
-		{
-			this._CursoAlumno = new EntitySet<CursoAlumno>(new Action<CursoAlumno>(this.attach_CursoAlumno), new Action<CursoAlumno>(this.detach_CursoAlumno));
-			this._Pagos = new EntitySet<Pagos>(new Action<Pagos>(this.attach_Pagos), new Action<Pagos>(this.detach_Pagos));
-			this._Usuario = default(EntityRef<Usuario>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdAlumno", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int IdAlumno
-		{
-			get
-			{
-				return this._IdAlumno;
-			}
-			set
-			{
-				if ((this._IdAlumno != value))
-				{
-					this.OnIdAlumnoChanging(value);
-					this.SendPropertyChanging();
-					this._IdAlumno = value;
-					this.SendPropertyChanged("IdAlumno");
-					this.OnIdAlumnoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_nombre", DbType="VarChar(30)")]
-		public string nombre
-		{
-			get
-			{
-				return this._nombre;
-			}
-			set
-			{
-				if ((this._nombre != value))
-				{
-					this.OnnombreChanging(value);
-					this.SendPropertyChanging();
-					this._nombre = value;
-					this.SendPropertyChanged("nombre");
-					this.OnnombreChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_apellido", DbType="VarChar(30)")]
-		public string apellido
-		{
-			get
-			{
-				return this._apellido;
-			}
-			set
-			{
-				if ((this._apellido != value))
-				{
-					this.OnapellidoChanging(value);
-					this.SendPropertyChanging();
-					this._apellido = value;
-					this.SendPropertyChanged("apellido");
-					this.OnapellidoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fecha_n", DbType="DateTime")]
-		public System.Nullable<System.DateTime> fecha_n
-		{
-			get
-			{
-				return this._fecha_n;
-			}
-			set
-			{
-				if ((this._fecha_n != value))
-				{
-					this.Onfecha_nChanging(value);
-					this.SendPropertyChanging();
-					this._fecha_n = value;
-					this.SendPropertyChanged("fecha_n");
-					this.Onfecha_nChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_genero", DbType="Char(1)")]
-		public System.Nullable<char> genero
-		{
-			get
-			{
-				return this._genero;
-			}
-			set
-			{
-				if ((this._genero != value))
-				{
-					this.OngeneroChanging(value);
-					this.SendPropertyChanging();
-					this._genero = value;
-					this.SendPropertyChanged("genero");
-					this.OngeneroChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idUsuario", DbType="Int")]
-		public System.Nullable<int> idUsuario
-		{
-			get
-			{
-				return this._idUsuario;
-			}
-			set
-			{
-				if ((this._idUsuario != value))
-				{
-					if (this._Usuario.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnidUsuarioChanging(value);
-					this.SendPropertyChanging();
-					this._idUsuario = value;
-					this.SendPropertyChanged("idUsuario");
-					this.OnidUsuarioChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Alumno_CursoAlumno", Storage="_CursoAlumno", ThisKey="IdAlumno", OtherKey="IdAlumno")]
-		public EntitySet<CursoAlumno> CursoAlumno
-		{
-			get
-			{
-				return this._CursoAlumno;
-			}
-			set
-			{
-				this._CursoAlumno.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Alumno_Pagos", Storage="_Pagos", ThisKey="IdAlumno", OtherKey="IdAlumno")]
-		public EntitySet<Pagos> Pagos
-		{
-			get
-			{
-				return this._Pagos;
-			}
-			set
-			{
-				this._Pagos.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuario_Alumno", Storage="_Usuario", ThisKey="idUsuario", OtherKey="IdUsuario", IsForeignKey=true)]
-		public Usuario Usuario
-		{
-			get
-			{
-				return this._Usuario.Entity;
-			}
-			set
-			{
-				Usuario previousValue = this._Usuario.Entity;
-				if (((previousValue != value) 
-							|| (this._Usuario.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Usuario.Entity = null;
-						previousValue.Alumno.Remove(this);
-					}
-					this._Usuario.Entity = value;
-					if ((value != null))
-					{
-						value.Alumno.Add(this);
-						this._idUsuario = value.IdUsuario;
-					}
-					else
-					{
-						this._idUsuario = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Usuario");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_CursoAlumno(CursoAlumno entity)
-		{
-			this.SendPropertyChanging();
-			entity.Alumno = this;
-		}
-		
-		private void detach_CursoAlumno(CursoAlumno entity)
-		{
-			this.SendPropertyChanging();
-			entity.Alumno = null;
-		}
-		
-		private void attach_Pagos(Pagos entity)
-		{
-			this.SendPropertyChanging();
-			entity.Alumno = this;
-		}
-		
-		private void detach_Pagos(Pagos entity)
-		{
-			this.SendPropertyChanging();
-			entity.Alumno = null;
 		}
 	}
 	
@@ -911,9 +632,9 @@ namespace UVirtualClass.DataContext
 		
 		private EntitySet<Notas> _Notas;
 		
-		private EntityRef<Alumno> _Alumno;
-		
 		private EntityRef<Cursos> _Cursos;
+		
+		private EntityRef<Alumno> _Alumno;
 		
     #region Definiciones de métodos de extensibilidad
     partial void OnLoaded();
@@ -930,8 +651,8 @@ namespace UVirtualClass.DataContext
 		public CursoAlumno()
 		{
 			this._Notas = new EntitySet<Notas>(new Action<Notas>(this.attach_Notas), new Action<Notas>(this.detach_Notas));
-			this._Alumno = default(EntityRef<Alumno>);
 			this._Cursos = default(EntityRef<Cursos>);
+			this._Alumno = default(EntityRef<Alumno>);
 			OnCreated();
 		}
 		
@@ -1016,40 +737,6 @@ namespace UVirtualClass.DataContext
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Alumno_CursoAlumno", Storage="_Alumno", ThisKey="IdAlumno", OtherKey="IdAlumno", IsForeignKey=true)]
-		public Alumno Alumno
-		{
-			get
-			{
-				return this._Alumno.Entity;
-			}
-			set
-			{
-				Alumno previousValue = this._Alumno.Entity;
-				if (((previousValue != value) 
-							|| (this._Alumno.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Alumno.Entity = null;
-						previousValue.CursoAlumno.Remove(this);
-					}
-					this._Alumno.Entity = value;
-					if ((value != null))
-					{
-						value.CursoAlumno.Add(this);
-						this._IdAlumno = value.IdAlumno;
-					}
-					else
-					{
-						this._IdAlumno = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Alumno");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Cursos_CursoAlumno", Storage="_Cursos", ThisKey="IdCurso", OtherKey="IdCurso", IsForeignKey=true)]
 		public Cursos Cursos
 		{
@@ -1080,6 +767,40 @@ namespace UVirtualClass.DataContext
 						this._IdCurso = default(Nullable<int>);
 					}
 					this.SendPropertyChanged("Cursos");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Alumno_CursoAlumno", Storage="_Alumno", ThisKey="IdAlumno", OtherKey="IdAlumno", IsForeignKey=true)]
+		public Alumno Alumno
+		{
+			get
+			{
+				return this._Alumno.Entity;
+			}
+			set
+			{
+				Alumno previousValue = this._Alumno.Entity;
+				if (((previousValue != value) 
+							|| (this._Alumno.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Alumno.Entity = null;
+						previousValue.CursoAlumno.Remove(this);
+					}
+					this._Alumno.Entity = value;
+					if ((value != null))
+					{
+						value.CursoAlumno.Add(this);
+						this._IdAlumno = value.IdAlumno;
+					}
+					else
+					{
+						this._IdAlumno = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Alumno");
 				}
 			}
 		}
@@ -2191,9 +1912,9 @@ namespace UVirtualClass.DataContext
 		
 		private System.Nullable<int> _IdAlumno;
 		
-		private EntityRef<Alumno> _Alumno;
-		
 		private EntityRef<Cursos> _Cursos;
+		
+		private EntityRef<Alumno> _Alumno;
 		
     #region Definiciones de métodos de extensibilidad
     partial void OnLoaded();
@@ -2209,8 +1930,8 @@ namespace UVirtualClass.DataContext
 		
 		public Pagos()
 		{
-			this._Alumno = default(EntityRef<Alumno>);
 			this._Cursos = default(EntityRef<Cursos>);
+			this._Alumno = default(EntityRef<Alumno>);
 			OnCreated();
 		}
 		
@@ -2282,40 +2003,6 @@ namespace UVirtualClass.DataContext
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Alumno_Pagos", Storage="_Alumno", ThisKey="IdAlumno", OtherKey="IdAlumno", IsForeignKey=true)]
-		public Alumno Alumno
-		{
-			get
-			{
-				return this._Alumno.Entity;
-			}
-			set
-			{
-				Alumno previousValue = this._Alumno.Entity;
-				if (((previousValue != value) 
-							|| (this._Alumno.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Alumno.Entity = null;
-						previousValue.Pagos.Remove(this);
-					}
-					this._Alumno.Entity = value;
-					if ((value != null))
-					{
-						value.Pagos.Add(this);
-						this._IdAlumno = value.IdAlumno;
-					}
-					else
-					{
-						this._IdAlumno = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Alumno");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Cursos_Pagos", Storage="_Cursos", ThisKey="IdCurso", OtherKey="IdCurso", IsForeignKey=true)]
 		public Cursos Cursos
 		{
@@ -2346,6 +2033,40 @@ namespace UVirtualClass.DataContext
 						this._IdCurso = default(Nullable<int>);
 					}
 					this.SendPropertyChanged("Cursos");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Alumno_Pagos", Storage="_Alumno", ThisKey="IdAlumno", OtherKey="IdAlumno", IsForeignKey=true)]
+		public Alumno Alumno
+		{
+			get
+			{
+				return this._Alumno.Entity;
+			}
+			set
+			{
+				Alumno previousValue = this._Alumno.Entity;
+				if (((previousValue != value) 
+							|| (this._Alumno.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Alumno.Entity = null;
+						previousValue.Pagos.Remove(this);
+					}
+					this._Alumno.Entity = value;
+					if ((value != null))
+					{
+						value.Pagos.Add(this);
+						this._IdAlumno = value.IdAlumno;
+					}
+					else
+					{
+						this._IdAlumno = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Alumno");
 				}
 			}
 		}
@@ -2509,248 +2230,6 @@ namespace UVirtualClass.DataContext
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Usuario")]
-	public partial class Usuario : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _IdUsuario;
-		
-		private string _Usuario1;
-		
-		private string _correo;
-		
-		private string _contraseña;
-		
-		private System.Nullable<int> _tipo;
-		
-		private EntitySet<Alumno> _Alumno;
-		
-		private EntitySet<compras> _compras;
-		
-		private EntitySet<Docentes> _Docentes;
-		
-    #region Definiciones de métodos de extensibilidad
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdUsuarioChanging(int value);
-    partial void OnIdUsuarioChanged();
-    partial void OnUsuario1Changing(string value);
-    partial void OnUsuario1Changed();
-    partial void OncorreoChanging(string value);
-    partial void OncorreoChanged();
-    partial void OncontraseñaChanging(string value);
-    partial void OncontraseñaChanged();
-    partial void OntipoChanging(System.Nullable<int> value);
-    partial void OntipoChanged();
-    #endregion
-		
-		public Usuario()
-		{
-			this._Alumno = new EntitySet<Alumno>(new Action<Alumno>(this.attach_Alumno), new Action<Alumno>(this.detach_Alumno));
-			this._compras = new EntitySet<compras>(new Action<compras>(this.attach_compras), new Action<compras>(this.detach_compras));
-			this._Docentes = new EntitySet<Docentes>(new Action<Docentes>(this.attach_Docentes), new Action<Docentes>(this.detach_Docentes));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdUsuario", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int IdUsuario
-		{
-			get
-			{
-				return this._IdUsuario;
-			}
-			set
-			{
-				if ((this._IdUsuario != value))
-				{
-					this.OnIdUsuarioChanging(value);
-					this.SendPropertyChanging();
-					this._IdUsuario = value;
-					this.SendPropertyChanged("IdUsuario");
-					this.OnIdUsuarioChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="Usuario", Storage="_Usuario1", DbType="VarChar(60)")]
-		public string Usuario1
-		{
-			get
-			{
-				return this._Usuario1;
-			}
-			set
-			{
-				if ((this._Usuario1 != value))
-				{
-					this.OnUsuario1Changing(value);
-					this.SendPropertyChanging();
-					this._Usuario1 = value;
-					this.SendPropertyChanged("Usuario1");
-					this.OnUsuario1Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_correo", DbType="VarChar(60)")]
-		public string correo
-		{
-			get
-			{
-				return this._correo;
-			}
-			set
-			{
-				if ((this._correo != value))
-				{
-					this.OncorreoChanging(value);
-					this.SendPropertyChanging();
-					this._correo = value;
-					this.SendPropertyChanged("correo");
-					this.OncorreoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_contraseña", DbType="VarChar(30)")]
-		public string contraseña
-		{
-			get
-			{
-				return this._contraseña;
-			}
-			set
-			{
-				if ((this._contraseña != value))
-				{
-					this.OncontraseñaChanging(value);
-					this.SendPropertyChanging();
-					this._contraseña = value;
-					this.SendPropertyChanged("contraseña");
-					this.OncontraseñaChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_tipo", DbType="Int")]
-		public System.Nullable<int> tipo
-		{
-			get
-			{
-				return this._tipo;
-			}
-			set
-			{
-				if ((this._tipo != value))
-				{
-					this.OntipoChanging(value);
-					this.SendPropertyChanging();
-					this._tipo = value;
-					this.SendPropertyChanged("tipo");
-					this.OntipoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuario_Alumno", Storage="_Alumno", ThisKey="IdUsuario", OtherKey="idUsuario")]
-		public EntitySet<Alumno> Alumno
-		{
-			get
-			{
-				return this._Alumno;
-			}
-			set
-			{
-				this._Alumno.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuario_compras", Storage="_compras", ThisKey="IdUsuario", OtherKey="IdUsuario")]
-		public EntitySet<compras> compras
-		{
-			get
-			{
-				return this._compras;
-			}
-			set
-			{
-				this._compras.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuario_Docentes", Storage="_Docentes", ThisKey="IdUsuario", OtherKey="idUsuario")]
-		public EntitySet<Docentes> Docentes
-		{
-			get
-			{
-				return this._Docentes;
-			}
-			set
-			{
-				this._Docentes.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Alumno(Alumno entity)
-		{
-			this.SendPropertyChanging();
-			entity.Usuario = this;
-		}
-		
-		private void detach_Alumno(Alumno entity)
-		{
-			this.SendPropertyChanging();
-			entity.Usuario = null;
-		}
-		
-		private void attach_compras(compras entity)
-		{
-			this.SendPropertyChanging();
-			entity.Usuario = this;
-		}
-		
-		private void detach_compras(compras entity)
-		{
-			this.SendPropertyChanging();
-			entity.Usuario = null;
-		}
-		
-		private void attach_Docentes(Docentes entity)
-		{
-			this.SendPropertyChanging();
-			entity.Usuario = this;
-		}
-		
-		private void detach_Docentes(Docentes entity)
-		{
-			this.SendPropertyChanging();
-			entity.Usuario = null;
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Inscripciones_del_Curso")]
 	public partial class Inscripciones_del_Curso
 	{
@@ -2809,159 +2288,6 @@ namespace UVirtualClass.DataContext
 				if ((this._Curso != value))
 				{
 					this._Curso = value;
-				}
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ViewAlumnos")]
-	public partial class ViewAlumnos
-	{
-		
-		private int _IdAlumno;
-		
-		private string _Nombre;
-		
-		private string _Apellido;
-		
-		private System.Nullable<System.DateTime> _Fecha_de_Nacimiento;
-		
-		private System.Nullable<char> _Género;
-		
-		private string _Usuario;
-		
-		private string _Correo;
-		
-		private System.Nullable<int> _Tipo_Usuario;
-		
-		public ViewAlumnos()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdAlumno", DbType="Int NOT NULL")]
-		public int IdAlumno
-		{
-			get
-			{
-				return this._IdAlumno;
-			}
-			set
-			{
-				if ((this._IdAlumno != value))
-				{
-					this._IdAlumno = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nombre", DbType="VarChar(30)")]
-		public string Nombre
-		{
-			get
-			{
-				return this._Nombre;
-			}
-			set
-			{
-				if ((this._Nombre != value))
-				{
-					this._Nombre = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Apellido", DbType="VarChar(30)")]
-		public string Apellido
-		{
-			get
-			{
-				return this._Apellido;
-			}
-			set
-			{
-				if ((this._Apellido != value))
-				{
-					this._Apellido = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Fecha de Nacimiento]", Storage="_Fecha_de_Nacimiento", DbType="DateTime")]
-		public System.Nullable<System.DateTime> Fecha_de_Nacimiento
-		{
-			get
-			{
-				return this._Fecha_de_Nacimiento;
-			}
-			set
-			{
-				if ((this._Fecha_de_Nacimiento != value))
-				{
-					this._Fecha_de_Nacimiento = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Género", DbType="Char(1)")]
-		public System.Nullable<char> Género
-		{
-			get
-			{
-				return this._Género;
-			}
-			set
-			{
-				if ((this._Género != value))
-				{
-					this._Género = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Usuario", DbType="VarChar(60)")]
-		public string Usuario
-		{
-			get
-			{
-				return this._Usuario;
-			}
-			set
-			{
-				if ((this._Usuario != value))
-				{
-					this._Usuario = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Correo", DbType="VarChar(60)")]
-		public string Correo
-		{
-			get
-			{
-				return this._Correo;
-			}
-			set
-			{
-				if ((this._Correo != value))
-				{
-					this._Correo = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Tipo Usuario]", Storage="_Tipo_Usuario", DbType="Int")]
-		public System.Nullable<int> Tipo_Usuario
-		{
-			get
-			{
-				return this._Tipo_Usuario;
-			}
-			set
-			{
-				if ((this._Tipo_Usuario != value))
-				{
-					this._Tipo_Usuario = value;
 				}
 			}
 		}
@@ -3237,27 +2563,723 @@ namespace UVirtualClass.DataContext
 		}
 	}
 	
-	public partial class SP_ModificaAlumnoResult
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Alumno")]
+	public partial class Alumno : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
-		private string _Mensaje;
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		public SP_ModificaAlumnoResult()
+		private int _IdAlumno;
+		
+		private string _nombre;
+		
+		private string _apellido;
+		
+		private System.Nullable<System.DateTime> _fecha_n;
+		
+		private System.Nullable<char> _genero;
+		
+		private System.Nullable<int> _idUsuario;
+		
+		private System.Nullable<int> _Activo;
+		
+		private EntitySet<CursoAlumno> _CursoAlumno;
+		
+		private EntitySet<Pagos> _Pagos;
+		
+		private EntityRef<Usuario> _Usuario;
+		
+    #region Definiciones de métodos de extensibilidad
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdAlumnoChanging(int value);
+    partial void OnIdAlumnoChanged();
+    partial void OnnombreChanging(string value);
+    partial void OnnombreChanged();
+    partial void OnapellidoChanging(string value);
+    partial void OnapellidoChanged();
+    partial void Onfecha_nChanging(System.Nullable<System.DateTime> value);
+    partial void Onfecha_nChanged();
+    partial void OngeneroChanging(System.Nullable<char> value);
+    partial void OngeneroChanged();
+    partial void OnidUsuarioChanging(System.Nullable<int> value);
+    partial void OnidUsuarioChanged();
+    partial void OnActivoChanging(System.Nullable<int> value);
+    partial void OnActivoChanged();
+    #endregion
+		
+		public Alumno()
 		{
+			this._CursoAlumno = new EntitySet<CursoAlumno>(new Action<CursoAlumno>(this.attach_CursoAlumno), new Action<CursoAlumno>(this.detach_CursoAlumno));
+			this._Pagos = new EntitySet<Pagos>(new Action<Pagos>(this.attach_Pagos), new Action<Pagos>(this.detach_Pagos));
+			this._Usuario = default(EntityRef<Usuario>);
+			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Mensaje", DbType="VarChar(31) NOT NULL", CanBeNull=false)]
-		public string Mensaje
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdAlumno", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int IdAlumno
 		{
 			get
 			{
-				return this._Mensaje;
+				return this._IdAlumno;
 			}
 			set
 			{
-				if ((this._Mensaje != value))
+				if ((this._IdAlumno != value))
 				{
-					this._Mensaje = value;
+					this.OnIdAlumnoChanging(value);
+					this.SendPropertyChanging();
+					this._IdAlumno = value;
+					this.SendPropertyChanged("IdAlumno");
+					this.OnIdAlumnoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_nombre", DbType="VarChar(30)")]
+		public string nombre
+		{
+			get
+			{
+				return this._nombre;
+			}
+			set
+			{
+				if ((this._nombre != value))
+				{
+					this.OnnombreChanging(value);
+					this.SendPropertyChanging();
+					this._nombre = value;
+					this.SendPropertyChanged("nombre");
+					this.OnnombreChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_apellido", DbType="VarChar(30)")]
+		public string apellido
+		{
+			get
+			{
+				return this._apellido;
+			}
+			set
+			{
+				if ((this._apellido != value))
+				{
+					this.OnapellidoChanging(value);
+					this.SendPropertyChanging();
+					this._apellido = value;
+					this.SendPropertyChanged("apellido");
+					this.OnapellidoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fecha_n", DbType="DateTime")]
+		public System.Nullable<System.DateTime> fecha_n
+		{
+			get
+			{
+				return this._fecha_n;
+			}
+			set
+			{
+				if ((this._fecha_n != value))
+				{
+					this.Onfecha_nChanging(value);
+					this.SendPropertyChanging();
+					this._fecha_n = value;
+					this.SendPropertyChanged("fecha_n");
+					this.Onfecha_nChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_genero", DbType="Char(1)")]
+		public System.Nullable<char> genero
+		{
+			get
+			{
+				return this._genero;
+			}
+			set
+			{
+				if ((this._genero != value))
+				{
+					this.OngeneroChanging(value);
+					this.SendPropertyChanging();
+					this._genero = value;
+					this.SendPropertyChanged("genero");
+					this.OngeneroChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idUsuario", DbType="Int")]
+		public System.Nullable<int> idUsuario
+		{
+			get
+			{
+				return this._idUsuario;
+			}
+			set
+			{
+				if ((this._idUsuario != value))
+				{
+					if (this._Usuario.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnidUsuarioChanging(value);
+					this.SendPropertyChanging();
+					this._idUsuario = value;
+					this.SendPropertyChanged("idUsuario");
+					this.OnidUsuarioChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Activo", DbType="Int")]
+		public System.Nullable<int> Activo
+		{
+			get
+			{
+				return this._Activo;
+			}
+			set
+			{
+				if ((this._Activo != value))
+				{
+					this.OnActivoChanging(value);
+					this.SendPropertyChanging();
+					this._Activo = value;
+					this.SendPropertyChanged("Activo");
+					this.OnActivoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Alumno_CursoAlumno", Storage="_CursoAlumno", ThisKey="IdAlumno", OtherKey="IdAlumno")]
+		public EntitySet<CursoAlumno> CursoAlumno
+		{
+			get
+			{
+				return this._CursoAlumno;
+			}
+			set
+			{
+				this._CursoAlumno.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Alumno_Pagos", Storage="_Pagos", ThisKey="IdAlumno", OtherKey="IdAlumno")]
+		public EntitySet<Pagos> Pagos
+		{
+			get
+			{
+				return this._Pagos;
+			}
+			set
+			{
+				this._Pagos.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuario_Alumno", Storage="_Usuario", ThisKey="idUsuario", OtherKey="IdUsuario", IsForeignKey=true)]
+		public Usuario Usuario
+		{
+			get
+			{
+				return this._Usuario.Entity;
+			}
+			set
+			{
+				Usuario previousValue = this._Usuario.Entity;
+				if (((previousValue != value) 
+							|| (this._Usuario.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Usuario.Entity = null;
+						previousValue.Alumno.Remove(this);
+					}
+					this._Usuario.Entity = value;
+					if ((value != null))
+					{
+						value.Alumno.Add(this);
+						this._idUsuario = value.IdUsuario;
+					}
+					else
+					{
+						this._idUsuario = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Usuario");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_CursoAlumno(CursoAlumno entity)
+		{
+			this.SendPropertyChanging();
+			entity.Alumno = this;
+		}
+		
+		private void detach_CursoAlumno(CursoAlumno entity)
+		{
+			this.SendPropertyChanging();
+			entity.Alumno = null;
+		}
+		
+		private void attach_Pagos(Pagos entity)
+		{
+			this.SendPropertyChanging();
+			entity.Alumno = this;
+		}
+		
+		private void detach_Pagos(Pagos entity)
+		{
+			this.SendPropertyChanging();
+			entity.Alumno = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Usuario")]
+	public partial class Usuario : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _IdUsuario;
+		
+		private string _Usuario1;
+		
+		private string _correo;
+		
+		private string _contraseña;
+		
+		private System.Nullable<int> _tipo;
+		
+		private System.Nullable<int> _Activo;
+		
+		private EntitySet<compras> _compras;
+		
+		private EntitySet<Docentes> _Docentes;
+		
+		private EntitySet<Alumno> _Alumno;
+		
+    #region Definiciones de métodos de extensibilidad
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdUsuarioChanging(int value);
+    partial void OnIdUsuarioChanged();
+    partial void OnUsuario1Changing(string value);
+    partial void OnUsuario1Changed();
+    partial void OncorreoChanging(string value);
+    partial void OncorreoChanged();
+    partial void OncontraseñaChanging(string value);
+    partial void OncontraseñaChanged();
+    partial void OntipoChanging(System.Nullable<int> value);
+    partial void OntipoChanged();
+    partial void OnActivoChanging(System.Nullable<int> value);
+    partial void OnActivoChanged();
+    #endregion
+		
+		public Usuario()
+		{
+			this._compras = new EntitySet<compras>(new Action<compras>(this.attach_compras), new Action<compras>(this.detach_compras));
+			this._Docentes = new EntitySet<Docentes>(new Action<Docentes>(this.attach_Docentes), new Action<Docentes>(this.detach_Docentes));
+			this._Alumno = new EntitySet<Alumno>(new Action<Alumno>(this.attach_Alumno), new Action<Alumno>(this.detach_Alumno));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdUsuario", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int IdUsuario
+		{
+			get
+			{
+				return this._IdUsuario;
+			}
+			set
+			{
+				if ((this._IdUsuario != value))
+				{
+					this.OnIdUsuarioChanging(value);
+					this.SendPropertyChanging();
+					this._IdUsuario = value;
+					this.SendPropertyChanged("IdUsuario");
+					this.OnIdUsuarioChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="Usuario", Storage="_Usuario1", DbType="VarChar(60)")]
+		public string Usuario1
+		{
+			get
+			{
+				return this._Usuario1;
+			}
+			set
+			{
+				if ((this._Usuario1 != value))
+				{
+					this.OnUsuario1Changing(value);
+					this.SendPropertyChanging();
+					this._Usuario1 = value;
+					this.SendPropertyChanged("Usuario1");
+					this.OnUsuario1Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_correo", DbType="VarChar(60)")]
+		public string correo
+		{
+			get
+			{
+				return this._correo;
+			}
+			set
+			{
+				if ((this._correo != value))
+				{
+					this.OncorreoChanging(value);
+					this.SendPropertyChanging();
+					this._correo = value;
+					this.SendPropertyChanged("correo");
+					this.OncorreoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_contraseña", DbType="VarChar(30)")]
+		public string contraseña
+		{
+			get
+			{
+				return this._contraseña;
+			}
+			set
+			{
+				if ((this._contraseña != value))
+				{
+					this.OncontraseñaChanging(value);
+					this.SendPropertyChanging();
+					this._contraseña = value;
+					this.SendPropertyChanged("contraseña");
+					this.OncontraseñaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_tipo", DbType="Int")]
+		public System.Nullable<int> tipo
+		{
+			get
+			{
+				return this._tipo;
+			}
+			set
+			{
+				if ((this._tipo != value))
+				{
+					this.OntipoChanging(value);
+					this.SendPropertyChanging();
+					this._tipo = value;
+					this.SendPropertyChanged("tipo");
+					this.OntipoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Activo", DbType="Int")]
+		public System.Nullable<int> Activo
+		{
+			get
+			{
+				return this._Activo;
+			}
+			set
+			{
+				if ((this._Activo != value))
+				{
+					this.OnActivoChanging(value);
+					this.SendPropertyChanging();
+					this._Activo = value;
+					this.SendPropertyChanged("Activo");
+					this.OnActivoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuario_compras", Storage="_compras", ThisKey="IdUsuario", OtherKey="IdUsuario")]
+		public EntitySet<compras> compras
+		{
+			get
+			{
+				return this._compras;
+			}
+			set
+			{
+				this._compras.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuario_Docentes", Storage="_Docentes", ThisKey="IdUsuario", OtherKey="idUsuario")]
+		public EntitySet<Docentes> Docentes
+		{
+			get
+			{
+				return this._Docentes;
+			}
+			set
+			{
+				this._Docentes.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuario_Alumno", Storage="_Alumno", ThisKey="IdUsuario", OtherKey="idUsuario")]
+		public EntitySet<Alumno> Alumno
+		{
+			get
+			{
+				return this._Alumno;
+			}
+			set
+			{
+				this._Alumno.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_compras(compras entity)
+		{
+			this.SendPropertyChanging();
+			entity.Usuario = this;
+		}
+		
+		private void detach_compras(compras entity)
+		{
+			this.SendPropertyChanging();
+			entity.Usuario = null;
+		}
+		
+		private void attach_Docentes(Docentes entity)
+		{
+			this.SendPropertyChanging();
+			entity.Usuario = this;
+		}
+		
+		private void detach_Docentes(Docentes entity)
+		{
+			this.SendPropertyChanging();
+			entity.Usuario = null;
+		}
+		
+		private void attach_Alumno(Alumno entity)
+		{
+			this.SendPropertyChanging();
+			entity.Usuario = this;
+		}
+		
+		private void detach_Alumno(Alumno entity)
+		{
+			this.SendPropertyChanging();
+			entity.Usuario = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ViewAlumnos")]
+	public partial class ViewAlumnos
+	{
+		
+		private int _IdAlumno;
+		
+		private string _Nombre;
+		
+		private string _Apellido;
+		
+		private System.Nullable<System.DateTime> _Fecha_de_Nacimiento;
+		
+		private System.Nullable<char> _Género;
+		
+		private string _Usuario;
+		
+		private string _Correo;
+		
+		private System.Nullable<int> _Tipo_Usuario;
+		
+		public ViewAlumnos()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdAlumno", DbType="Int NOT NULL")]
+		public int IdAlumno
+		{
+			get
+			{
+				return this._IdAlumno;
+			}
+			set
+			{
+				if ((this._IdAlumno != value))
+				{
+					this._IdAlumno = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nombre", DbType="VarChar(30)")]
+		public string Nombre
+		{
+			get
+			{
+				return this._Nombre;
+			}
+			set
+			{
+				if ((this._Nombre != value))
+				{
+					this._Nombre = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Apellido", DbType="VarChar(30)")]
+		public string Apellido
+		{
+			get
+			{
+				return this._Apellido;
+			}
+			set
+			{
+				if ((this._Apellido != value))
+				{
+					this._Apellido = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Fecha de Nacimiento]", Storage="_Fecha_de_Nacimiento", DbType="DateTime")]
+		public System.Nullable<System.DateTime> Fecha_de_Nacimiento
+		{
+			get
+			{
+				return this._Fecha_de_Nacimiento;
+			}
+			set
+			{
+				if ((this._Fecha_de_Nacimiento != value))
+				{
+					this._Fecha_de_Nacimiento = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Género", DbType="Char(1)")]
+		public System.Nullable<char> Género
+		{
+			get
+			{
+				return this._Género;
+			}
+			set
+			{
+				if ((this._Género != value))
+				{
+					this._Género = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Usuario", DbType="VarChar(60)")]
+		public string Usuario
+		{
+			get
+			{
+				return this._Usuario;
+			}
+			set
+			{
+				if ((this._Usuario != value))
+				{
+					this._Usuario = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Correo", DbType="VarChar(60)")]
+		public string Correo
+		{
+			get
+			{
+				return this._Correo;
+			}
+			set
+			{
+				if ((this._Correo != value))
+				{
+					this._Correo = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[Tipo Usuario]", Storage="_Tipo_Usuario", DbType="Int")]
+		public System.Nullable<int> Tipo_Usuario
+		{
+			get
+			{
+				return this._Tipo_Usuario;
+			}
+			set
+			{
+				if ((this._Tipo_Usuario != value))
+				{
+					this._Tipo_Usuario = value;
 				}
 			}
 		}
@@ -3347,6 +3369,32 @@ namespace UVirtualClass.DataContext
 		private string _Mensaje;
 		
 		public SP_ModificaTemariosResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Mensaje", DbType="VarChar(31) NOT NULL", CanBeNull=false)]
+		public string Mensaje
+		{
+			get
+			{
+				return this._Mensaje;
+			}
+			set
+			{
+				if ((this._Mensaje != value))
+				{
+					this._Mensaje = value;
+				}
+			}
+		}
+	}
+	
+	public partial class SP_ModificaAlumnoResult
+	{
+		
+		private string _Mensaje;
+		
+		public SP_ModificaAlumnoResult()
 		{
 		}
 		
