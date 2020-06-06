@@ -74,7 +74,6 @@
                 <p>Alumno</p>
             </td>
             <td>
-                <button type="submit" class="btn-dark" id="ProbandoSwal">Touch ME</button>
                 @Html.ActionLink("Editar", "EditaAlumno", new { id=item.IdAlumno }, new { @class = "btn btn-success" })
                 @*@Html.ActionLink("Delete", "Delete", new { id=item.IdAlumno }, new { @class = "btn btn-danger" })*@
                 <button type="submit" id="btn-Eliminar" class="btn btn-danger" data-codigo="@item.IdAlumno">Eliminar</button>
@@ -92,9 +91,11 @@
 
     <script type="text/javascript">
             var accion = $('#MiAccion').val();
-            $(document).ready(function () {
-                if (accion == "Crear") {
-                    swal("Exito!", "El Alumno se ha creado con Exito.", "success");
+            $(document).ready(function (s) {
+                if (accion == "AlumnoCreado") {
+                    swal("Bien!", "El Alumno se ha creado Correctamente.", "success");
+                } if (accion == "AlumnoEditado") {
+                    swal("Exito!", "El registro se modificó Correctamente.", "success");
                 } if (accion == "Error") {
                     swal("Lo Sentimos!", "Parece que algo salio mal, vuelve a intentarlo", "warning");
                 };

@@ -18,7 +18,7 @@ namespace UVirtualClass.Controllers
         {
             return View();
         }
-
+        //******************************ALUMNO'S METHODS**********************************
         public ActionResult ListaAlumnos(string a)
         {
             @ViewBag.Accion = a;
@@ -28,45 +28,7 @@ namespace UVirtualClass.Controllers
             return View(ListadoAlumno);
         }
 
-        public ActionResult ListaDocente (string a)
-        {
-            @ViewBag.Accion = a;
-
-            IEnumerable<ViewDocentes> ListadoDocentes = (from db in db.ViewDocentes select db);
-
-            return View(ListadoDocentes);
-        }
-
-        public ActionResult ListaCurso(string a)
-        {
-            @ViewBag.Accion = a;
-
-            IEnumerable<ViewCurso> ListadoCurso = (from db in db.ViewCurso select db);
-
-            return View(ListadoCurso);
-        }
-
-        public ActionResult CrearDocente()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult CrearDocente(FormCollection c, Docentes model, Usuario modelo)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Usuario.InsertOnSubmit(modelo);
-                db.Docentes.InsertOnSubmit(model);
-                db.SubmitChanges();
-                Usuario Id = (from db in db.Usuario select db).Last();
-                Docentes Ids = (from db in db.Docentes select db).Last();
-                db.SP_ModificaDocente(Ids.IdDocente, Ids.nombre, Ids.apellido, Ids.fecha_n, Ids.genero, Id.IdUsuario);
-                db.SubmitChanges();
-            }
-            return View();
-        }
-
+        [HttpGet]
         public ActionResult CrearAlumno()
         {
             List<SelectListItem> lst = new List<SelectListItem>();
@@ -80,33 +42,247 @@ namespace UVirtualClass.Controllers
         }
 
         [HttpPost]
-        public ActionResult CrearAlumno(FormCollection c, Alumno Alum, Usuario Usu)
+        public ActionResult CrearAlumno(FormCollection c, CrearAlumnoVM MyModel)
         {
-            Usu.tipo = 3;
-            Usu.Activo = 1;
-            string message;
-            try
-            {
-                db.Usuario.InsertOnSubmit(Usu);
-                db.SubmitChanges();
-                IEnumerable<Usuario> LastUser = (from db in db.Usuario select db);
 
-                var LastUser1 = LastUser.LastOrDefault();
-                if (LastUser1 != null)
-                {
-                    Alum.idUsuario = LastUser1.IdUsuario;
-                    Alum.Activo = 1;
-                    db.Alumno.InsertOnSubmit(Alum);
-                    db.SubmitChanges();
-                }
-                message = "Crear";
-            }
-            catch (Exception e)
+            string message = "AlumnoCreado";
+
+            if (ModelState.IsValid)
             {
-                var error = e;
-                message = "Error";
+                using (var dbContext = new ContextDbDataContext())
+                {
+                    Usuario User = new Usuario();
+                    Alumno Alum = new Alumno();
+
+                    User.Usuario1 = MyModel.Usuario1;
+                    User.contraseña = MyModel.contraseña;
+                    User.Activo = 1;
+                    User.tipo = 2;
+                    dbContext.Usuario.InsertOnSubmit(User);
+                    dbContext.SubmitChanges();
+
+                    var Find = (from dbD in dbContext.Usuario select dbD).ToList();
+                    User = Find.LastOrDefault();
+
+
+                    Alum.nombre = MyModel.nombre;
+                    Alum.apellido = MyModel.apellido;
+                    Alum.fecha_n = Convert.ToDateTime(MyModel.fecha_n);
+                    Alum.genero = Convert.ToChar(MyModel.genero);
+                    Alum.idUsuario = User.IdUsuario;
+                    dbContext.Alumno.InsertOnSubmit(Alum);
+                    dbContext.SubmitChanges();
+
+                }
             }
+            else { message = "Error"; }
+
             return RedirectToAction("ListaAlumnos", "AdminHome", new { a = message });
+        }
+
+        [HttpGet]
+        public ActionResult EditaAlumno(int id)
+        {
+            EditarAlumnoVM Alum = new EditarAlumnoVM();
+
+            using (var DataContext = new ContextDbDataContext())
+            {
+                Alumno DataAlum = (from db in DataContext.Alumno where db.IdAlumno == id select db).Single();
+                Usuario DataUser = (from db in DataContext.Usuario where db.IdUsuario == DataAlum.idUsuario select db).Single();
+
+                Alum.idUsuario = int.Parse(DataAlum.idUsuario.ToString());
+                Alum.Usuario1 = DataUser.Usuario1.ToString();
+                Alum.correo = DataUser.correo.ToString();
+                Alum.nombre = DataAlum.nombre;
+                Alum.apellido = DataAlum.apellido;
+                Alum.contraseña = "DummyPass";
+                Alum.ConfirmarContraseña = "DummyPass";
+                Alum.fecha_n = Convert.ToDateTime(DataAlum.fecha_n);
+                Alum.genero = Convert.ToChar(DataAlum.genero);
+                Alum.tipo = int.Parse(DataUser.tipo.ToString());
+            }
+
+            return View(Alum);
+        }
+
+        [HttpPost]
+        public ActionResult EditaAlumno(FormCollection e, EditarAlumnoVM MyModel)
+        {
+            string message = "AlumnoEditado";
+            if (ModelState.IsValid)
+            {
+                using (var dbContext = new ContextDbDataContext())
+                {
+                    Alumno Alum = (from dbD in dbContext.Alumno where dbD.idUsuario == MyModel.idUsuario select dbD).Single();
+                    Usuario User = (from dbD in dbContext.Usuario where dbD.IdUsuario == MyModel.idUsuario select dbD).Single();
+
+                    User.contraseña = MyModel.contraseña == "DummyPass" ? User.contraseña : MyModel.contraseña;
+                    User.Usuario1 = MyModel.Usuario1;
+                    Alum.nombre = MyModel.nombre;
+                    Alum.apellido = MyModel.apellido;
+                    Alum.fecha_n = Convert.ToDateTime(MyModel.fecha_n);
+                    Alum.genero = Convert.ToChar(MyModel.genero);
+
+                    dbContext.SP_ModificaAlumno(Alum.IdAlumno, Alum.nombre, Alum.apellido, Alum.fecha_n, Alum.genero);
+                    dbContext.SP_ModificarUsuario(User.IdUsuario, User.contraseña, User.Activo);
+                    dbContext.SubmitChanges();
+                }
+            }
+            else { message = "Error"; }
+
+            return RedirectToAction("ListaAlumnos", "AdminHome", new { a = message });
+        }
+
+        public JsonResult EliminarAlumno(int idAlumno)
+        {
+            using (var dbContext = new ContextDbDataContext())
+            {
+                Alumno Alum = (from dbD in dbContext.Alumno where dbD.IdAlumno == idAlumno select dbD).Single();
+                Usuario User = (from dbD in dbContext.Usuario where dbD.IdUsuario == Alum.idUsuario select dbD).Single();
+
+                dbContext.SP_ModificaUsuario(User.IdUsuario, User.Usuario1, User.correo, User.contraseña, 0, User.tipo);
+            }
+
+            return Json(new { exito = true }, JsonRequestBehavior.AllowGet);
+        }
+
+
+        //******************************DOCENTE'S METHODS**********************************
+        public ActionResult ListaDocente (string a)
+        {
+            @ViewBag.Accion = a;
+
+            IEnumerable<ViewDocentes> ListadoDocentes = (from db in db.ViewDocentes select db);
+
+            return View(ListadoDocentes);
+        }
+
+        [HttpGet]
+        public ActionResult CrearDocente()
+        {
+
+            List<SelectListItem> lst = new List<SelectListItem>();
+
+            lst.Add(new SelectListItem() { Text = "Masculino", Value = "M" });
+            lst.Add(new SelectListItem() { Text = "Femenino", Value = "F" });
+
+            ViewBag.genero = lst;
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CrearDocente(FormCollection c, CrearDocenteVM MyModel)
+        {
+            string message = "DocenteCreado";
+            if (ModelState.IsValid)
+            {
+                using (var dbContext = new ContextDbDataContext())
+                {
+                    Usuario User = new Usuario();
+                    Docentes Docen = new Docentes();
+
+                    User.Usuario1 = MyModel.Usuario1;
+                    User.contraseña = MyModel.contraseña;
+                    User.Activo = 1;
+                    User.tipo = 2;
+                    dbContext.Usuario.InsertOnSubmit(User);
+                    dbContext.SubmitChanges();
+
+                    var Find = (from dbD in dbContext.Usuario select dbD).ToList();
+                    User = Find.LastOrDefault();
+
+
+                    Docen.nombre = MyModel.nombre;
+                    Docen.apellido = MyModel.apellido;
+                    Docen.fecha_n = Convert.ToDateTime(MyModel.fecha_n);
+                    Docen.genero = Convert.ToChar(MyModel.genero);
+                    Docen.idUsuario = User.IdUsuario;
+                    dbContext.Docentes.InsertOnSubmit(Docen);
+                    dbContext.SubmitChanges();
+
+
+                }
+            }
+            else { message = "Error"; }
+            return RedirectToAction("ListaDocente", "AdminHome", new { a = message });
+        }
+
+        [HttpGet]
+        public ActionResult EditaDocente(int id)
+        {
+            EditarDocenteVM Docen = new EditarDocenteVM();
+
+            using (var DataContext = new ContextDbDataContext())
+            {
+                Docentes DataDocen = (from db in DataContext.Docentes where db.IdDocente == id select db).Single();
+                Usuario DataUser = (from db in DataContext.Usuario where db.IdUsuario == DataDocen.idUsuario select db).Single();
+
+                Docen.idUsuario = int.Parse(DataDocen.idUsuario.ToString());
+                Docen.Usuario1 = DataUser.Usuario1.ToString();
+                Docen.correo = DataUser.correo.ToString();
+                Docen.nombre = DataDocen.nombre;
+                Docen.apellido = DataDocen.apellido;
+                Docen.contraseña = "DummyPass";
+                Docen.ConfirmarContraseña = "DummyPass";
+                Docen.fecha_n = Convert.ToDateTime(DataDocen.fecha_n);
+                Docen.genero = Convert.ToChar(DataDocen.genero);
+                Docen.tipo = int.Parse(DataUser.tipo.ToString());
+            }
+
+            return View(Docen);
+        }
+
+        [HttpPost]
+        public ActionResult EditaDocente(FormCollection e, EditarAlumnoVM MyModel)
+        {
+            string message = "AlumnoEditado";
+            if (ModelState.IsValid)
+            {
+                using (var dbContext = new ContextDbDataContext())
+                {
+                    Docentes Docen = (from dbD in dbContext.Docentes where dbD.idUsuario == MyModel.idUsuario select dbD).Single();
+                    Usuario User = (from dbD in dbContext.Usuario where dbD.IdUsuario == MyModel.idUsuario select dbD).Single();
+
+                    User.contraseña = MyModel.contraseña == "DummyPass" ? User.contraseña : MyModel.contraseña;
+                    User.Usuario1 = MyModel.Usuario1;
+                    Docen.nombre = MyModel.nombre;
+                    Docen.apellido = MyModel.apellido;
+                    Docen.fecha_n = Convert.ToDateTime(MyModel.fecha_n);
+                    Docen.genero = Convert.ToChar(MyModel.genero);
+
+                    dbContext.SP_ModificaDocente(Docen.IdDocente, Docen.nombre, Docen.apellido, Docen.fecha_n, Docen.genero, Docen.idUsuario);
+                    dbContext.SP_ModificarUsuario(User.IdUsuario, User.contraseña, User.Activo);
+                    dbContext.SubmitChanges();
+                }
+            }
+            else { message = "Error"; }
+
+            return RedirectToAction("ListaAlumnos", "AdminHome", new { a = message });
+        }
+
+        public JsonResult EliminarDocente(int idDocente)
+        {
+            using (var dbContext = new ContextDbDataContext())
+            {
+                Docentes Docen = (from dbD in dbContext.Docentes where dbD.IdDocente == idDocente select dbD).Single();
+                Usuario User = (from dbD in dbContext.Usuario where dbD.IdUsuario == Docen.idUsuario select dbD).Single();
+
+                dbContext.SP_ModificaUsuario(User.IdUsuario, User.Usuario1, User.correo, User.contraseña, 0, User.tipo);
+            }
+
+            return Json(new { exito = true }, JsonRequestBehavior.AllowGet);
+        }
+
+
+        //******************************CURSO'S METHODS**********************************
+        public ActionResult ListaCurso(string a)
+        {
+            @ViewBag.Accion = a;
+
+            IEnumerable<ViewCurso> ListadoCurso = (from db in db.ViewCurso select db);
+
+            return View(ListadoCurso);
         }
 
 
@@ -126,46 +302,6 @@ namespace UVirtualClass.Controllers
         {
             return View();
         }
-
-        [HttpGet]
-        public ActionResult EditaAlumno(int id)
-        {
-            CrearAlumnoVM Alum = new CrearAlumnoVM();
-
-            using (var DataContext = new ContextDbDataContext())
-            {
-                Alumno DataAlum = (from db in DataContext.Alumno where db.IdAlumno == id select db).Single();
-                Usuario DataUser = (from db in DataContext.Usuario where db.IdUsuario == DataAlum.idUsuario select db).Single();
-
-                Alum.idUsuario = int.Parse(DataAlum.idUsuario.ToString());
-                Alum.Usuario1 = DataAlum.Usuario.ToString();
-                Alum.correo = DataUser.correo.ToString();
-                Alum.nombre = DataAlum.nombre;
-                Alum.apellido = DataAlum.apellido;
-                Alum.contraseña = "DummyPass";
-                Alum.ConfirmarContraseña = "DummyPass";
-                Alum.fecha_n = Convert.ToDateTime(DataAlum.fecha_n);
-                Alum.genero = Convert.ToChar(DataAlum.genero);
-                Alum.tipo = int.Parse(DataUser.tipo.ToString());
-            }
-
-                return View(Alum);
-        }
-
-        public JsonResult EliminarAlumno(int idAlumno)
-        {
-            using (var dbContext = new ContextDbDataContext())
-            {
-                Alumno Alum = (from dbD in dbContext.Alumno where dbD.IdAlumno == idAlumno select dbD).Single();
-                Usuario User = (from dbD in dbContext.Usuario where dbD.IdUsuario == Alum.idUsuario select dbD).Single();
-
-                dbContext.SP_ModificaAlumno(Alum.IdAlumno, Alum.nombre, Alum.apellido, Alum.fecha_n, Alum.genero, 0);
-                dbContext.SP_ModificaUsuario(User.IdUsuario, User.Usuario1, User.correo, User.contraseña, 0, User.tipo);
-            }
-
-            return Json( new{ exito = true }, JsonRequestBehavior.AllowGet );
-        }
-
 
 
         //--------------------------- VALIDATIONS CLIENT'S SIDE ---------------------------

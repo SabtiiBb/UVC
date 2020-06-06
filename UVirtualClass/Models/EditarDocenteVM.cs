@@ -4,13 +4,13 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
 
 namespace UVirtualClass.Models
 {
-    public class CrearDocenteVM
+    public class EditarDocenteVM
     {
 
+        public int idUsuario { get; set; }
         public String Usuario1 { get; set; }
         public String correo { get; set; }
         public String contraseña { get; set; }
