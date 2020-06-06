@@ -1,0 +1,146 @@
+﻿@model IEnumerable<UVirtualClass.DataContext.ViewDocentes>
+
+@{
+    ViewBag.Title = "ListaDocente";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="banner-listados-logo">
+    <img src="~/img/Logi2.png" />
+    <h2>Listado de Docentes</h2>
+</div>
+
+<p class="btn btn-primary">
+    @Html.ActionLink("Crear Nuevo Docente", "CrearDocente")
+</p>
+<table class="table table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Apellido)
+        </th>
+        <th>
+            @*@Html.DisplayNameFor(model => model.Fecha_de_Nacimiento)*@
+            <strong>Fecha de Nacimiento</strong>
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Género)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Usuario)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Correo)
+        </th>
+        <th>
+            @*@Html.DisplayNameFor(model => model.Tipo_Usuario)*@
+            <strong>Tipo de Usuario</strong>
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Apellido)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Fecha_de_Nacimiento)
+        </td>
+        <td>
+            @*@Html.DisplayFor(modelItem => item.Género)*@
+            @if (item.Género == 'M')
+                {
+                <p>Masculino</p>
+            }
+            else
+            {
+                <p>Femenino</p>
+            }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Usuario)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Correo)
+        </td>
+        <td>
+            @*@Html.DisplayFor(modelItem => item.Tipo_Usuario)*@
+            <p>Docente</p>
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.IdDocente }, new { @class = "btn btn-success" })
+            @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */}, new { @class = "btn btn-primary" })*@
+            @Html.ActionLink("Delete", "Delete", new { id = item.IdDocente }, new { @class = "btn btn-danger" })
+        </td>
+    </tr>
+}
+
+</table>
+
+<input id="MiAccion" type="hidden" value="@ViewBag.Accion" />
+
+<input type="hidden" id="AccionEliminarAlumno" value="@Url.Action("EliminarDocente", "AdminHome")" />
+
+@section Scripts{
+
+    <script type="text/javascript">
+
+            var accion = $('#MiAccion').val();
+            $(document).ready(function () {
+                if (accion == "DocenteCreado") {
+                    swal("Bien!", "El Docente se ha creado con éxito.", "success");
+                } if (accion == "Error") {
+                    swal("¡Lo Sentimos!", "Parece que algo salió mal, vuelve a intentarlo", "warning");
+                };
+            });
+
+            $("#btn-Eliminar").on("click", function (e) {
+                e.preventDefault();
+                var id = $(this).data('codigo');
+
+                swal({
+                    title: "¿Está seguro?",
+                    text: "Este Docente sera eliminado y tambien su usuario!",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Sí, eliminarlo!",
+                    closeOnConfirm: false,
+                    closeOnCancel: true
+                },
+                    function (isConfirm) {
+                        if (isConfirm) {
+                            $.ajax({
+                                type: "post",
+                                url: $("#AccionEliminarDocente").val(),
+                                dataType: "json",
+                                data: { idAlumno: id },
+                                success: function (res) {
+
+                                    //swal("Exito", "El registro se elimino correctamente!", "success");
+                                    swal({
+                                        title: "Exito",
+                                        text: "El registro se elimino correctamente!",
+                                        type: "success"
+                                    }, function () {
+                                        window.location.reload();
+                                    });
+
+                                },
+                                error: function (er) {
+                                    swal("Oops!", "Ha Ocurrido un problema y no se pudo eliminar el registro!", "error");
+                                }
+                            });
+                        }
+                    });
+                })
+
+    </script>
+
+}
