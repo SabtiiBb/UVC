@@ -1,0 +1,73 @@
+﻿@model IEnumerable<UVirtualClass.DataContext.Usuario>
+@{
+    ViewBag.Title = "ListaUsuarios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="banner-listados-logo">
+    <img src="~/img/Logi2.png" />
+    <h2>Listado de Usuarios</h2>
+</div>
+
+<p class="btn btn-primary">
+    @Html.ActionLink("Crear Nuevo Curso", "CrearCurso")
+</p>
+<table class="table table-striped">
+    <tr>
+        <th>
+            @*@Html.DisplayNameFor(model => model.Usuario1)*@
+            <strong>Nombre de Usuario</strong>
+        </th>
+        <th>
+            @*@Html.DisplayNameFor(model => model.correo)*@
+            <strong>Estado</strong>
+        </th>
+        <th>
+            @*@Html.DisplayNameFor(model => model.tipo)*@
+            <strong>Tipo Usuario</strong>
+        </th>
+        <th>
+            @*@Html.DisplayNameFor(model => model.Activo)*@
+            <strong>Estado</strong>
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Usuario1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.correo)
+            </td>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.tipo)*@
+
+                @if (item.tipo == 2)
+                {
+                    <p>Docente</p>
+                }
+                @if (item.tipo == 3) 
+                
+                {
+                    <p>Alumno</p>
+                }
+            </td>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.Activo)*@
+                @if (item.Activo == 0)
+                {
+                <p>Inhabilitado</p>
+                }
+                @if (item.Activo == 1)
+
+                {
+                <p>Habilitado</p>
+                }
+            </td>
+        </tr>
+    }
+
+</table>
+

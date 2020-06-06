@@ -19,6 +19,10 @@ namespace UVirtualClass.Models
         [Required(ErrorMessage = "el siguiente dato es requerido")]
         public String nombre { get; set; }
         public String apellido { get; set; }
+
+        [Required(ErrorMessage = "Este Campo Esta Vacio")]
+        [DisplayName("Fecha de Nacimiento: ")]
+        [DataType(DataType.Date)]
         public DateTime fecha_n { get; set; }
         public char genero { get; set; }
 

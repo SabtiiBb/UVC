@@ -125,7 +125,7 @@ namespace UVirtualClass.Controllers
 
                     dbContext.SP_ModificaAlumno(Alum.IdAlumno, Alum.nombre, Alum.apellido, Alum.fecha_n, Alum.genero);
                     dbContext.SP_ModificarUsuario(User.IdUsuario, User.contraseña, User.Activo);
-                    dbContext.SubmitChanges();
+                    //dbContext.SubmitChanges();
                 }
             }
             else { message = "Error"; }
@@ -140,6 +140,7 @@ namespace UVirtualClass.Controllers
                 Alumno Alum = (from dbD in dbContext.Alumno where dbD.IdAlumno == idAlumno select dbD).Single();
                 Usuario User = (from dbD in dbContext.Usuario where dbD.IdUsuario == Alum.idUsuario select dbD).Single();
 
+                //dbContext.SP_ModificarUsuario(User.IdUsuario, User.contraseña, 0);
                 dbContext.SP_ModificaUsuario(User.IdUsuario, User.Usuario1, User.correo, User.contraseña, 0, User.tipo);
             }
 
@@ -200,7 +201,6 @@ namespace UVirtualClass.Controllers
                     Docen.idUsuario = User.IdUsuario;
                     dbContext.Docentes.InsertOnSubmit(Docen);
                     dbContext.SubmitChanges();
-
 
                 }
             }
@@ -268,6 +268,7 @@ namespace UVirtualClass.Controllers
                 Docentes Docen = (from dbD in dbContext.Docentes where dbD.IdDocente == idDocente select dbD).Single();
                 Usuario User = (from dbD in dbContext.Usuario where dbD.IdUsuario == Docen.idUsuario select dbD).Single();
 
+                //dbContext.SP_ModificarUsuario(User.IdUsuario, User.contraseña, 0);
                 dbContext.SP_ModificaUsuario(User.IdUsuario, User.Usuario1, User.correo, User.contraseña, 0, User.tipo);
             }
 
@@ -344,6 +345,14 @@ namespace UVirtualClass.Controllers
             
             bool IsValid = EmailExist != null ? false : true;
             return IsValid;
+        }
+
+        //--------------------------- LISTA USUARIOS ---------------------------
+        public ActionResult ListaUsuarios()
+        {
+            IEnumerable<Usuario> ListaUsuario = (from db in db.Usuario select db);
+
+            return View(ListaUsuario);
         }
     }
 }

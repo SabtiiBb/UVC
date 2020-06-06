@@ -34,5 +34,8 @@ namespace UVirtualClass.Models
         [Required(ErrorMessage = "El campo Foto está vacio")]
         public String Foto { get; set; }
 
+        [Required(ErrorMessage = "El campo de video está vacio")]
+        public String Videointro { get; set; }
+
     }
 }

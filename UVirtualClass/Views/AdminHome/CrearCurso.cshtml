@@ -1,7 +1,7 @@
 ﻿@model UVirtualClass.Models.CreaCurso
 
 @{
-    ViewBag.Title = "CrearCurso";
+    ViewBag.Title = "Crear Curso";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -13,77 +13,85 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-
-    <div class="formilizer">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="prueba-test-grid-grid">
-            <div class="claseusuario">
-                <span class="fa fa-user fa-2x"></span>
-                @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="texto-formulario-ok">
-                    @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+    <br />
+    <center>
+        <div>
+            <img src="~/img/books-pngrepo-com.png" width="130px" />
+        </div>
+        <div class="crearalumno">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-row">
+                <div class="col-auto">
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text"><i class="fas fa-book-open"></i></div>
+                        </div>
+                        @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", placeholder = "Nombre"  } })
+                        @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-                @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
-
-            </div>
-
-            <div class="clasecorreo">
-                <span class="fas fa-align-left fa-2x"></span>
-                @Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="texto-formulario-ok">
-                    @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
-            </div>
-
-
-            <div class="clasecontra-grid">
-                <span class="fas fa-search fa-2x"></span>
-                @Html.LabelFor(model => model.Recursos, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="texto-formulario-ok">
-                    @Html.EditorFor(model => model.Recursos, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                @Html.ValidationMessageFor(model => model.Recursos, "", new { @class = "text-danger" })
-            </div>
-
-
-            <div class="clasetipo">
-                <span class="fas fa-dollar-sign fa-2x"></span>
-                @Html.LabelFor(model => model.Costo, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="texto-formulario-ok">
-                    @Html.EditorFor(model => model.Costo, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Costo, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="clasenombre">
-                <span class="fas fa-clipboard-check fa-2x"></span>
-                @Html.LabelFor(model => model.idTemario, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="texto-formulario-ok">
-                    @Html.EditorFor(model => model.idTemario, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.idTemario, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="claseapellido">
-                <span class="fas fa-chalkboard-teacher fa-2x"></span>
-                @Html.LabelFor(model => model.idDocente, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="texto-formulario-ok">
-                    @Html.EditorFor(model => model.idDocente, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.idDocente, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="claseboton">
-                <div>
-                    <input type="submit" value="Create" class="btn btn-default" />
-                    <div class="btn btn-danger">
-                        @Html.ActionLink("Regresar", "Index")
+                <div class="col-auto">
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text"><i class="fas fa-align-center"></i></div>
+                        </div>
+                        @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control", placeholder = "Descripcion" } })
+                        @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+            <div class="form-row">
+                <div class="col-auto">
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text"><i class="fas fa-cut"></i></div>
+                        </div>
+                        @Html.EditorFor(model => model.Recursos, new { htmlAttributes = new { @class = "form-control", placeholder = "Recursos" } })
+                        @Html.ValidationMessageFor(model => model.Recursos, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text"><i class="fas fa-money-bill-wave"></i></div>
+                        </div>
+                        @Html.EditorFor(model => model.Costo, new { htmlAttributes = new { @class = "form-control", placeholder = "Costo" } })
+                        @Html.ValidationMessageFor(model => model.Costo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-auto">
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text"><i class="fas fa-images"></i></div>
+                        </div>
+                        @Html.EditorFor(model => model.Foto, new { htmlAttributes = new { @class = "form-control", placeholder = "Portada del curso" } })
+                        @Html.ValidationMessageFor(model => model.Foto, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text"><i class="fas fa-video"></i></div>
+                        </div>
+                        @Html.EditorFor(model => model.Videointro, new { htmlAttributes = new { @class = "form-control", placeholder = "Vídeo presentación de curso" } })
+                        @Html.ValidationMessageFor(model => model.Videointro, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            @Html.HiddenFor(model => model.idTemario)
+            @Html.HiddenFor(model => model.idDocente)
+            <br />
+                <div class="claseboton">
+                    <div>                        
+                        <div class="btn btn-danger">
+                            @Html.ActionLink("Regresar", "ListaCurso")
+                        </div>
+                        <input type="submit" value="Guardar y continuar" class="btn btn-primary" />
+                    </div>
+                </div>
+            </div>
+    </center>
 }
 

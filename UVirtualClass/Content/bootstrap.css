@@ -2189,7 +2189,6 @@ textarea.form-control {
 
 .form-row {
   display: -ms-flexbox;
-  display: flex;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
   margin-right: -5px;
@@ -10225,3 +10224,9 @@ a.text-dark:hover, a.text-dark:focus {
   }
 }
 /*# sourceMappingURL=bootstrap.css.map */
+
+.crearalumno{
+    margin:auto;
+    padding: 1rem;
+    width:50%;
+}
