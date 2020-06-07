@@ -24,7 +24,7 @@ namespace UVirtualClass.Controllers
 
             using (var dbContext = new ContextDbDataContext())
             {
-                ListadoAlumno = (from dbD in dbContext.ViewAlumnos select dbD);
+                ListadoAlumno = (from dbD in dbContext.ViewAlumnos select dbD).ToList();
             }
 
             return View(ListadoAlumno);
@@ -157,7 +157,7 @@ namespace UVirtualClass.Controllers
             IEnumerable<ViewDocentes> ListadoDocentes;
             using (var dbContext = new ContextDbDataContext())
             {
-                ListadoDocentes = (from db in dbContext.ViewDocentes select db);
+                ListadoDocentes = (from db in dbContext.ViewDocentes select db).ToList();
             }
 
             return View(ListadoDocentes);
@@ -288,7 +288,7 @@ namespace UVirtualClass.Controllers
             IEnumerable<ViewCurso> ListadoCurso;
             using (var dbContext = new ContextDbDataContext())
             {
-                ListadoCurso = (from db in dbContext.ViewCurso select db);
+                ListadoCurso = (from db in dbContext.ViewCurso select db).ToList();
             }
 
             return View(ListadoCurso);
