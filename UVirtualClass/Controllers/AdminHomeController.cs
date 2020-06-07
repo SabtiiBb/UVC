@@ -150,6 +150,7 @@ namespace UVirtualClass.Controllers
 
 
         //******************************DOCENTE'S METHODS**********************************
+
         public ActionResult ListaDocente(string a)
         {
             @ViewBag.Accion = a;
@@ -163,6 +164,7 @@ namespace UVirtualClass.Controllers
             return View(ListadoDocentes);
         }
 
+        // "CrearDocente", "AdminHome", FormMethod.Post, new { @class = "crearalumno" }
         [HttpGet]
         public ActionResult CrearDocente()
         {

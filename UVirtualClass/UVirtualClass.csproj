@@ -235,10 +235,14 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="img\Alumnos.png" />
+    <Content Include="img\books-pngrepo-com.png" />
     <Content Include="img\Cursos.png" />
     <Content Include="img\Docentes.png" />
+    <Content Include="img\Editar.png" />
     <Content Include="img\Logi.png" />
     <Content Include="img\Logi2.png" />
+    <Content Include="img\student-pngrepo-com.png" />
+    <Content Include="img\teacher-social-pngrepo-com.png" />
     <Content Include="img\Usuarios.png" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
@@ -387,13 +391,13 @@
     <Content Include="Views\AdminHome\Index.cshtml" />
     <Content Include="Views\AdminHome\ListaAlumnos.cshtml" />
     <Content Include="Views\AdminHome\CrearDocente.cshtml" />
-    <Content Include="Views\AdminHome\CrearAlumno.cshtml" />
     <Content Include="Views\AdminHome\CrearCurso.cshtml" />
     <Content Include="Views\AdminHome\ListaDocente.cshtml" />
     <Content Include="Views\AdminHome\ListaCurso.cshtml" />
     <Content Include="Views\AdminHome\EditaAlumno.cshtml" />
     <Content Include="Views\AdminHome\EditaDocente.cshtml" />
     <Content Include="Views\AdminHome\EditarCurso.cshtml" />
+    <Content Include="Views\AdminHome\CrearAlumno.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
