@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace UVirtualClass.Models
 {
-    public class CreaCurso
+    public class EditarCursoVM
     {
         [Required(ErrorMessage = "El campo nombre está vacio")]
         [DisplayName("Nombre: ")]
@@ -25,24 +25,20 @@ namespace UVirtualClass.Models
         [Required(ErrorMessage = "El campo costo está vacio")]
         public decimal Costo { get; set; }
 
-        [Required(ErrorMessage = "El campo temario está vacio")]
-        public int idTemario { get; set; }
-
         [Required(ErrorMessage = "El campo docente está vacio")]
         public int idDocente { get; set; }
 
         [Required(ErrorMessage = "El campo Foto está vacio")]
         public String Foto { get; set; }
 
+        public String VideoTema { get; set; }
+
         public String VideoIntro { get; set; }
-
-        public int idCurso { get; set; }
-
-        public String NombreTema { get; set; }
 
         public String DescripcionTema { get; set; }
 
-        public String VideoTema { get; set; }
+        public String NombreTema { get; set; }
 
+        public int IdCurso { get; set; }
     }
 }

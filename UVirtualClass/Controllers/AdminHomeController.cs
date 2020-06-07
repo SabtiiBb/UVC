@@ -10,20 +10,22 @@ namespace UVirtualClass.Controllers
 {
     public class AdminHomeController : Controller
     {
-
-        ContextDbDataContext db = new ContextDbDataContext();
-
         // GET: AdminHome
         public ActionResult Index()
         {
             return View();
         }
+
         //******************************ALUMNO'S METHODS**********************************
         public ActionResult ListaAlumnos(string a)
         {
             @ViewBag.Accion = a;
+            IEnumerable<ViewAlumnos> ListadoAlumno;
 
-            IEnumerable<ViewAlumnos> ListadoAlumno = (from db in db.ViewAlumnos select db);
+            using (var dbContext = new ContextDbDataContext())
+            {
+                ListadoAlumno = (from dbD in dbContext.ViewAlumnos select dbD);
+            }
 
             return View(ListadoAlumno);
         }
@@ -124,8 +126,7 @@ namespace UVirtualClass.Controllers
                     Alum.genero = Convert.ToChar(MyModel.genero);
 
                     dbContext.SP_ModificaAlumno(Alum.IdAlumno, Alum.nombre, Alum.apellido, Alum.fecha_n, Alum.genero);
-                    dbContext.SP_ModificarUsuario(User.IdUsuario, User.contraseña, User.Activo);
-                    dbContext.SubmitChanges();
+                    dbContext.SP_ModificaUsuario(User.IdUsuario, User.Usuario1, User.correo, User.contraseña, User.Activo, User.tipo);
                 }
             }
             else { message = "Error"; }
@@ -140,6 +141,7 @@ namespace UVirtualClass.Controllers
                 Alumno Alum = (from dbD in dbContext.Alumno where dbD.IdAlumno == idAlumno select dbD).Single();
                 Usuario User = (from dbD in dbContext.Usuario where dbD.IdUsuario == Alum.idUsuario select dbD).Single();
 
+                //dbContext.SP_ModificarUsuario(User.IdUsuario, User.contraseña, 0);
                 dbContext.SP_ModificaUsuario(User.IdUsuario, User.Usuario1, User.correo, User.contraseña, 0, User.tipo);
             }
 
@@ -148,11 +150,15 @@ namespace UVirtualClass.Controllers
 
 
         //******************************DOCENTE'S METHODS**********************************
-        public ActionResult ListaDocente (string a)
+        public ActionResult ListaDocente(string a)
         {
             @ViewBag.Accion = a;
 
-            IEnumerable<ViewDocentes> ListadoDocentes = (from db in db.ViewDocentes select db);
+            IEnumerable<ViewDocentes> ListadoDocentes;
+            using (var dbContext = new ContextDbDataContext())
+            {
+                ListadoDocentes = (from db in dbContext.ViewDocentes select db);
+            }
 
             return View(ListadoDocentes);
         }
@@ -200,7 +206,6 @@ namespace UVirtualClass.Controllers
                     Docen.idUsuario = User.IdUsuario;
                     dbContext.Docentes.InsertOnSubmit(Docen);
                     dbContext.SubmitChanges();
-
 
                 }
             }
@@ -252,8 +257,7 @@ namespace UVirtualClass.Controllers
                     Docen.genero = Convert.ToChar(MyModel.genero);
 
                     dbContext.SP_ModificaDocente(Docen.IdDocente, Docen.nombre, Docen.apellido, Docen.fecha_n, Docen.genero, Docen.idUsuario);
-                    dbContext.SP_ModificarUsuario(User.IdUsuario, User.contraseña, User.Activo);
-                    dbContext.SubmitChanges();
+                    dbContext.SP_ModificaUsuario(User.IdUsuario, User.Usuario1, User.correo, User.contraseña, User.Activo, User.tipo);
                 }
             }
             else { message = "Error"; }
@@ -268,6 +272,7 @@ namespace UVirtualClass.Controllers
                 Docentes Docen = (from dbD in dbContext.Docentes where dbD.IdDocente == idDocente select dbD).Single();
                 Usuario User = (from dbD in dbContext.Usuario where dbD.IdUsuario == Docen.idUsuario select dbD).Single();
 
+                //dbContext.SP_ModificarUsuario(User.IdUsuario, User.contraseña, 0);
                 dbContext.SP_ModificaUsuario(User.IdUsuario, User.Usuario1, User.correo, User.contraseña, 0, User.tipo);
             }
 
@@ -280,29 +285,126 @@ namespace UVirtualClass.Controllers
         {
             @ViewBag.Accion = a;
 
-            IEnumerable<ViewCurso> ListadoCurso = (from db in db.ViewCurso select db);
+            IEnumerable<ViewCurso> ListadoCurso;
+            using (var dbContext = new ContextDbDataContext())
+            {
+                ListadoCurso = (from db in dbContext.ViewCurso select db);
+            }
 
             return View(ListadoCurso);
         }
 
-
-        [HttpPost]
-        public ActionResult CrearCurso(FormCollection c, Cursos cur)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Cursos.InsertOnSubmit(cur);
-                db.SubmitChanges();
-
-            }
-            return View();
-        }
-
+        [HttpGet]
         public ActionResult CrearCurso()
         {
             return View();
         }
 
+        [HttpPost]
+        public ActionResult CrearCurso(FormCollection c, CreaCurso MyModel)
+        {
+            using (var dbContext = new ContextDbDataContext())
+            {
+
+                Cursos Curso = new Cursos();
+
+                Curso.Nombre = MyModel.Nombre;
+                Curso.Descripcion = MyModel.Descripcion;
+                Curso.Recursos = MyModel.Recursos;
+                Curso.Costo = MyModel.Costo;
+                Curso.idDocente = MyModel.idDocente;
+                Curso.Foto = MyModel.Foto;
+                Curso.Videointro = MyModel.VideoIntro;
+                dbContext.Cursos.InsertOnSubmit(Curso);
+                dbContext.SubmitChanges();
+
+                var List = (from dbD in dbContext.Cursos select dbD).ToList();
+                Curso = List.LastOrDefault();
+                MyModel.idCurso = Curso.IdCurso;
+
+
+            }
+            return RedirectToAction("CrearTemario", "AdminHome", new { MyModel = MyModel });
+        }
+
+        [HttpGet]
+        public ActionResult CrearTemario(CreaCurso MyModel)
+        {
+            return View(MyModel);
+        }
+
+        [HttpPost]
+        public ActionResult CrearTemario(FormCollection e, CreaCurso MyModel)
+        {
+            using (var dbContext = new ContextDbDataContext())
+            {
+                Temario TempTemp = new Temario();
+                TempTemp.IdCurso = MyModel.idCurso;
+                TempTemp.Tema = MyModel.NombreTema;
+                TempTemp.Descripcion = MyModel.DescripcionTema;
+                TempTemp.FotoTema = MyModel.VideoTema;
+
+                dbContext.Temario.InsertOnSubmit(TempTemp);
+                dbContext.SubmitChanges();
+
+                MyModel.NombreTema = "";
+                MyModel.DescripcionTema = "";
+                MyModel.VideoTema = "";
+            }
+            return View(MyModel);
+        }
+
+        [HttpGet]
+        public ActionResult EditarCurso(int idCurso)
+        {
+            EditarCursoVM MyModel = new EditarCursoVM();
+            using (var dbContext = new ContextDbDataContext())
+            {
+                Cursos Curs = (from dbD in dbContext.Cursos where dbD.IdCurso == idCurso select dbD).Single();
+                MyModel.IdCurso = idCurso;
+                MyModel.Nombre = Curs.Nombre;
+                MyModel.Descripcion = Curs.Descripcion;
+                MyModel.Costo = Convert.ToDecimal(Curs.Costo);
+                MyModel.idDocente = Convert.ToInt32(Curs.idDocente);
+                MyModel.Recursos = Curs.Recursos;
+                MyModel.Foto = Curs.Foto;
+                MyModel.VideoIntro = Curs.Videointro;
+            }
+            return View(MyModel);
+        }
+
+        [HttpPost]
+        public ActionResult EditarCurso(EditarCursoVM MyModel)
+        {
+            using (var dbContext = new ContextDbDataContext())
+            {
+                Cursos Curs = (from dbD in dbContext.Cursos where dbD.IdCurso == MyModel.IdCurso select dbD).Single();
+                Curs.Nombre = MyModel.Nombre;
+                Curs.Descripcion = MyModel.Descripcion;
+                Curs.Costo = Convert.ToDecimal(MyModel.Costo);
+                Curs.idDocente = Convert.ToInt32(MyModel.idDocente);
+                Curs.Recursos = MyModel.Recursos;
+                Curs.Foto = MyModel.Foto;
+                dbContext.SP_ModificaCursos(Curs.IdCurso, Curs.Nombre, Curs.Descripcion, Curs.Recursos, Curs.Costo, Curs.Foto);
+                dbContext.SubmitChanges();
+            }
+            return View(MyModel);
+        }
+
+
+
+        //******************************PAGO'S METHODS**********************************
+
+        [HttpGet]
+        public ActionResult ListadoPago()
+        {
+            List<Pagos> ListadoPagos;
+            using (var dbContext = new ContextDbDataContext())
+            {
+                ListadoPagos = (from db in dbContext.Pagos select db).ToList();
+            }
+            return View(ListadoPagos);
+        }
 
         //--------------------------- VALIDATIONS CLIENT'S SIDE ---------------------------
         [HttpPost]
@@ -315,16 +417,16 @@ namespace UVirtualClass.Controllers
 
         public bool UsuarioRegistrado(string User)
         {
-            var UsuRegis = (from db in db.Usuario
-                            where db.Usuario1.ToUpper() == User.ToUpper()
-                            select new { User }).FirstOrDefault();
+            bool ifExist;
 
+            using (var dbContext = new ContextDbDataContext())
+            {
+                var UsuRegis = (from db in dbContext.Usuario
+                                where db.Usuario1.ToUpper() == User.ToUpper()
+                                select new { User }).FirstOrDefault();
 
-
-
-            bool ifExist = UsuRegis != null ? false : true;
-
-
+                ifExist = UsuRegis != null ? false : true;
+            }
 
             return ifExist;
         }
@@ -338,12 +440,32 @@ namespace UVirtualClass.Controllers
         }
         public bool CorreoRegistrado(string Email)
         {
-            var EmailExist = (from db in db.Usuario
-                              where db.correo.ToUpper() == Email.ToUpper()
-                              select new { Email }).FirstOrDefault();
-            
-            bool IsValid = EmailExist != null ? false : true;
-            return IsValid;
+
+            bool IfExist;
+
+            using (var dbContext = new ContextDbDataContext())
+            {
+                var EmailExist = (from db in dbContext.Usuario
+                                  where db.correo.ToUpper() == Email.ToUpper()
+                                  select new { Email }).FirstOrDefault();
+
+                IfExist = EmailExist != null ? false : true;
+            }
+
+            return IfExist;
+        }
+
+        //--------------------------- LISTA USUARIOS ---------------------------
+        public ActionResult ListaUsuarios()
+        {
+            IEnumerable<Usuario> ListaUsuario;
+
+            using (var dbContext = new ContextDbDataContext())
+            {
+                ListaUsuario = (from dbD in dbContext.Usuario select dbD).ToList();
+            }
+
+                return View(ListaUsuario);
         }
     }
 }

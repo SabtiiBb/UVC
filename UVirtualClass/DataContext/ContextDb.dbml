@@ -17,14 +17,27 @@
       <Association Name="Usuario_compras" Member="Usuario" ThisKey="IdUsuario" OtherKey="IdUsuario" Type="Usuario" IsForeignKey="true" />
     </Type>
   </Table>
+  <Table Name="dbo.Alumno" Member="Alumno">
+    <Type Name="Alumno">
+      <Column Name="IdAlumno" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="nombre" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="apellido" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="fecha_n" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="genero" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+      <Column Name="idUsuario" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Alumno_CursoAlumno" Member="CursoAlumno" ThisKey="IdAlumno" OtherKey="IdAlumno" Type="CursoAlumno" />
+      <Association Name="Alumno_Pagos" Member="Pagos" ThisKey="IdAlumno" OtherKey="IdAlumno" Type="Pagos" />
+      <Association Name="Usuario_Alumno" Member="Usuario" ThisKey="idUsuario" OtherKey="IdUsuario" Type="Usuario" IsForeignKey="true" />
+    </Type>
+  </Table>
   <Table Name="dbo.CursoAlumno" Member="CursoAlumno">
     <Type Name="CursoAlumno">
       <Column Name="IdCurso_Alumno" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="IdCurso" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="IdAlumno" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="CursoAlumno_Notas" Member="Notas" ThisKey="IdCurso_Alumno" OtherKey="idCursoAlumno" Type="Notas" />
-      <Association Name="Cursos_CursoAlumno" Member="Cursos" ThisKey="IdCurso" OtherKey="IdCurso" Type="Cursos" IsForeignKey="true" />
       <Association Name="Alumno_CursoAlumno" Member="Alumno" ThisKey="IdAlumno" OtherKey="IdAlumno" Type="Alumno" IsForeignKey="true" />
+      <Association Name="Cursos_CursoAlumno" Member="Cursos" ThisKey="IdCurso" OtherKey="IdCurso" Type="Cursos" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Cursos" Member="Cursos">
@@ -34,13 +47,13 @@
       <Column Name="Descripcion" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
       <Column Name="Recursos" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
       <Column Name="Costo" Type="System.Decimal" DbType="Money" CanBeNull="true" />
-      <Column Name="idTemario" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="idDocente" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Foto" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Videointro" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
       <Association Name="Cursos_CursoAlumno" Member="CursoAlumno" ThisKey="IdCurso" OtherKey="IdCurso" Type="CursoAlumno" />
       <Association Name="Cursos_detallecompra" Member="detallecompra" ThisKey="IdCurso" OtherKey="idcursodetalle" Type="detallecompra" />
       <Association Name="Cursos_Pagos" Member="Pagos" ThisKey="IdCurso" OtherKey="IdCurso" Type="Pagos" />
-      <Association Name="Temario_Cursos" Member="Temario" ThisKey="idTemario" OtherKey="IdTema" Type="Temario" IsForeignKey="true" />
+      <Association Name="Cursos_Temario" Member="Temario" ThisKey="IdCurso" OtherKey="IdCurso" Type="Temario" />
       <Association Name="Docentes_Cursos" Member="Docentes" ThisKey="idDocente" OtherKey="IdDocente" Type="Docentes" IsForeignKey="true" />
     </Type>
   </Table>
@@ -53,6 +66,18 @@
       <Column Name="idcursodetalle" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="compras_detallecompra" Member="compras" ThisKey="idcompradetalle" OtherKey="id_Compra" Type="compras" IsForeignKey="true" />
       <Association Name="Cursos_detallecompra" Member="Cursos" ThisKey="idcursodetalle" OtherKey="IdCurso" Type="Cursos" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Docentes" Member="Docentes">
+    <Type Name="Docentes">
+      <Column Name="IdDocente" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="nombre" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="apellido" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="fecha_n" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="genero" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+      <Column Name="idUsuario" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Docentes_Cursos" Member="Cursos" ThisKey="IdDocente" OtherKey="idDocente" Type="Cursos" />
+      <Association Name="Usuario_Docentes" Member="Usuario" ThisKey="idUsuario" OtherKey="IdUsuario" Type="Usuario" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Notas" Member="Notas">
@@ -69,8 +94,8 @@
       <Column Name="IdPago" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="IdCurso" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="IdAlumno" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="Cursos_Pagos" Member="Cursos" ThisKey="IdCurso" OtherKey="IdCurso" Type="Cursos" IsForeignKey="true" />
       <Association Name="Alumno_Pagos" Member="Alumno" ThisKey="IdAlumno" OtherKey="IdAlumno" Type="Alumno" IsForeignKey="true" />
+      <Association Name="Cursos_Pagos" Member="Cursos" ThisKey="IdCurso" OtherKey="IdCurso" Type="Cursos" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Temario" Member="Temario">
@@ -78,24 +103,9 @@
       <Column Name="IdTema" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Tema" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
       <Column Name="Descripcion" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
-      <Association Name="Temario_Cursos" Member="Cursos" ThisKey="IdTema" OtherKey="idTemario" Type="Cursos" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Inscripciones_del_Curso" Member="Inscripciones_del_Curso">
-    <Type Name="Inscripciones_del_Curso">
-      <Column Name="[Nombre del Alumno]" Member="Nombre_del_Alumno" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
-      <Column Name="[Apellido del Alumno]" Member="Apellido_del_Alumno" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
-      <Column Name="Curso" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.ViewCurso" Member="ViewCurso">
-    <Type Name="ViewCurso">
-      <Column Name="IdCurso" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Nombre" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
-      <Column Name="Descripción" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
-      <Column Name="Recursos" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
-      <Column Name="Costo" Type="System.Decimal" DbType="Money" CanBeNull="true" />
-      <Column Name="[Nombre Docente]" Member="Nombre_Docente" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="FotoTema" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="IdCurso" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Cursos_Temario" Member="Cursos" ThisKey="IdCurso" OtherKey="IdCurso" Type="Cursos" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Usuario" Member="Usuario">
@@ -111,29 +121,11 @@
       <Association Name="Usuario_Docentes" Member="Docentes" ThisKey="IdUsuario" OtherKey="idUsuario" Type="Docentes" />
     </Type>
   </Table>
-  <Table Name="dbo.Alumno" Member="Alumno">
-    <Type Name="Alumno">
-      <Column Name="IdAlumno" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="nombre" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
-      <Column Name="apellido" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
-      <Column Name="fecha_n" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="genero" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
-      <Column Name="idUsuario" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="Alumno_CursoAlumno" Member="CursoAlumno" ThisKey="IdAlumno" OtherKey="IdAlumno" Type="CursoAlumno" />
-      <Association Name="Alumno_Pagos" Member="Pagos" ThisKey="IdAlumno" OtherKey="IdAlumno" Type="Pagos" />
-      <Association Name="Usuario_Alumno" Member="Usuario" ThisKey="idUsuario" OtherKey="IdUsuario" Type="Usuario" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Docentes" Member="Docentes">
-    <Type Name="Docentes">
-      <Column Name="IdDocente" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="nombre" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
-      <Column Name="apellido" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
-      <Column Name="fecha_n" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="genero" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
-      <Column Name="idUsuario" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="Docentes_Cursos" Member="Cursos" ThisKey="IdDocente" OtherKey="idDocente" Type="Cursos" />
-      <Association Name="Usuario_Docentes" Member="Usuario" ThisKey="idUsuario" OtherKey="IdUsuario" Type="Usuario" IsForeignKey="true" />
+  <Table Name="dbo.Inscripciones_del_Curso" Member="Inscripciones_del_Curso">
+    <Type Name="Inscripciones_del_Curso">
+      <Column Name="[Nombre del Alumno]" Member="Nombre_del_Alumno" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="[Apellido del Alumno]" Member="Apellido_del_Alumno" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="Curso" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
     </Type>
   </Table>
   <Table Name="dbo.ViewAlumnos" Member="ViewAlumnos">
@@ -148,6 +140,16 @@
       <Column Name="[Tipo Usuario]" Member="Tipo_Usuario" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </Type>
   </Table>
+  <Table Name="dbo.ViewCurso" Member="ViewCurso">
+    <Type Name="ViewCurso">
+      <Column Name="IdCurso" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="Descripción" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="Recursos" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="Costo" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="[Nombre Docente]" Member="Nombre_Docente" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+    </Type>
+  </Table>
   <Table Name="dbo.ViewDocentes" Member="ViewDocentes">
     <Type Name="ViewDocentes">
       <Column Name="IdDocente" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
@@ -160,6 +162,16 @@
       <Column Name="[Tipo Usuario]" Member="Tipo_Usuario" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </Type>
   </Table>
+  <Function Name="dbo.SP_ModificaAlumno" Method="SP_ModificaAlumno">
+    <Parameter Name="idAlumno" Type="System.Int32" DbType="Int" />
+    <Parameter Name="nombre" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="apellido" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="fecha_n" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="genero" Type="System.Char" DbType="Char(1)" />
+    <ElementType Name="SP_ModificaAlumnoResult">
+      <Column Name="Mensaje" Type="System.String" DbType="VarChar(31) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
   <Function Name="dbo.SP_ModificaCursos" Method="SP_ModificaCursos">
     <Parameter Name="idCurso" Type="System.Int32" DbType="Int" />
     <Parameter Name="Nombre" Parameter="nombre" Type="System.String" DbType="VarChar(30)" />
@@ -168,6 +180,17 @@
     <Parameter Name="Costo" Parameter="costo" Type="System.Decimal" DbType="Money" />
     <Parameter Name="Foto" Parameter="foto" Type="System.String" DbType="VarChar(MAX)" />
     <ElementType Name="SP_ModificaCursosResult">
+      <Column Name="Mensaje" Type="System.String" DbType="VarChar(31) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SP_ModificaDocente" Method="SP_ModificaDocente">
+    <Parameter Name="idDocentes" Type="System.Int32" DbType="Int" />
+    <Parameter Name="nombre" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="apellido" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="fecha_n" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="genero" Type="System.Char" DbType="Char(1)" />
+    <Parameter Name="IdUsuario" Parameter="idUsuario" Type="System.Int32" DbType="Int" />
+    <ElementType Name="SP_ModificaDocenteResult">
       <Column Name="Mensaje" Type="System.String" DbType="VarChar(31) NOT NULL" CanBeNull="false" />
     </ElementType>
   </Function>
@@ -195,35 +218,6 @@
     <Parameter Name="Activo" Parameter="activo" Type="System.Int32" DbType="Int" />
     <Parameter Name="tipo" Type="System.Int32" DbType="Int" />
     <ElementType Name="SP_ModificaUsuarioResult">
-      <Column Name="Mensaje" Type="System.String" DbType="VarChar(31) NOT NULL" CanBeNull="false" />
-    </ElementType>
-  </Function>
-  <Function Name="dbo.SP_ModificaAlumno" Method="SP_ModificaAlumno">
-    <Parameter Name="idAlumno" Type="System.Int32" DbType="Int" />
-    <Parameter Name="nombre" Type="System.String" DbType="VarChar(30)" />
-    <Parameter Name="apellido" Type="System.String" DbType="VarChar(30)" />
-    <Parameter Name="fecha_n" Type="System.DateTime" DbType="DateTime" />
-    <Parameter Name="genero" Type="System.Char" DbType="Char(1)" />
-    <ElementType Name="SP_ModificaAlumnoResult">
-      <Column Name="Mensaje" Type="System.String" DbType="VarChar(31) NOT NULL" CanBeNull="false" />
-    </ElementType>
-  </Function>
-  <Function Name="dbo.SP_ModificaDocente" Method="SP_ModificaDocente">
-    <Parameter Name="idDocentes" Type="System.Int32" DbType="Int" />
-    <Parameter Name="nombre" Type="System.String" DbType="VarChar(30)" />
-    <Parameter Name="apellido" Type="System.String" DbType="VarChar(30)" />
-    <Parameter Name="fecha_n" Type="System.DateTime" DbType="DateTime" />
-    <Parameter Name="genero" Type="System.Char" DbType="Char(1)" />
-    <Parameter Name="IdUsuario" Parameter="idUsuario" Type="System.Int32" DbType="Int" />
-    <ElementType Name="SP_ModificaDocenteResult">
-      <Column Name="Mensaje" Type="System.String" DbType="VarChar(31) NOT NULL" CanBeNull="false" />
-    </ElementType>
-  </Function>
-  <Function Name="dbo.SP_ModificarUsuario" Method="SP_ModificarUsuario">
-    <Parameter Name="id" Type="System.Int32" DbType="Int" />
-    <Parameter Name="Contraseña" Parameter="contraseña" Type="System.String" DbType="VarChar(30)" />
-    <Parameter Name="Activo" Parameter="activo" Type="System.Int32" DbType="Int" />
-    <ElementType Name="SP_ModificarUsuarioResult">
       <Column Name="Mensaje" Type="System.String" DbType="VarChar(31) NOT NULL" CanBeNull="false" />
     </ElementType>
   </Function>

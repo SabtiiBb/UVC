@@ -214,6 +214,7 @@
     <Compile Include="Models\CrearAlumnoVM.cs" />
     <Compile Include="Models\CrearDocenteVM.cs" />
     <Compile Include="Models\EditarAlumnoVM.cs" />
+    <Compile Include="Models\EditarCursoVM.cs" />
     <Compile Include="Models\EditarDocenteVM.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -392,6 +393,7 @@
     <Content Include="Views\AdminHome\ListaCurso.cshtml" />
     <Content Include="Views\AdminHome\EditaAlumno.cshtml" />
     <Content Include="Views\AdminHome\EditaDocente.cshtml" />
+    <Content Include="Views\AdminHome\EditarCurso.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
