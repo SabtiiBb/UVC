@@ -10,7 +10,7 @@
     <h2>Crear Docente</h2>
 </div>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("CrearDocente", "AdminHome", FormMethod.Post, new { @class = "crearalumno" }))
 {
     @Html.AntiForgeryToken()
 
