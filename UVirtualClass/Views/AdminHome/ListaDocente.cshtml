@@ -74,9 +74,9 @@
             <p>Docente</p>
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.IdDocente }, new { @class = "btn btn-success" })
-            @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */}, new { @class = "btn btn-primary" })*@
-            @Html.ActionLink("Delete", "Delete", new { id = item.IdDocente }, new { @class = "btn btn-danger" })
+            <a href="@Url.Action("EditaDocente", "AdminHome", new { id=item.IdDocente } )" class="btn btn-success"><i class="fas fa-edit"></i></a>
+            @*@Html.ActionLink("Delete", "Delete", new { id=item.IdAlumno }, new { @class = "btn btn-danger" })*@
+            <button type="submit" class="btn btn-danger btn-Eliminar" data-codigo="@item.IdDocente"><i class="fas fa-trash"></i></button>
         </td>
     </tr>
 }
