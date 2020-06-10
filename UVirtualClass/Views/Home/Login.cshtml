@@ -1,0 +1,46 @@
+﻿@model UVirtualClass.Models.Login
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+<br />
+<div class="loginloginlogin">
+    <br />
+    <center>
+        <h3 class="titleLogin">Iniciar Sesión</h3>
+    </center>
+    <br />
+    <div>
+        <img src="~/img/MicrosoftTeams-image.png"  class="imagenlogin" />
+    </div>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+    @using (Html.BeginForm("Login", "Home", FormMethod.Post, new { @class = "form- signin" }))
+    {
+        <div class="formulariogrupo">
+            <div class="input-group mb-2 mr-sm-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text"><i class="fas fa-envelope"></i></div>
+                </div>
+                @Html.TextBoxFor(x => x.correo, new { @class = "form-control", @placeholder = "Correo" })
+                @Html.ValidationMessageFor(x => x.correo, "", new { @class = "text-danger" })
+            </div>
+            <br />
+            <div class="input-group mb-2 mr-sm-2">
+                <div class="input-group-prepend">
+                    <div class="input-group-text"><i class="fas fa-key"></i></div>
+                </div>
+                @Html.PasswordFor(x => x.contraseña, new { @class = "form-control", @placeholder = "Contraseña" })
+                @Html.ValidationMessageFor(x => x.contraseña, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+       
+                <br />
+                <input type="submit" class="btn btn-primary" value="Iniciar Sesión">
+    }
+
+</div>

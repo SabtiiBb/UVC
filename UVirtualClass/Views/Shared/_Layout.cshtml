@@ -8,6 +8,7 @@
 
     <title>@ViewBag.Title Virtual Class Mantenimiento</title>
 
+
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/Swal")
     @*@Scripts.Render("~/bundles/modernizr")
@@ -76,8 +77,9 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="@Url.Action("Cerrar", "AdminHome")"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
+                        <a href="@Url.Action("Close", "Home")"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
                     </li>
+
                   </ul>
                     @*<ul class="list-unstyled CTAs">
                         <li>
