@@ -191,6 +191,7 @@ namespace UVirtualClass.Controllers
                     Docentes Docen = new Docentes();
 
                     User.Usuario1 = MyModel.Usuario1;
+                    User.correo = MyModel.correo;
                     User.contraseña = MyModel.contraseña;
                     User.Activo = 1;
                     User.tipo = 2;
