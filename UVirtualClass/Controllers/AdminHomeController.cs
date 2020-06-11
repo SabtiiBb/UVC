@@ -191,6 +191,7 @@ namespace UVirtualClass.Controllers
                     Docentes Docen = new Docentes();
 
                     User.Usuario1 = MyModel.Usuario1;
+                    User.correo = MyModel.correo;
                     User.contraseña = MyModel.contraseña;
                     User.Activo = 1;
                     User.tipo = 2;
@@ -299,6 +300,20 @@ namespace UVirtualClass.Controllers
         [HttpGet]
         public ActionResult CrearCurso()
         {
+            List<Docentes> docentes;
+
+            List<SelectListItem> lst = new List<SelectListItem>();
+
+            using (var dbContext = new ContextDbDataContext())
+            {
+                docentes = (from db in dbContext.Docentes select db).ToList();
+                foreach (var item in docentes)
+                {
+                    lst.Add(new SelectListItem() { Text = item.nombre, Value = item.IdDocente.ToString() });
+                }
+            }
+                ViewBag.docente = lst;
+
             return View();
         }
 
@@ -314,7 +329,7 @@ namespace UVirtualClass.Controllers
                 Curso.Descripcion = MyModel.Descripcion;
                 Curso.Recursos = MyModel.Recursos;
                 Curso.Costo = MyModel.Costo;
-                Curso.idDocente = MyModel.idDocente;
+                Curso.idDocente = Convert.ToInt32(MyModel.idDocente);
                 Curso.Foto = MyModel.Foto;
                 Curso.Videointro = MyModel.VideoIntro;
                 dbContext.Cursos.InsertOnSubmit(Curso);
@@ -324,15 +339,15 @@ namespace UVirtualClass.Controllers
                 Curso = List.LastOrDefault();
                 MyModel.idCurso = Curso.IdCurso;
 
-
             }
-            return RedirectToAction("CrearTemario", "AdminHome", new { MyModel = MyModel });
+            var modelito = MyModel;
+            return RedirectToAction("CrearTemario", "AdminHome", modelito);
         }
 
         [HttpGet]
-        public ActionResult CrearTemario(CreaCurso MyModel)
+        public ActionResult CrearTemario(CreaCurso Model)
         {
-            return View(MyModel);
+            return View(Model);
         }
 
         [HttpPost]
@@ -353,7 +368,7 @@ namespace UVirtualClass.Controllers
                 MyModel.DescripcionTema = "";
                 MyModel.VideoTema = "";
             }
-            return View(MyModel);
+            return RedirectToAction("CrearTemario", "AdminHome", MyModel);
         }
 
         [HttpGet]

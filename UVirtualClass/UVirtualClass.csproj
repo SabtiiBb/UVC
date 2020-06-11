@@ -235,6 +235,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="img\Alumnos.png" />
+    <Content Include="img\board-strategy-board-pngrepo-com.png" />
     <Content Include="img\books-pngrepo-com.png" />
     <Content Include="img\Cursos.png" />
     <Content Include="img\Docentes.png" />
@@ -398,6 +399,8 @@
     <Content Include="Views\AdminHome\EditaDocente.cshtml" />
     <Content Include="Views\AdminHome\EditarCurso.cshtml" />
     <Content Include="Views\AdminHome\CrearAlumno.cshtml" />
+    <Content Include="Views\AdminHome\ListaUsuarios.cshtml" />
+    <Content Include="Views\AdminHome\CrearTemario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

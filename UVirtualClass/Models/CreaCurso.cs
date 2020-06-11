@@ -29,7 +29,7 @@ namespace UVirtualClass.Models
         public int idTemario { get; set; }
 
         [Required(ErrorMessage = "El campo docente está vacio")]
-        public int idDocente { get; set; }
+        public String idDocente { get; set; }
 
         [Required(ErrorMessage = "El campo Foto está vacio")]
         public String Foto { get; set; }

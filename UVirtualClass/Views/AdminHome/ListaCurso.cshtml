@@ -52,8 +52,7 @@
             @Html.DisplayFor(modelItem => item.Nombre_Docente)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */}, new { @class = "btn btn-success" })
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ }, new { @class = "btn btn-danger" })
+            <a href="@Url.Action("EditaCurso", "AdminHome", new { id=item.IdCurso } )" class="btn btn-success"><i class="fas fa-edit"></i></a>
         </td>
     </tr>
 }

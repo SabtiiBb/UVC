@@ -74,9 +74,9 @@
             <p>Docente</p>
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.IdDocente }, new { @class = "btn btn-success" })
-            @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */}, new { @class = "btn btn-primary" })*@
-            @Html.ActionLink("Delete", "Delete", new { id = item.IdDocente }, new { @class = "btn btn-danger" })
+            <a href="@Url.Action("EditaDocente", "AdminHome", new { id=item.IdDocente } )" class="btn btn-success"><i class="fas fa-edit"></i></a>
+            @*@Html.ActionLink("Delete", "Delete", new { id=item.IdAlumno }, new { @class = "btn btn-danger" })*@
+            <button type="submit" class="btn btn-danger btn-Eliminar" data-codigo="@item.IdDocente"><i class="fas fa-trash"></i></button>
         </td>
     </tr>
 }
@@ -85,7 +85,7 @@
 
 <input id="MiAccion" type="hidden" value="@ViewBag.Accion" />
 
-<input type="hidden" id="AccionEliminarAlumno" value="@Url.Action("EliminarDocente", "AdminHome")" />
+<input type="hidden" id="AccionEliminarDocente" value="@Url.Action("EliminarDocente", "AdminHome")" />
 
 @section Scripts{
 
@@ -100,7 +100,7 @@
                 };
             });
 
-            $("#btn-Eliminar").on("click", function (e) {
+            $(".btn-Eliminar").on("click", function (e) {
                 e.preventDefault();
                 var id = $(this).data('codigo');
 
@@ -120,12 +120,12 @@
                                 type: "post",
                                 url: $("#AccionEliminarDocente").val(),
                                 dataType: "json",
-                                data: { idAlumno: id },
+                                data: { idDocente: id },
                                 success: function (res) {
 
                                     //swal("Exito", "El registro se elimino correctamente!", "success");
                                     swal({
-                                        title: "Exito",
+                                        title: "Éxito",
                                         text: "El registro se elimino correctamente!",
                                         type: "success"
                                     }, function () {

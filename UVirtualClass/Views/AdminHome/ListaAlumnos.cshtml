@@ -74,9 +74,10 @@
                 <p>Alumno</p>
             </td>
             <td>
-                @Html.ActionLink("Editar", "EditaAlumno", new { id=item.IdAlumno }, new { @class = "btn btn-success" })
+                @*@Html.ActionLink("Editar", "EditaAlumno", new { id=item.IdAlumno }, new { @class = "btn btn-success" })*@
+                <a href="@Url.Action("EditaAlumno", "AdminHome", new { id=item.IdAlumno } )" class="btn btn-success"><i class="fas fa-edit"></i></a>
                 @*@Html.ActionLink("Delete", "Delete", new { id=item.IdAlumno }, new { @class = "btn btn-danger" })*@
-                <button type="submit" id="btn-Eliminar" class="btn btn-danger" data-codigo="@item.IdAlumno">Eliminar</button>
+                <button type="submit" class="btn btn-danger btn-Eliminar" data-codigo="@item.IdAlumno"><i class="fas fa-trash"></i></button>
             </td>
         </tr>
     }
