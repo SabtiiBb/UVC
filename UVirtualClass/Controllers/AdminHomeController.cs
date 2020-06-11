@@ -5,9 +5,11 @@ using System.Web;
 using System.Web.Mvc;
 using UVirtualClass.DataContext;
 using UVirtualClass.Models;
+using UVirtualClass.Filters;
 
 namespace UVirtualClass.Controllers
 {
+    [Access]
     public class AdminHomeController : Controller
     {
         // GET: AdminHome
@@ -51,6 +53,7 @@ namespace UVirtualClass.Controllers
 
             if (ModelState.IsValid)
             {
+
                 using (var dbContext = new ContextDbDataContext())
                 {
                     Usuario User = new Usuario();
@@ -221,6 +224,8 @@ namespace UVirtualClass.Controllers
         {
             EditarDocenteVM Docen = new EditarDocenteVM();
 
+            try
+            {
             using (var DataContext = new ContextDbDataContext())
             {
                 Docentes DataDocen = (from db in DataContext.Docentes where db.IdDocente == id select db).Single();
@@ -237,7 +242,7 @@ namespace UVirtualClass.Controllers
                 Docen.genero = Convert.ToChar(DataDocen.genero);
                 Docen.tipo = int.Parse(DataUser.tipo.ToString());
             }
-
+          }catch(Exception e) { }
             return View(Docen);
         }
 
@@ -245,23 +250,28 @@ namespace UVirtualClass.Controllers
         public ActionResult EditaDocente(FormCollection e, EditarAlumnoVM MyModel)
         {
             string message = "AlumnoEditado";
+      
             if (ModelState.IsValid)
             {
-                using (var dbContext = new ContextDbDataContext())
+                try
                 {
-                    Docentes Docen = (from dbD in dbContext.Docentes where dbD.idUsuario == MyModel.idUsuario select dbD).Single();
-                    Usuario User = (from dbD in dbContext.Usuario where dbD.IdUsuario == MyModel.idUsuario select dbD).Single();
 
-                    User.contraseña = MyModel.contraseña == "DummyPass" ? User.contraseña : MyModel.contraseña;
-                    User.Usuario1 = MyModel.Usuario1;
-                    Docen.nombre = MyModel.nombre;
-                    Docen.apellido = MyModel.apellido;
-                    Docen.fecha_n = Convert.ToDateTime(MyModel.fecha_n);
-                    Docen.genero = Convert.ToChar(MyModel.genero);
+                    using (var dbContext = new ContextDbDataContext())
+                    {
+                        Docentes Docen = (from dbD in dbContext.Docentes where dbD.idUsuario == MyModel.idUsuario select dbD).Single();
+                        Usuario User = (from dbD in dbContext.Usuario where dbD.IdUsuario == MyModel.idUsuario select dbD).Single();
 
-                    dbContext.SP_ModificaDocente(Docen.IdDocente, Docen.nombre, Docen.apellido, Docen.fecha_n, Docen.genero, Docen.idUsuario);
-                    dbContext.SP_ModificaUsuario(User.IdUsuario, User.Usuario1, User.correo, User.contraseña, User.Activo, User.tipo);
-                }
+                        User.contraseña = MyModel.contraseña == "DummyPass" ? User.contraseña : MyModel.contraseña;
+                        User.Usuario1 = MyModel.Usuario1;
+                        Docen.nombre = MyModel.nombre;
+                        Docen.apellido = MyModel.apellido;
+                        Docen.fecha_n = Convert.ToDateTime(MyModel.fecha_n);
+                        Docen.genero = Convert.ToChar(MyModel.genero);
+
+                        dbContext.SP_ModificaDocente(Docen.IdDocente, Docen.nombre, Docen.apellido, Docen.fecha_n, Docen.genero, Docen.idUsuario);
+                        dbContext.SP_ModificaUsuario(User.IdUsuario, User.Usuario1, User.correo, User.contraseña, User.Activo, User.tipo);
+                    }
+                } catch{ }
             }
             else { message = "Error"; }
 
@@ -270,6 +280,7 @@ namespace UVirtualClass.Controllers
 
         public JsonResult EliminarDocente(int idDocente)
         {
+            try { 
             using (var dbContext = new ContextDbDataContext())
             {
                 Docentes Docen = (from dbD in dbContext.Docentes where dbD.IdDocente == idDocente select dbD).Single();
@@ -278,7 +289,7 @@ namespace UVirtualClass.Controllers
                 //dbContext.SP_ModificarUsuario(User.IdUsuario, User.contraseña, 0);
                 dbContext.SP_ModificaUsuario(User.IdUsuario, User.Usuario1, User.correo, User.contraseña, 0, User.tipo);
             }
-
+            } catch (Exception e) { }
             return Json(new { exito = true }, JsonRequestBehavior.AllowGet);
         }
 
@@ -289,11 +300,13 @@ namespace UVirtualClass.Controllers
             @ViewBag.Accion = a;
 
             IEnumerable<ViewCurso> ListadoCurso;
+
+            
             using (var dbContext = new ContextDbDataContext())
             {
                 ListadoCurso = (from db in dbContext.ViewCurso select db).ToList();
             }
-
+        
             return View(ListadoCurso);
         }
 
@@ -320,6 +333,7 @@ namespace UVirtualClass.Controllers
         [HttpPost]
         public ActionResult CrearCurso(FormCollection c, CreaCurso MyModel)
         {
+            try { 
             using (var dbContext = new ContextDbDataContext())
             {
 
@@ -340,6 +354,8 @@ namespace UVirtualClass.Controllers
                 MyModel.idCurso = Curso.IdCurso;
 
             }
+            } catch(Exception e) { }
+            
             var modelito = MyModel;
             return RedirectToAction("CrearTemario", "AdminHome", modelito);
         }
@@ -353,6 +369,7 @@ namespace UVirtualClass.Controllers
         [HttpPost]
         public ActionResult CrearTemario(FormCollection e, CreaCurso MyModel)
         {
+ 
             using (var dbContext = new ContextDbDataContext())
             {
                 Temario TempTemp = new Temario();
@@ -375,6 +392,8 @@ namespace UVirtualClass.Controllers
         public ActionResult EditarCurso(int idCurso)
         {
             EditarCursoVM MyModel = new EditarCursoVM();
+
+            try { 
             using (var dbContext = new ContextDbDataContext())
             {
                 Cursos Curs = (from dbD in dbContext.Cursos where dbD.IdCurso == idCurso select dbD).Single();
@@ -387,12 +406,14 @@ namespace UVirtualClass.Controllers
                 MyModel.Foto = Curs.Foto;
                 MyModel.VideoIntro = Curs.Videointro;
             }
+            } catch(Exception e) { }
             return View(MyModel);
         }
 
         [HttpPost]
         public ActionResult EditarCurso(EditarCursoVM MyModel)
         {
+            try { 
             using (var dbContext = new ContextDbDataContext())
             {
                 Cursos Curs = (from dbD in dbContext.Cursos where dbD.IdCurso == MyModel.IdCurso select dbD).Single();
@@ -405,6 +426,7 @@ namespace UVirtualClass.Controllers
                 dbContext.SP_ModificaCursos(Curs.IdCurso, Curs.Nombre, Curs.Descripcion, Curs.Recursos, Curs.Costo, Curs.Foto);
                 dbContext.SubmitChanges();
             }
+            }catch(Exception e) { }
             return View(MyModel);
         }
 
@@ -416,6 +438,7 @@ namespace UVirtualClass.Controllers
         public ActionResult ListadoPago()
         {
             List<Pagos> ListadoPagos;
+
             using (var dbContext = new ContextDbDataContext())
             {
                 ListadoPagos = (from db in dbContext.Pagos select db).ToList();
@@ -435,6 +458,7 @@ namespace UVirtualClass.Controllers
         public bool UsuarioRegistrado(string User)
         {
             bool ifExist;
+
 
             using (var dbContext = new ContextDbDataContext())
             {
