@@ -52,7 +52,7 @@ namespace UVirtualClass.Controllers
         public ActionResult Close()
         {
             session.destroySession();
-            return RedirectToAction("Login", "Home");
+            return RedirectToAction("Index", "Home");
         }
     }
 }

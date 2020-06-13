@@ -268,7 +268,7 @@ namespace UVirtualClass.Controllers
                         Docen.fecha_n = Convert.ToDateTime(MyModel.fecha_n);
                         Docen.genero = Convert.ToChar(MyModel.genero);
 
-                        dbContext.SP_ModificaDocente(Docen.IdDocente, Docen.nombre, Docen.apellido, Docen.fecha_n, Docen.genero, Docen.idUsuario);
+                        dbContext.SP_ModificaDocente(Docen.IdDocente, Docen.nombre, Docen.apellido, Docen.fecha_n, Docen.genero);
                         dbContext.SP_ModificaUsuario(User.IdUsuario, User.Usuario1, User.correo, User.contraseña, User.Activo, User.tipo);
                     }
                 } catch{ }
@@ -428,22 +428,6 @@ namespace UVirtualClass.Controllers
             }
             }catch(Exception e) { }
             return View(MyModel);
-        }
-
-
-
-        //******************************PAGO'S METHODS**********************************
-
-        [HttpGet]
-        public ActionResult ListadoPago()
-        {
-            List<Pagos> ListadoPagos;
-
-            using (var dbContext = new ContextDbDataContext())
-            {
-                ListadoPagos = (from db in dbContext.Pagos select db).ToList();
-            }
-            return View(ListadoPagos);
         }
 
         //--------------------------- VALIDATIONS CLIENT'S SIDE ---------------------------

@@ -17,7 +17,7 @@ namespace UVirtualClass.Filters
 
             if (tipo == null)
             {
-                filterContext.Result = new RedirectResult("~/Home/Login");
+                filterContext.Result = new RedirectResult("~/Home/Index");
             }
 
             base.OnActionExecuted(filterContext);

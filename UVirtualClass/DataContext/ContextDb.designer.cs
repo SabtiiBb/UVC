@@ -33,6 +33,9 @@ namespace UVirtualClass.DataContext
     partial void InsertAlumno(Alumno instance);
     partial void UpdateAlumno(Alumno instance);
     partial void DeleteAlumno(Alumno instance);
+    partial void InsertCarrito(Carrito instance);
+    partial void UpdateCarrito(Carrito instance);
+    partial void DeleteCarrito(Carrito instance);
     partial void Insertcompras(compras instance);
     partial void Updatecompras(compras instance);
     partial void Deletecompras(compras instance);
@@ -45,15 +48,9 @@ namespace UVirtualClass.DataContext
     partial void InsertDocentes(Docentes instance);
     partial void UpdateDocentes(Docentes instance);
     partial void DeleteDocentes(Docentes instance);
-    partial void Insertdetallecompra(detallecompra instance);
-    partial void Updatedetallecompra(detallecompra instance);
-    partial void Deletedetallecompra(detallecompra instance);
-    partial void InsertNotas(Notas instance);
-    partial void UpdateNotas(Notas instance);
-    partial void DeleteNotas(Notas instance);
-    partial void InsertPagos(Pagos instance);
-    partial void UpdatePagos(Pagos instance);
-    partial void DeletePagos(Pagos instance);
+    partial void InsertTarjeta(Tarjeta instance);
+    partial void UpdateTarjeta(Tarjeta instance);
+    partial void DeleteTarjeta(Tarjeta instance);
     partial void InsertTemario(Temario instance);
     partial void UpdateTemario(Temario instance);
     partial void DeleteTemario(Temario instance);
@@ -63,7 +60,7 @@ namespace UVirtualClass.DataContext
     #endregion
 		
 		public ContextDbDataContext() : 
-				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["PortalEduConnectionString1"].ConnectionString, mappingSource)
+				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["PortalEduConnectionString"].ConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -100,6 +97,14 @@ namespace UVirtualClass.DataContext
 			}
 		}
 		
+		public System.Data.Linq.Table<Carrito> Carrito
+		{
+			get
+			{
+				return this.GetTable<Carrito>();
+			}
+		}
+		
 		public System.Data.Linq.Table<compras> compras
 		{
 			get
@@ -132,27 +137,11 @@ namespace UVirtualClass.DataContext
 			}
 		}
 		
-		public System.Data.Linq.Table<detallecompra> detallecompra
+		public System.Data.Linq.Table<Tarjeta> Tarjeta
 		{
 			get
 			{
-				return this.GetTable<detallecompra>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Notas> Notas
-		{
-			get
-			{
-				return this.GetTable<Notas>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Pagos> Pagos
-		{
-			get
-			{
-				return this.GetTable<Pagos>();
+				return this.GetTable<Tarjeta>();
 			}
 		}
 		
@@ -219,24 +208,10 @@ namespace UVirtualClass.DataContext
 		}
 		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.SP_ModificaDocente")]
-		public ISingleResult<SP_ModificaDocenteResult> SP_ModificaDocente([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> idDocentes, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(30)")] string nombre, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(30)")] string apellido, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="DateTime")] System.Nullable<System.DateTime> fecha_n, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Char(1)")] System.Nullable<char> genero, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="IdUsuario", DbType="Int")] System.Nullable<int> idUsuario)
+		public ISingleResult<SP_ModificaDocenteResult> SP_ModificaDocente([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> idDocentes, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(30)")] string nombre, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(30)")] string apellido, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="DateTime")] System.Nullable<System.DateTime> fecha_n, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Char(1)")] System.Nullable<char> genero)
 		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), idDocentes, nombre, apellido, fecha_n, genero, idUsuario);
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), idDocentes, nombre, apellido, fecha_n, genero);
 			return ((ISingleResult<SP_ModificaDocenteResult>)(result.ReturnValue));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.SP_ModificaNotas")]
-		public ISingleResult<SP_ModificaNotasResult> SP_ModificaNotas([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> idNota, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Nota", DbType="Decimal(18,0)")] System.Nullable<decimal> nota, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Estado", DbType="VarChar(15)")] string estado)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), idNota, nota, estado);
-			return ((ISingleResult<SP_ModificaNotasResult>)(result.ReturnValue));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.SP_ModificarUsuario")]
-		public ISingleResult<SP_ModificarUsuarioResult> SP_ModificarUsuario([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> id, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Contraseña", DbType="VarChar(30)")] string contraseña, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Activo", DbType="Int")] System.Nullable<int> activo)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id, contraseña, activo);
-			return ((ISingleResult<SP_ModificarUsuarioResult>)(result.ReturnValue));
 		}
 		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.SP_ModificaTemarios")]
@@ -274,8 +249,6 @@ namespace UVirtualClass.DataContext
 		
 		private EntitySet<CursoAlumno> _CursoAlumno;
 		
-		private EntitySet<Pagos> _Pagos;
-		
 		private EntityRef<Usuario> _Usuario;
 		
     #region Definiciones de métodos de extensibilidad
@@ -299,7 +272,6 @@ namespace UVirtualClass.DataContext
 		public Alumno()
 		{
 			this._CursoAlumno = new EntitySet<CursoAlumno>(new Action<CursoAlumno>(this.attach_CursoAlumno), new Action<CursoAlumno>(this.detach_CursoAlumno));
-			this._Pagos = new EntitySet<Pagos>(new Action<Pagos>(this.attach_Pagos), new Action<Pagos>(this.detach_Pagos));
 			this._Usuario = default(EntityRef<Usuario>);
 			OnCreated();
 		}
@@ -441,19 +413,6 @@ namespace UVirtualClass.DataContext
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Alumno_Pagos", Storage="_Pagos", ThisKey="IdAlumno", OtherKey="IdAlumno")]
-		public EntitySet<Pagos> Pagos
-		{
-			get
-			{
-				return this._Pagos;
-			}
-			set
-			{
-				this._Pagos.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuario_Alumno", Storage="_Usuario", ThisKey="idUsuario", OtherKey="IdUsuario", IsForeignKey=true)]
 		public Usuario Usuario
 		{
@@ -519,17 +478,187 @@ namespace UVirtualClass.DataContext
 			this.SendPropertyChanging();
 			entity.Alumno = null;
 		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Carrito")]
+	public partial class Carrito : INotifyPropertyChanging, INotifyPropertyChanged
+	{
 		
-		private void attach_Pagos(Pagos entity)
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id_Carrito;
+		
+		private string _Nombre;
+		
+		private string _descripcion;
+		
+		private System.Nullable<decimal> _valorcompra;
+		
+		private System.Nullable<int> _Id_UsuarioC;
+		
+		private System.Nullable<int> _Id_CursoC;
+		
+    #region Definiciones de métodos de extensibilidad
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void Onid_CarritoChanging(int value);
+    partial void Onid_CarritoChanged();
+    partial void OnNombreChanging(string value);
+    partial void OnNombreChanged();
+    partial void OndescripcionChanging(string value);
+    partial void OndescripcionChanged();
+    partial void OnvalorcompraChanging(System.Nullable<decimal> value);
+    partial void OnvalorcompraChanged();
+    partial void OnId_UsuarioCChanging(System.Nullable<int> value);
+    partial void OnId_UsuarioCChanged();
+    partial void OnId_CursoCChanging(System.Nullable<int> value);
+    partial void OnId_CursoCChanged();
+    #endregion
+		
+		public Carrito()
 		{
-			this.SendPropertyChanging();
-			entity.Alumno = this;
+			OnCreated();
 		}
 		
-		private void detach_Pagos(Pagos entity)
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id_Carrito", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id_Carrito
 		{
-			this.SendPropertyChanging();
-			entity.Alumno = null;
+			get
+			{
+				return this._id_Carrito;
+			}
+			set
+			{
+				if ((this._id_Carrito != value))
+				{
+					this.Onid_CarritoChanging(value);
+					this.SendPropertyChanging();
+					this._id_Carrito = value;
+					this.SendPropertyChanged("id_Carrito");
+					this.Onid_CarritoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nombre", DbType="VarChar(25)")]
+		public string Nombre
+		{
+			get
+			{
+				return this._Nombre;
+			}
+			set
+			{
+				if ((this._Nombre != value))
+				{
+					this.OnNombreChanging(value);
+					this.SendPropertyChanging();
+					this._Nombre = value;
+					this.SendPropertyChanged("Nombre");
+					this.OnNombreChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_descripcion", DbType="VarChar(MAX)")]
+		public string descripcion
+		{
+			get
+			{
+				return this._descripcion;
+			}
+			set
+			{
+				if ((this._descripcion != value))
+				{
+					this.OndescripcionChanging(value);
+					this.SendPropertyChanging();
+					this._descripcion = value;
+					this.SendPropertyChanged("descripcion");
+					this.OndescripcionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_valorcompra", DbType="Decimal(8,2)")]
+		public System.Nullable<decimal> valorcompra
+		{
+			get
+			{
+				return this._valorcompra;
+			}
+			set
+			{
+				if ((this._valorcompra != value))
+				{
+					this.OnvalorcompraChanging(value);
+					this.SendPropertyChanging();
+					this._valorcompra = value;
+					this.SendPropertyChanged("valorcompra");
+					this.OnvalorcompraChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_UsuarioC", DbType="Int")]
+		public System.Nullable<int> Id_UsuarioC
+		{
+			get
+			{
+				return this._Id_UsuarioC;
+			}
+			set
+			{
+				if ((this._Id_UsuarioC != value))
+				{
+					this.OnId_UsuarioCChanging(value);
+					this.SendPropertyChanging();
+					this._Id_UsuarioC = value;
+					this.SendPropertyChanged("Id_UsuarioC");
+					this.OnId_UsuarioCChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_CursoC", DbType="Int")]
+		public System.Nullable<int> Id_CursoC
+		{
+			get
+			{
+				return this._Id_CursoC;
+			}
+			set
+			{
+				if ((this._Id_CursoC != value))
+				{
+					this.OnId_CursoCChanging(value);
+					this.SendPropertyChanging();
+					this._Id_CursoC = value;
+					this.SendPropertyChanged("Id_CursoC");
+					this.OnId_CursoCChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 	
@@ -545,23 +674,13 @@ namespace UVirtualClass.DataContext
 		
 		private System.Nullable<decimal> _valorcompra;
 		
-		private string _tipotc;
-		
-		private string _nombretc;
-		
-		private string _bancotc;
-		
-		private string _numerotc;
-		
-		private System.Nullable<int> _ccv;
-		
-		private System.Nullable<int> _mestc;
-		
-		private System.Nullable<int> _aniotc;
-		
 		private System.Nullable<int> _IdUsuario;
 		
-		private EntitySet<detallecompra> _detallecompra;
+		private System.Nullable<int> _idtarjetac;
+		
+		private System.Nullable<int> _idCursoComprado;
+		
+		private EntityRef<Tarjeta> _Tarjeta;
 		
 		private EntityRef<Usuario> _Usuario;
 		
@@ -575,27 +694,17 @@ namespace UVirtualClass.DataContext
     partial void OnfechaChanged();
     partial void OnvalorcompraChanging(System.Nullable<decimal> value);
     partial void OnvalorcompraChanged();
-    partial void OntipotcChanging(string value);
-    partial void OntipotcChanged();
-    partial void OnnombretcChanging(string value);
-    partial void OnnombretcChanged();
-    partial void OnbancotcChanging(string value);
-    partial void OnbancotcChanged();
-    partial void OnnumerotcChanging(string value);
-    partial void OnnumerotcChanged();
-    partial void OnccvChanging(System.Nullable<int> value);
-    partial void OnccvChanged();
-    partial void OnmestcChanging(System.Nullable<int> value);
-    partial void OnmestcChanged();
-    partial void OnaniotcChanging(System.Nullable<int> value);
-    partial void OnaniotcChanged();
     partial void OnIdUsuarioChanging(System.Nullable<int> value);
     partial void OnIdUsuarioChanged();
+    partial void OnidtarjetacChanging(System.Nullable<int> value);
+    partial void OnidtarjetacChanged();
+    partial void OnidCursoCompradoChanging(System.Nullable<int> value);
+    partial void OnidCursoCompradoChanged();
     #endregion
 		
 		public compras()
 		{
-			this._detallecompra = new EntitySet<detallecompra>(new Action<detallecompra>(this.attach_detallecompra), new Action<detallecompra>(this.detach_detallecompra));
+			this._Tarjeta = default(EntityRef<Tarjeta>);
 			this._Usuario = default(EntityRef<Usuario>);
 			OnCreated();
 		}
@@ -660,146 +769,6 @@ namespace UVirtualClass.DataContext
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_tipotc", DbType="VarChar(25)")]
-		public string tipotc
-		{
-			get
-			{
-				return this._tipotc;
-			}
-			set
-			{
-				if ((this._tipotc != value))
-				{
-					this.OntipotcChanging(value);
-					this.SendPropertyChanging();
-					this._tipotc = value;
-					this.SendPropertyChanged("tipotc");
-					this.OntipotcChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_nombretc", DbType="VarChar(50)")]
-		public string nombretc
-		{
-			get
-			{
-				return this._nombretc;
-			}
-			set
-			{
-				if ((this._nombretc != value))
-				{
-					this.OnnombretcChanging(value);
-					this.SendPropertyChanging();
-					this._nombretc = value;
-					this.SendPropertyChanged("nombretc");
-					this.OnnombretcChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_bancotc", DbType="VarChar(50)")]
-		public string bancotc
-		{
-			get
-			{
-				return this._bancotc;
-			}
-			set
-			{
-				if ((this._bancotc != value))
-				{
-					this.OnbancotcChanging(value);
-					this.SendPropertyChanging();
-					this._bancotc = value;
-					this.SendPropertyChanged("bancotc");
-					this.OnbancotcChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_numerotc", DbType="VarChar(50)")]
-		public string numerotc
-		{
-			get
-			{
-				return this._numerotc;
-			}
-			set
-			{
-				if ((this._numerotc != value))
-				{
-					this.OnnumerotcChanging(value);
-					this.SendPropertyChanging();
-					this._numerotc = value;
-					this.SendPropertyChanged("numerotc");
-					this.OnnumerotcChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ccv", DbType="Int")]
-		public System.Nullable<int> ccv
-		{
-			get
-			{
-				return this._ccv;
-			}
-			set
-			{
-				if ((this._ccv != value))
-				{
-					this.OnccvChanging(value);
-					this.SendPropertyChanging();
-					this._ccv = value;
-					this.SendPropertyChanged("ccv");
-					this.OnccvChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_mestc", DbType="Int")]
-		public System.Nullable<int> mestc
-		{
-			get
-			{
-				return this._mestc;
-			}
-			set
-			{
-				if ((this._mestc != value))
-				{
-					this.OnmestcChanging(value);
-					this.SendPropertyChanging();
-					this._mestc = value;
-					this.SendPropertyChanged("mestc");
-					this.OnmestcChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_aniotc", DbType="Int")]
-		public System.Nullable<int> aniotc
-		{
-			get
-			{
-				return this._aniotc;
-			}
-			set
-			{
-				if ((this._aniotc != value))
-				{
-					this.OnaniotcChanging(value);
-					this.SendPropertyChanging();
-					this._aniotc = value;
-					this.SendPropertyChanged("aniotc");
-					this.OnaniotcChanged();
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdUsuario", DbType="Int")]
 		public System.Nullable<int> IdUsuario
 		{
@@ -824,16 +793,81 @@ namespace UVirtualClass.DataContext
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="compras_detallecompra", Storage="_detallecompra", ThisKey="id_Compra", OtherKey="idcompradetalle")]
-		public EntitySet<detallecompra> detallecompra
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idtarjetac", DbType="Int")]
+		public System.Nullable<int> idtarjetac
 		{
 			get
 			{
-				return this._detallecompra;
+				return this._idtarjetac;
 			}
 			set
 			{
-				this._detallecompra.Assign(value);
+				if ((this._idtarjetac != value))
+				{
+					if (this._Tarjeta.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnidtarjetacChanging(value);
+					this.SendPropertyChanging();
+					this._idtarjetac = value;
+					this.SendPropertyChanged("idtarjetac");
+					this.OnidtarjetacChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idCursoComprado", DbType="Int")]
+		public System.Nullable<int> idCursoComprado
+		{
+			get
+			{
+				return this._idCursoComprado;
+			}
+			set
+			{
+				if ((this._idCursoComprado != value))
+				{
+					this.OnidCursoCompradoChanging(value);
+					this.SendPropertyChanging();
+					this._idCursoComprado = value;
+					this.SendPropertyChanged("idCursoComprado");
+					this.OnidCursoCompradoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Tarjeta_compras", Storage="_Tarjeta", ThisKey="idtarjetac", OtherKey="idtarjeta", IsForeignKey=true)]
+		public Tarjeta Tarjeta
+		{
+			get
+			{
+				return this._Tarjeta.Entity;
+			}
+			set
+			{
+				Tarjeta previousValue = this._Tarjeta.Entity;
+				if (((previousValue != value) 
+							|| (this._Tarjeta.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Tarjeta.Entity = null;
+						previousValue.compras.Remove(this);
+					}
+					this._Tarjeta.Entity = value;
+					if ((value != null))
+					{
+						value.compras.Add(this);
+						this._idtarjetac = value.idtarjeta;
+					}
+					else
+					{
+						this._idtarjetac = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Tarjeta");
+				}
 			}
 		}
 		
@@ -890,18 +924,6 @@ namespace UVirtualClass.DataContext
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
-		
-		private void attach_detallecompra(detallecompra entity)
-		{
-			this.SendPropertyChanging();
-			entity.compras = this;
-		}
-		
-		private void detach_detallecompra(detallecompra entity)
-		{
-			this.SendPropertyChanging();
-			entity.compras = null;
-		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CursoAlumno")]
@@ -915,8 +937,6 @@ namespace UVirtualClass.DataContext
 		private System.Nullable<int> _IdCurso;
 		
 		private System.Nullable<int> _IdAlumno;
-		
-		private EntitySet<Notas> _Notas;
 		
 		private EntityRef<Alumno> _Alumno;
 		
@@ -936,7 +956,6 @@ namespace UVirtualClass.DataContext
 		
 		public CursoAlumno()
 		{
-			this._Notas = new EntitySet<Notas>(new Action<Notas>(this.attach_Notas), new Action<Notas>(this.detach_Notas));
 			this._Alumno = default(EntityRef<Alumno>);
 			this._Cursos = default(EntityRef<Cursos>);
 			OnCreated();
@@ -1007,19 +1026,6 @@ namespace UVirtualClass.DataContext
 					this.SendPropertyChanged("IdAlumno");
 					this.OnIdAlumnoChanged();
 				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CursoAlumno_Notas", Storage="_Notas", ThisKey="IdCurso_Alumno", OtherKey="idCursoAlumno")]
-		public EntitySet<Notas> Notas
-		{
-			get
-			{
-				return this._Notas;
-			}
-			set
-			{
-				this._Notas.Assign(value);
 			}
 		}
 		
@@ -1110,18 +1116,6 @@ namespace UVirtualClass.DataContext
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
-		
-		private void attach_Notas(Notas entity)
-		{
-			this.SendPropertyChanging();
-			entity.CursoAlumno = this;
-		}
-		
-		private void detach_Notas(Notas entity)
-		{
-			this.SendPropertyChanging();
-			entity.CursoAlumno = null;
-		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Cursos")]
@@ -1147,10 +1141,6 @@ namespace UVirtualClass.DataContext
 		private string _Videointro;
 		
 		private EntitySet<CursoAlumno> _CursoAlumno;
-		
-		private EntitySet<detallecompra> _detallecompra;
-		
-		private EntitySet<Pagos> _Pagos;
 		
 		private EntitySet<Temario> _Temario;
 		
@@ -1181,8 +1171,6 @@ namespace UVirtualClass.DataContext
 		public Cursos()
 		{
 			this._CursoAlumno = new EntitySet<CursoAlumno>(new Action<CursoAlumno>(this.attach_CursoAlumno), new Action<CursoAlumno>(this.detach_CursoAlumno));
-			this._detallecompra = new EntitySet<detallecompra>(new Action<detallecompra>(this.attach_detallecompra), new Action<detallecompra>(this.detach_detallecompra));
-			this._Pagos = new EntitySet<Pagos>(new Action<Pagos>(this.attach_Pagos), new Action<Pagos>(this.detach_Pagos));
 			this._Temario = new EntitySet<Temario>(new Action<Temario>(this.attach_Temario), new Action<Temario>(this.detach_Temario));
 			this._Docentes = default(EntityRef<Docentes>);
 			OnCreated();
@@ -1365,32 +1353,6 @@ namespace UVirtualClass.DataContext
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Cursos_detallecompra", Storage="_detallecompra", ThisKey="IdCurso", OtherKey="idcursodetalle")]
-		public EntitySet<detallecompra> detallecompra
-		{
-			get
-			{
-				return this._detallecompra;
-			}
-			set
-			{
-				this._detallecompra.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Cursos_Pagos", Storage="_Pagos", ThisKey="IdCurso", OtherKey="IdCurso")]
-		public EntitySet<Pagos> Pagos
-		{
-			get
-			{
-				return this._Pagos;
-			}
-			set
-			{
-				this._Pagos.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Cursos_Temario", Storage="_Temario", ThisKey="IdCurso", OtherKey="IdCurso")]
 		public EntitySet<Temario> Temario
 		{
@@ -1465,30 +1427,6 @@ namespace UVirtualClass.DataContext
 		}
 		
 		private void detach_CursoAlumno(CursoAlumno entity)
-		{
-			this.SendPropertyChanging();
-			entity.Cursos = null;
-		}
-		
-		private void attach_detallecompra(detallecompra entity)
-		{
-			this.SendPropertyChanging();
-			entity.Cursos = this;
-		}
-		
-		private void detach_detallecompra(detallecompra entity)
-		{
-			this.SendPropertyChanging();
-			entity.Cursos = null;
-		}
-		
-		private void attach_Pagos(Pagos entity)
-		{
-			this.SendPropertyChanging();
-			entity.Cursos = this;
-		}
-		
-		private void detach_Pagos(Pagos entity)
 		{
 			this.SendPropertyChanging();
 			entity.Cursos = null;
@@ -1758,221 +1696,292 @@ namespace UVirtualClass.DataContext
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.detallecompra")]
-	public partial class detallecompra : INotifyPropertyChanging, INotifyPropertyChanged
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Tarjeta")]
+	public partial class Tarjeta : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private int _id_detallecompra;
+		private int _idtarjeta;
 		
-		private string _curso;
+		private string _tipotc;
 		
-		private System.Nullable<decimal> _precio;
+		private string _nombretc;
 		
-		private System.Nullable<int> _idcompradetalle;
+		private string _bancotc;
 		
-		private System.Nullable<int> _idcursodetalle;
+		private string _numerotc;
 		
-		private EntityRef<compras> _compras;
+		private System.Nullable<int> _ccv;
 		
-		private EntityRef<Cursos> _Cursos;
+		private System.Nullable<int> _mestc;
+		
+		private System.Nullable<int> _aniotc;
+		
+		private System.Nullable<int> _IdUsuariot;
+		
+		private EntitySet<compras> _compras;
+		
+		private EntityRef<Usuario> _Usuario;
 		
     #region Definiciones de métodos de extensibilidad
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void Onid_detallecompraChanging(int value);
-    partial void Onid_detallecompraChanged();
-    partial void OncursoChanging(string value);
-    partial void OncursoChanged();
-    partial void OnprecioChanging(System.Nullable<decimal> value);
-    partial void OnprecioChanged();
-    partial void OnidcompradetalleChanging(System.Nullable<int> value);
-    partial void OnidcompradetalleChanged();
-    partial void OnidcursodetalleChanging(System.Nullable<int> value);
-    partial void OnidcursodetalleChanged();
+    partial void OnidtarjetaChanging(int value);
+    partial void OnidtarjetaChanged();
+    partial void OntipotcChanging(string value);
+    partial void OntipotcChanged();
+    partial void OnnombretcChanging(string value);
+    partial void OnnombretcChanged();
+    partial void OnbancotcChanging(string value);
+    partial void OnbancotcChanged();
+    partial void OnnumerotcChanging(string value);
+    partial void OnnumerotcChanged();
+    partial void OnccvChanging(System.Nullable<int> value);
+    partial void OnccvChanged();
+    partial void OnmestcChanging(System.Nullable<int> value);
+    partial void OnmestcChanged();
+    partial void OnaniotcChanging(System.Nullable<int> value);
+    partial void OnaniotcChanged();
+    partial void OnIdUsuariotChanging(System.Nullable<int> value);
+    partial void OnIdUsuariotChanged();
     #endregion
 		
-		public detallecompra()
+		public Tarjeta()
 		{
-			this._compras = default(EntityRef<compras>);
-			this._Cursos = default(EntityRef<Cursos>);
+			this._compras = new EntitySet<compras>(new Action<compras>(this.attach_compras), new Action<compras>(this.detach_compras));
+			this._Usuario = default(EntityRef<Usuario>);
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id_detallecompra", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int id_detallecompra
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idtarjeta", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int idtarjeta
 		{
 			get
 			{
-				return this._id_detallecompra;
+				return this._idtarjeta;
 			}
 			set
 			{
-				if ((this._id_detallecompra != value))
+				if ((this._idtarjeta != value))
 				{
-					this.Onid_detallecompraChanging(value);
+					this.OnidtarjetaChanging(value);
 					this.SendPropertyChanging();
-					this._id_detallecompra = value;
-					this.SendPropertyChanged("id_detallecompra");
-					this.Onid_detallecompraChanged();
+					this._idtarjeta = value;
+					this.SendPropertyChanged("idtarjeta");
+					this.OnidtarjetaChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_curso", DbType="VarChar(60)")]
-		public string curso
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_tipotc", DbType="VarChar(25)")]
+		public string tipotc
 		{
 			get
 			{
-				return this._curso;
+				return this._tipotc;
 			}
 			set
 			{
-				if ((this._curso != value))
+				if ((this._tipotc != value))
 				{
-					this.OncursoChanging(value);
+					this.OntipotcChanging(value);
 					this.SendPropertyChanging();
-					this._curso = value;
-					this.SendPropertyChanged("curso");
-					this.OncursoChanged();
+					this._tipotc = value;
+					this.SendPropertyChanged("tipotc");
+					this.OntipotcChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_precio", DbType="Money")]
-		public System.Nullable<decimal> precio
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_nombretc", DbType="VarChar(50)")]
+		public string nombretc
 		{
 			get
 			{
-				return this._precio;
+				return this._nombretc;
 			}
 			set
 			{
-				if ((this._precio != value))
+				if ((this._nombretc != value))
 				{
-					this.OnprecioChanging(value);
+					this.OnnombretcChanging(value);
 					this.SendPropertyChanging();
-					this._precio = value;
-					this.SendPropertyChanged("precio");
-					this.OnprecioChanged();
+					this._nombretc = value;
+					this.SendPropertyChanged("nombretc");
+					this.OnnombretcChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idcompradetalle", DbType="Int")]
-		public System.Nullable<int> idcompradetalle
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_bancotc", DbType="VarChar(50)")]
+		public string bancotc
 		{
 			get
 			{
-				return this._idcompradetalle;
+				return this._bancotc;
 			}
 			set
 			{
-				if ((this._idcompradetalle != value))
+				if ((this._bancotc != value))
 				{
-					if (this._compras.HasLoadedOrAssignedValue)
+					this.OnbancotcChanging(value);
+					this.SendPropertyChanging();
+					this._bancotc = value;
+					this.SendPropertyChanged("bancotc");
+					this.OnbancotcChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_numerotc", DbType="VarChar(50)")]
+		public string numerotc
+		{
+			get
+			{
+				return this._numerotc;
+			}
+			set
+			{
+				if ((this._numerotc != value))
+				{
+					this.OnnumerotcChanging(value);
+					this.SendPropertyChanging();
+					this._numerotc = value;
+					this.SendPropertyChanged("numerotc");
+					this.OnnumerotcChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ccv", DbType="Int")]
+		public System.Nullable<int> ccv
+		{
+			get
+			{
+				return this._ccv;
+			}
+			set
+			{
+				if ((this._ccv != value))
+				{
+					this.OnccvChanging(value);
+					this.SendPropertyChanging();
+					this._ccv = value;
+					this.SendPropertyChanged("ccv");
+					this.OnccvChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_mestc", DbType="Int")]
+		public System.Nullable<int> mestc
+		{
+			get
+			{
+				return this._mestc;
+			}
+			set
+			{
+				if ((this._mestc != value))
+				{
+					this.OnmestcChanging(value);
+					this.SendPropertyChanging();
+					this._mestc = value;
+					this.SendPropertyChanged("mestc");
+					this.OnmestcChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_aniotc", DbType="Int")]
+		public System.Nullable<int> aniotc
+		{
+			get
+			{
+				return this._aniotc;
+			}
+			set
+			{
+				if ((this._aniotc != value))
+				{
+					this.OnaniotcChanging(value);
+					this.SendPropertyChanging();
+					this._aniotc = value;
+					this.SendPropertyChanged("aniotc");
+					this.OnaniotcChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdUsuariot", DbType="Int")]
+		public System.Nullable<int> IdUsuariot
+		{
+			get
+			{
+				return this._IdUsuariot;
+			}
+			set
+			{
+				if ((this._IdUsuariot != value))
+				{
+					if (this._Usuario.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
-					this.OnidcompradetalleChanging(value);
+					this.OnIdUsuariotChanging(value);
 					this.SendPropertyChanging();
-					this._idcompradetalle = value;
-					this.SendPropertyChanged("idcompradetalle");
-					this.OnidcompradetalleChanged();
+					this._IdUsuariot = value;
+					this.SendPropertyChanged("IdUsuariot");
+					this.OnIdUsuariotChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idcursodetalle", DbType="Int")]
-		public System.Nullable<int> idcursodetalle
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Tarjeta_compras", Storage="_compras", ThisKey="idtarjeta", OtherKey="idtarjetac")]
+		public EntitySet<compras> compras
 		{
 			get
 			{
-				return this._idcursodetalle;
+				return this._compras;
 			}
 			set
 			{
-				if ((this._idcursodetalle != value))
-				{
-					if (this._Cursos.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnidcursodetalleChanging(value);
-					this.SendPropertyChanging();
-					this._idcursodetalle = value;
-					this.SendPropertyChanged("idcursodetalle");
-					this.OnidcursodetalleChanged();
-				}
+				this._compras.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="compras_detallecompra", Storage="_compras", ThisKey="idcompradetalle", OtherKey="id_Compra", IsForeignKey=true)]
-		public compras compras
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuario_Tarjeta", Storage="_Usuario", ThisKey="IdUsuariot", OtherKey="IdUsuario", IsForeignKey=true)]
+		public Usuario Usuario
 		{
 			get
 			{
-				return this._compras.Entity;
+				return this._Usuario.Entity;
 			}
 			set
 			{
-				compras previousValue = this._compras.Entity;
+				Usuario previousValue = this._Usuario.Entity;
 				if (((previousValue != value) 
-							|| (this._compras.HasLoadedOrAssignedValue == false)))
+							|| (this._Usuario.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._compras.Entity = null;
-						previousValue.detallecompra.Remove(this);
+						this._Usuario.Entity = null;
+						previousValue.Tarjeta.Remove(this);
 					}
-					this._compras.Entity = value;
+					this._Usuario.Entity = value;
 					if ((value != null))
 					{
-						value.detallecompra.Add(this);
-						this._idcompradetalle = value.id_Compra;
+						value.Tarjeta.Add(this);
+						this._IdUsuariot = value.IdUsuario;
 					}
 					else
 					{
-						this._idcompradetalle = default(Nullable<int>);
+						this._IdUsuariot = default(Nullable<int>);
 					}
-					this.SendPropertyChanged("compras");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Cursos_detallecompra", Storage="_Cursos", ThisKey="idcursodetalle", OtherKey="IdCurso", IsForeignKey=true)]
-		public Cursos Cursos
-		{
-			get
-			{
-				return this._Cursos.Entity;
-			}
-			set
-			{
-				Cursos previousValue = this._Cursos.Entity;
-				if (((previousValue != value) 
-							|| (this._Cursos.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Cursos.Entity = null;
-						previousValue.detallecompra.Remove(this);
-					}
-					this._Cursos.Entity = value;
-					if ((value != null))
-					{
-						value.detallecompra.Add(this);
-						this._idcursodetalle = value.IdCurso;
-					}
-					else
-					{
-						this._idcursodetalle = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Cursos");
+					this.SendPropertyChanged("Usuario");
 				}
 			}
 		}
@@ -1996,372 +2005,17 @@ namespace UVirtualClass.DataContext
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Notas")]
-	public partial class Notas : INotifyPropertyChanging, INotifyPropertyChanged
-	{
 		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _IdNota;
-		
-		private System.Nullable<decimal> _Nota;
-		
-		private string _Estado;
-		
-		private System.Nullable<int> _idCursoAlumno;
-		
-		private EntityRef<CursoAlumno> _CursoAlumno;
-		
-    #region Definiciones de métodos de extensibilidad
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdNotaChanging(int value);
-    partial void OnIdNotaChanged();
-    partial void OnNotaChanging(System.Nullable<decimal> value);
-    partial void OnNotaChanged();
-    partial void OnEstadoChanging(string value);
-    partial void OnEstadoChanged();
-    partial void OnidCursoAlumnoChanging(System.Nullable<int> value);
-    partial void OnidCursoAlumnoChanged();
-    #endregion
-		
-		public Notas()
+		private void attach_compras(compras entity)
 		{
-			this._CursoAlumno = default(EntityRef<CursoAlumno>);
-			OnCreated();
+			this.SendPropertyChanging();
+			entity.Tarjeta = this;
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdNota", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int IdNota
+		private void detach_compras(compras entity)
 		{
-			get
-			{
-				return this._IdNota;
-			}
-			set
-			{
-				if ((this._IdNota != value))
-				{
-					this.OnIdNotaChanging(value);
-					this.SendPropertyChanging();
-					this._IdNota = value;
-					this.SendPropertyChanged("IdNota");
-					this.OnIdNotaChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Nota", DbType="Decimal(18,0)")]
-		public System.Nullable<decimal> Nota
-		{
-			get
-			{
-				return this._Nota;
-			}
-			set
-			{
-				if ((this._Nota != value))
-				{
-					this.OnNotaChanging(value);
-					this.SendPropertyChanging();
-					this._Nota = value;
-					this.SendPropertyChanged("Nota");
-					this.OnNotaChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Estado", DbType="VarChar(15)")]
-		public string Estado
-		{
-			get
-			{
-				return this._Estado;
-			}
-			set
-			{
-				if ((this._Estado != value))
-				{
-					this.OnEstadoChanging(value);
-					this.SendPropertyChanging();
-					this._Estado = value;
-					this.SendPropertyChanged("Estado");
-					this.OnEstadoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idCursoAlumno", DbType="Int")]
-		public System.Nullable<int> idCursoAlumno
-		{
-			get
-			{
-				return this._idCursoAlumno;
-			}
-			set
-			{
-				if ((this._idCursoAlumno != value))
-				{
-					if (this._CursoAlumno.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnidCursoAlumnoChanging(value);
-					this.SendPropertyChanging();
-					this._idCursoAlumno = value;
-					this.SendPropertyChanged("idCursoAlumno");
-					this.OnidCursoAlumnoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="CursoAlumno_Notas", Storage="_CursoAlumno", ThisKey="idCursoAlumno", OtherKey="IdCurso_Alumno", IsForeignKey=true)]
-		public CursoAlumno CursoAlumno
-		{
-			get
-			{
-				return this._CursoAlumno.Entity;
-			}
-			set
-			{
-				CursoAlumno previousValue = this._CursoAlumno.Entity;
-				if (((previousValue != value) 
-							|| (this._CursoAlumno.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._CursoAlumno.Entity = null;
-						previousValue.Notas.Remove(this);
-					}
-					this._CursoAlumno.Entity = value;
-					if ((value != null))
-					{
-						value.Notas.Add(this);
-						this._idCursoAlumno = value.IdCurso_Alumno;
-					}
-					else
-					{
-						this._idCursoAlumno = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("CursoAlumno");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Pagos")]
-	public partial class Pagos : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _IdPago;
-		
-		private System.Nullable<int> _IdCurso;
-		
-		private System.Nullable<int> _IdAlumno;
-		
-		private EntityRef<Alumno> _Alumno;
-		
-		private EntityRef<Cursos> _Cursos;
-		
-    #region Definiciones de métodos de extensibilidad
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdPagoChanging(int value);
-    partial void OnIdPagoChanged();
-    partial void OnIdCursoChanging(System.Nullable<int> value);
-    partial void OnIdCursoChanged();
-    partial void OnIdAlumnoChanging(System.Nullable<int> value);
-    partial void OnIdAlumnoChanged();
-    #endregion
-		
-		public Pagos()
-		{
-			this._Alumno = default(EntityRef<Alumno>);
-			this._Cursos = default(EntityRef<Cursos>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdPago", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int IdPago
-		{
-			get
-			{
-				return this._IdPago;
-			}
-			set
-			{
-				if ((this._IdPago != value))
-				{
-					this.OnIdPagoChanging(value);
-					this.SendPropertyChanging();
-					this._IdPago = value;
-					this.SendPropertyChanged("IdPago");
-					this.OnIdPagoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdCurso", DbType="Int")]
-		public System.Nullable<int> IdCurso
-		{
-			get
-			{
-				return this._IdCurso;
-			}
-			set
-			{
-				if ((this._IdCurso != value))
-				{
-					if (this._Cursos.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnIdCursoChanging(value);
-					this.SendPropertyChanging();
-					this._IdCurso = value;
-					this.SendPropertyChanged("IdCurso");
-					this.OnIdCursoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdAlumno", DbType="Int")]
-		public System.Nullable<int> IdAlumno
-		{
-			get
-			{
-				return this._IdAlumno;
-			}
-			set
-			{
-				if ((this._IdAlumno != value))
-				{
-					if (this._Alumno.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnIdAlumnoChanging(value);
-					this.SendPropertyChanging();
-					this._IdAlumno = value;
-					this.SendPropertyChanged("IdAlumno");
-					this.OnIdAlumnoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Alumno_Pagos", Storage="_Alumno", ThisKey="IdAlumno", OtherKey="IdAlumno", IsForeignKey=true)]
-		public Alumno Alumno
-		{
-			get
-			{
-				return this._Alumno.Entity;
-			}
-			set
-			{
-				Alumno previousValue = this._Alumno.Entity;
-				if (((previousValue != value) 
-							|| (this._Alumno.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Alumno.Entity = null;
-						previousValue.Pagos.Remove(this);
-					}
-					this._Alumno.Entity = value;
-					if ((value != null))
-					{
-						value.Pagos.Add(this);
-						this._IdAlumno = value.IdAlumno;
-					}
-					else
-					{
-						this._IdAlumno = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Alumno");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Cursos_Pagos", Storage="_Cursos", ThisKey="IdCurso", OtherKey="IdCurso", IsForeignKey=true)]
-		public Cursos Cursos
-		{
-			get
-			{
-				return this._Cursos.Entity;
-			}
-			set
-			{
-				Cursos previousValue = this._Cursos.Entity;
-				if (((previousValue != value) 
-							|| (this._Cursos.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Cursos.Entity = null;
-						previousValue.Pagos.Remove(this);
-					}
-					this._Cursos.Entity = value;
-					if ((value != null))
-					{
-						value.Pagos.Add(this);
-						this._IdCurso = value.IdCurso;
-					}
-					else
-					{
-						this._IdCurso = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Cursos");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
+			this.SendPropertyChanging();
+			entity.Tarjeta = null;
 		}
 	}
 	
@@ -2588,6 +2242,8 @@ namespace UVirtualClass.DataContext
 		
 		private EntitySet<Docentes> _Docentes;
 		
+		private EntitySet<Tarjeta> _Tarjeta;
+		
     #region Definiciones de métodos de extensibilidad
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -2611,6 +2267,7 @@ namespace UVirtualClass.DataContext
 			this._Alumno = new EntitySet<Alumno>(new Action<Alumno>(this.attach_Alumno), new Action<Alumno>(this.detach_Alumno));
 			this._compras = new EntitySet<compras>(new Action<compras>(this.attach_compras), new Action<compras>(this.detach_compras));
 			this._Docentes = new EntitySet<Docentes>(new Action<Docentes>(this.attach_Docentes), new Action<Docentes>(this.detach_Docentes));
+			this._Tarjeta = new EntitySet<Tarjeta>(new Action<Tarjeta>(this.attach_Tarjeta), new Action<Tarjeta>(this.detach_Tarjeta));
 			OnCreated();
 		}
 		
@@ -2773,6 +2430,19 @@ namespace UVirtualClass.DataContext
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Usuario_Tarjeta", Storage="_Tarjeta", ThisKey="IdUsuario", OtherKey="IdUsuariot")]
+		public EntitySet<Tarjeta> Tarjeta
+		{
+			get
+			{
+				return this._Tarjeta;
+			}
+			set
+			{
+				this._Tarjeta.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -2824,6 +2494,18 @@ namespace UVirtualClass.DataContext
 		}
 		
 		private void detach_Docentes(Docentes entity)
+		{
+			this.SendPropertyChanging();
+			entity.Usuario = null;
+		}
+		
+		private void attach_Tarjeta(Tarjeta entity)
+		{
+			this.SendPropertyChanging();
+			entity.Usuario = this;
+		}
+		
+		private void detach_Tarjeta(Tarjeta entity)
 		{
 			this.SendPropertyChanging();
 			entity.Usuario = null;
@@ -3374,58 +3056,6 @@ namespace UVirtualClass.DataContext
 		private string _Mensaje;
 		
 		public SP_ModificaDocenteResult()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Mensaje", DbType="VarChar(31) NOT NULL", CanBeNull=false)]
-		public string Mensaje
-		{
-			get
-			{
-				return this._Mensaje;
-			}
-			set
-			{
-				if ((this._Mensaje != value))
-				{
-					this._Mensaje = value;
-				}
-			}
-		}
-	}
-	
-	public partial class SP_ModificaNotasResult
-	{
-		
-		private string _Mensaje;
-		
-		public SP_ModificaNotasResult()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Mensaje", DbType="VarChar(31) NOT NULL", CanBeNull=false)]
-		public string Mensaje
-		{
-			get
-			{
-				return this._Mensaje;
-			}
-			set
-			{
-				if ((this._Mensaje != value))
-				{
-					this._Mensaje = value;
-				}
-			}
-		}
-	}
-	
-	public partial class SP_ModificarUsuarioResult
-	{
-		
-		private string _Mensaje;
-		
-		public SP_ModificarUsuarioResult()
 		{
 		}
 		

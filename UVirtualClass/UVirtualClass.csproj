@@ -374,7 +374,9 @@
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -405,9 +407,9 @@
     <Content Include="Views\AdminHome\EditarCurso.cshtml" />
     <Content Include="Views\AdminHome\CrearAlumno.cshtml" />
     <Content Include="Views\Shared\_LayoutLogin.cshtml" />
-    <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\AdminHome\ListaUsuarios.cshtml" />
     <Content Include="Views\AdminHome\CrearTemario.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -13,12 +13,18 @@ namespace UVirtualClass.Models
         public int idUsuario { get; set; }
         public String Usuario1 { get; set; }
         public String correo { get; set; }
+        [Required]
+        [DataType(DataType.Password)]
         public String contraseña { get; set; }
+        [DataType(DataType.Password)]
+        [Compare("contraseña", ErrorMessage = "Las Contraseñas no Coinciden")]
         public String ConfirmarContraseña { get; set; }
         public int tipo { get; set; }
-        [Required(ErrorMessage = "el siguiente dato es requerido")]
+        [Required(ErrorMessage = "El Nombre es Requerido")]
         public String nombre { get; set; }
+        [Required(ErrorMessage = "El Apellido es Requerido")]
         public String apellido { get; set; }
+        [DataType(DataType.Date)]
         public DateTime fecha_n { get; set; }
         public char genero { get; set; }
 
