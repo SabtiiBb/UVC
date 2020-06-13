@@ -269,8 +269,13 @@ namespace UVirtualClass.Controllers
                         Docen.fecha_n = Convert.ToDateTime(MyModel.fecha_n);
                         Docen.genero = Convert.ToChar(MyModel.genero);
 
-                    dbContext.SP_ModificaDocente(Docen.IdDocente, Docen.nombre, Docen.apellido, Docen.fecha_n, Docen.genero);
-                    dbContext.SP_ModificaUsuario(User.IdUsuario, User.Usuario1, User.correo, User.contraseña, User.Activo, User.tipo);
+                        dbContext.SP_ModificaDocente(Docen.IdDocente, Docen.nombre, Docen.apellido, Docen.fecha_n, Docen.genero);
+                        dbContext.SP_ModificaUsuario(User.IdUsuario, User.Usuario1, User.correo, User.contraseña, User.Activo, User.tipo);
+                    }
+                }
+                catch 
+                {
+
                 }
             }
             else { message = "Error"; }
