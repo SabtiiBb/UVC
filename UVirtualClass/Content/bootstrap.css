@@ -10246,3 +10246,56 @@ a.text-dark:hover, a.text-dark:focus {
     padding: 1rem;
     width:50%;
 }
+
+.grid-container-editarcurso {
+  margin:1rem;
+  padding:1rem;
+  background-color:#ecf0f1;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 1px 1px;
+  grid-template-areas: "contenidocurso contenidocurso contenidocurso imagen" "contenidocurso contenidocurso contenidocurso imagen";
+  height:30%;
+
+}
+
+.grid-container-editarcurso > div{
+padding:1rem;
+}
+
+.contenidocurso-editarcurso {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 0.5fr 1fr 1fr 0.5fr;
+  gap: 1px 1px;
+  grid-template-areas: "nombrecurso nombrecurso" "descripcioncurso descripcioncurso" "recursos precio" "Docente Docente";
+  grid-area: contenidocurso;
+  border: 1px solid #b2bec3;
+  border-right: none;
+  border-radius:4px;
+}
+
+.nombrecurso-editarcurso { grid-area: nombrecurso; }
+
+.descripcioncurso-editarcurso { grid-area: descripcioncurso; }
+
+.recursos-editarcurso { grid-area: recursos; }
+
+.precio-editarcurso { grid-area: precio; }
+
+.Docente-editarcurso { grid-area: Docente; }
+
+.imagen-editarcurso { 
+    grid-area: imagen;
+    border: 1px solid #b2bec3;
+    border-left: none;
+}
+
+.MensajeValidacion{
+    color:red;
+    font-size:11px;
+    font-weight:bold;
+    margin:0;
+    padding:0;
+}

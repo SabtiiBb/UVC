@@ -249,7 +249,7 @@ namespace UVirtualClass.Controllers
         [HttpPost]
         public ActionResult EditaDocente(FormCollection e, EditarAlumnoVM MyModel)
         {
-            string message = "AlumnoEditado";
+            string message = "DocenteEditado";
       
             if (ModelState.IsValid)
             {
@@ -275,7 +275,7 @@ namespace UVirtualClass.Controllers
             }
             else { message = "Error"; }
 
-            return RedirectToAction("ListaAlumnos", "AdminHome", new { a = message });
+            return RedirectToAction("ListaDocente", "AdminHome", new { a = message });
         }
 
         public JsonResult EliminarDocente(int idDocente)
@@ -394,18 +394,23 @@ namespace UVirtualClass.Controllers
             EditarCursoVM MyModel = new EditarCursoVM();
 
             try { 
-            using (var dbContext = new ContextDbDataContext())
-            {
-                Cursos Curs = (from dbD in dbContext.Cursos where dbD.IdCurso == idCurso select dbD).Single();
-                MyModel.IdCurso = idCurso;
-                MyModel.Nombre = Curs.Nombre;
-                MyModel.Descripcion = Curs.Descripcion;
-                MyModel.Costo = Convert.ToDecimal(Curs.Costo);
-                MyModel.idDocente = Convert.ToInt32(Curs.idDocente);
-                MyModel.Recursos = Curs.Recursos;
-                MyModel.Foto = Curs.Foto;
-                MyModel.VideoIntro = Curs.Videointro;
-            }
+                    using (var dbContext = new ContextDbDataContext())
+                    {
+                            Cursos Curs = (from dbD in dbContext.Cursos where dbD.IdCurso == idCurso select dbD).Single();
+                            List<Temario> temario = (from dbD in dbContext.Temario where dbD.IdCurso == idCurso select dbD).ToList();
+                            Docentes doc = (from dbD in dbContext.Docentes where dbD.IdDocente == Curs.idDocente select dbD).Single();
+
+                            MyModel.IdCurso = idCurso;
+                            MyModel.Nombre = Curs.Nombre;
+                            MyModel.Descripcion = Curs.Descripcion;
+                            MyModel.Costo = Convert.ToDecimal(Curs.Costo);
+                            MyModel.idDocente = Convert.ToInt32(Curs.idDocente);
+                            MyModel.Recursos = Curs.Recursos;
+                            MyModel.NombreDocente = doc.apellido + ", " + doc.nombre;
+                            MyModel.Foto = Curs.Foto;
+                            MyModel.VideoIntro = Curs.Videointro;
+                            MyModel.temario = temario;
+                }
             } catch(Exception e) { }
             return View(MyModel);
         }
