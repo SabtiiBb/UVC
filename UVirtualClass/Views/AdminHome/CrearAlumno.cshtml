@@ -27,8 +27,7 @@
                             <div class="input-group-text"><i class="fa fa-user fa"></i></div>
                         </div>
                         @Html.EditorFor(model => model.Usuario1, new { htmlAttributes = new { @class = "form-control", placeholder = "Usuario" } })
-                        @Html.ValidationMessageFor(model => model.Usuario1, "", new { @class = "text-danger" })
-                    </div>
+                    </div><span class="MensajeValidacion">@Html.ValidationMessageFor(model => model.Usuario1, "", new { @class = "text-danger" })</span>
                 </div>
                 <div class="col-auto">
                     <div class="input-group mb-2">
@@ -36,8 +35,7 @@
                             <div class="input-group-text"><i class="fas fa-envelope fa"></i></div>
                         </div>
                         @Html.EditorFor(model => model.correo, new { htmlAttributes = new { @class = "form-control", placeholder = "Correo" } })
-                        @Html.ValidationMessageFor(model => model.correo, "", new { @class = "text-danger" })
-                    </div>
+                    </div><span class="MensajeValidacion">@Html.ValidationMessageFor(model => model.correo, "", new { @class = "text-danger" })</span>
                 </div>
             </div>
 
@@ -48,8 +46,7 @@
                             <div class="input-group-text"><i class="fas fa-key"></i></div>
                         </div>
                         @Html.EditorFor(model => model.contraseña, new { htmlAttributes = new { @class = "form-control", placeholder = "Contraseña" } })
-                        @Html.ValidationMessageFor(model => model.contraseña, "", new { @class = "text-danger" })
-                    </div>
+                    </div><span class="MensajeValidacion">@Html.ValidationMessageFor(model => model.contraseña, "", new { @class = "text-danger" })</span>
                 </div>
                 <div class="col-auto">
                     <div class="input-group mb-2">
@@ -57,8 +54,7 @@
                             <div class="input-group-text"><i class="fas fa-key"></i></div>
                         </div>
                         @Html.EditorFor(model => model.ConfirmarContraseña, new { htmlAttributes = new { @class = "form-control", placeholder = "Confirmar contraseña" } })
-                        @Html.ValidationMessageFor(model => model.ConfirmarContraseña, "", new { @class = "text-danger" })
-                    </div>
+                    </div><span class="MensajeValidacion">@Html.ValidationMessageFor(model => model.ConfirmarContraseña, "", new { @class = "text-danger" })</span>
                 </div>
             </div>
             <div class="form-row">
@@ -68,8 +64,7 @@
                             <div class="input-group-text"><i class="fa fa-user fa"></i></div>
                         </div>
                         @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control", placeholder = "Nombre" } })
-                        @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
-                    </div>
+                    </div><span class="MensajeValidacion">@Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })</span>
                 </div>
                 <div class="col-auto">
                     <div class="input-group mb-2">
@@ -77,8 +72,7 @@
                             <div class="input-group-text"><i class="fa fa-user fa"></i></div>
                         </div>
                         @Html.EditorFor(model => model.apellido, new { htmlAttributes = new { @class = "form-control", placeholder = "Apellido" } })
-                        @Html.ValidationMessageFor(model => model.apellido, "", new { @class = "text-danger" })
-                    </div>
+                    </div><span class="MensajeValidacion">@Html.ValidationMessageFor(model => model.apellido, "", new { @class = "text-danger" })</span>
                 </div>
             </div>
             <div class="form-row">
@@ -88,8 +82,7 @@
                             <div class="input-group-text"><i class="fas fa-calendar-alt"></i></div>
                         </div>
                         @Html.EditorFor(model => model.fecha_n, new { htmlAttributes = new { @class = "form-control", placeholder = "Fecha de Nacimiento" } })
-                        @Html.ValidationMessageFor(model => model.fecha_n, "", new { @class = "text-danger" })
-                    </div>
+                    </div><span class="MensajeValidacion">@Html.ValidationMessageFor(model => model.fecha_n, "", new { @class = "text-danger" })</span>
                 </div>
                 <div class="col-auto">
                     <div class="input-group mb-2">
@@ -97,8 +90,7 @@
                             <div class="input-group-text"><i class="fas fa-venus-mars"></i></div>
                         </div>
                         @Html.DropDownListFor(x => x.genero, (IEnumerable<SelectListItem>)ViewBag.genero, new { @class = "form-control", placeholder = "Genero" })
-                        @Html.ValidationMessageFor(model => model.genero, "", new { @class = "text-danger" })
-                    </div>
+                    </div><span class="MensajeValidacion">@Html.ValidationMessageFor(model => model.genero, "", new { @class = "text-danger" })</span>
                 </div>
             </div>
             <div class="claseboton">

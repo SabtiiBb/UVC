@@ -27,8 +27,7 @@
                             <div class="input-group-text"><i class="fas fa-book-open"></i></div>
                         </div>
                         @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", placeholder = "Nombre" } })
-                        @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
-                    </div>
+                    </div><span class="MensajeValidacion">@Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })</span>
                 </div>
                 <div class="col-auto">
                     <div class="input-group mb-2">
@@ -36,8 +35,7 @@
                             <div class="input-group-text"><i class="fas fa-align-center"></i></div>
                         </div>
                         @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control", placeholder = "Descripcion" } })
-                        @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
-                    </div>
+                    </div><span class="MensajeValidacion">@Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })</span>
                 </div>
             </div>
             <div class="form-row">
@@ -47,8 +45,7 @@
                             <div class="input-group-text"><i class="fas fa-cut"></i></div>
                         </div>
                         @Html.EditorFor(model => model.Recursos, new { htmlAttributes = new { @class = "form-control", placeholder = "Recursos" } })
-                        @Html.ValidationMessageFor(model => model.Recursos, "", new { @class = "text-danger" })
-                    </div>
+                    </div><span class="MensajeValidacion">@Html.ValidationMessageFor(model => model.Recursos, "", new { @class = "text-danger" })</span>
                 </div>
                 <div class="col-auto">
                     <div class="input-group mb-2">
@@ -56,8 +53,7 @@
                             <div class="input-group-text"><i class="fas fa-money-bill-wave"></i></div>
                         </div>
                         @Html.EditorFor(model => model.Costo, new { htmlAttributes = new { @class = "form-control", placeholder = "Costo" } })
-                        @Html.ValidationMessageFor(model => model.Costo, "", new { @class = "text-danger" })
-                    </div>
+                    </div><span class="MensajeValidacion">@Html.ValidationMessageFor(model => model.Costo, "", new { @class = "text-danger" })</span>
                 </div>
             </div>
             <div class="form-row">
@@ -67,8 +63,7 @@
                             <div class="input-group-text"><i class="fas fa-images"></i></div>
                         </div>
                         @Html.EditorFor(model => model.Foto, new { htmlAttributes = new { @class = "form-control", placeholder = "Portada del curso" } })
-                        @Html.ValidationMessageFor(model => model.Foto, "", new { @class = "text-danger" })
-                    </div>
+                    </div><span class="MensajeValidacion">@Html.ValidationMessageFor(model => model.Foto, "", new { @class = "text-danger" })</span>
                 </div>
                 <div class="col-auto">
                     <div class="input-group mb-2">
@@ -76,8 +71,7 @@
                             <div class="input-group-text"><i class="fas fa-video"></i></div>
                         </div>
                         @Html.EditorFor(model => model.VideoIntro, new { htmlAttributes = new { @class = "form-control", placeholder = "Vídeo presentación de curso" } })
-                        @Html.ValidationMessageFor(model => model.VideoIntro, "", new { @class = "text-danger" })
-                    </div>
+                    </div><span class="MensajeValidacion">@Html.ValidationMessageFor(model => model.VideoIntro, "", new { @class = "text-danger" })</span>
                 </div>
             </div>
             <div class="form-row">
@@ -87,8 +81,7 @@
                             <div class="input-group-text"><i class="fas fa-chalkboard-teacher"></i></div>
                         </div>
                         @Html.DropDownListFor(x => x.idDocente, (IEnumerable<SelectListItem>)ViewBag.docente, new { @class = "form-control", placeholder = "Docente" })
-                        @Html.ValidationMessageFor(model => model.idDocente, "", new { @class = "text-danger" })
-                    </div>
+                    </div><span class="MensajeValidacion">@Html.ValidationMessageFor(model => model.idDocente, "", new { @class = "text-danger" })</span>
                 </div>
             </div>
 
