@@ -48,9 +48,11 @@
         }
         
     </table>
-
+    @Html.HiddenFor(model => model.IdCurso)
+    @Html.HiddenFor(model => model.idTema)
+    @Html.HiddenFor(model => model.idDocente)
     <div>
-        <a href="@Url.Action("CrearTemario", "AdminHome")" class="btn btn-warning"><i class="fas fa-plus"></i><b> Agregar nuevo tema</b></a>
+        <input type="submit" value="Agregar nuevo tema +" class="btn btn-warning" />
     </div>
 }
         @section Scripts {

@@ -433,29 +433,12 @@ namespace UVirtualClass.Controllers
                 Curs.idDocente = Convert.ToInt32(MyModel.idDocente);
                 Curs.Recursos = MyModel.Recursos;
                 Curs.Foto = MyModel.Foto;
-                dbContext.SP_ModificaCursos(Curs.IdCurso, Curs.Nombre, Curs.Descripcion, Curs.Recursos, Curs.Costo, Curs.Foto);
-                dbContext.SubmitChanges();
             }
-            }catch(Exception e) { }
-            return View(MyModel);
+            }catch(Exception e) { }            
+            return RedirectToAction("CrearTemario", "AdminHome", MyModel);
         }
+        
 
-
-
-        ////******************************PAGO'S METHODS**********************************
-
-        //[HttpGet]
-        //public ActionResult ListadoPago()
-        //{
-        //    List<Pagos> ListadoPagos;
-        //    using (var dbContext = new ContextDbDataContext())
-        //    {
-        //        ListadoPagos = (from db in dbContext.Pagos select db).ToList();
-        //    }
-        //    return View(ListadoPagos);
-        //}
-
-        //--------------------------- VALIDATIONS CLIENT'S SIDE ---------------------------
         [HttpPost]
         public JsonResult UserRequestValidation(string Usuario1)
         {

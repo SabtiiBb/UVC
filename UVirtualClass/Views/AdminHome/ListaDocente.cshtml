@@ -94,7 +94,7 @@
             var accion = $('#MiAccion').val();
             $(document).ready(function () {
                 if (accion == "DocenteCreado") {
-                    swal("Bien!", "El Docente se ha creado con éxito.", "success");
+                    swal("¡Bien!", "El docente se ha creado con éxito.", "success");
                 } if (accion == "Error") {
                     swal("¡Lo Sentimos!", "Parece que algo salió mal, vuelve a intentarlo", "warning");
                 };
@@ -106,11 +106,11 @@
 
                 swal({
                     title: "¿Está seguro?",
-                    text: "Este Docente sera eliminado y tambien su usuario!",
+                    text: "Este docente será eliminado y también su usuario!",
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "Sí, eliminarlo!",
+                    confirmButtonText: "Sí, eliminarlo",
                     closeOnConfirm: false,
                     closeOnCancel: true
                 },
@@ -126,7 +126,7 @@
                                     //swal("Exito", "El registro se elimino correctamente!", "success");
                                     swal({
                                         title: "Éxito",
-                                        text: "El registro se elimino correctamente!",
+                                        text: "¡El registro se eliminó correctamente!",
                                         type: "success"
                                     }, function () {
                                         window.location.reload();
@@ -134,7 +134,7 @@
 
                                 },
                                 error: function (er) {
-                                    swal("Oops!", "Ha Ocurrido un problema y no se pudo eliminar el registro!", "error");
+                                    swal("¡Oops!", "Ha ocurrido un problema y no se pudo eliminar el registro", "error");
                                 }
                             });
                         }

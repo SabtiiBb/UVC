@@ -94,21 +94,21 @@
             var accion = $('#MiAccion').val();
             $(document).ready(function (s) {
                 if (accion == "AlumnoCreado") {
-                    swal("Bien!", "El Alumno se ha creado Correctamente.", "success");
+                    swal("¡Bien!", "El Alumno se ha creado correctamente.", "success");
                 } if (accion == "AlumnoEditado") {
-                    swal("Exito!", "El registro se modificó Correctamente.", "success");
+                    swal("¡Exito!", "El registro se modificó correctamente.", "success");
                 } if (accion == "Error") {
-                    swal("Lo Sentimos!", "Parece que algo salio mal, vuelve a intentarlo", "warning");
+                    swal("¡Lo Sentimos!", "Parece que algo salío mal, vuelve a intentarlo", "warning");
                 };
             });
 
-            $("#btn-Eliminar").on("click", function (e) {
+            $(".btn-Eliminar").on("click", function (e) {
                 e.preventDefault();
                 var id = $(this).data('codigo');
 
                 swal({
                     title: "¿Está seguro?",
-                    text: "Este Alumno sera eliminado y tambien su usuario!",
+                    text: "Este alumno será eliminado y también su usuario!",
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#DD6B55",
@@ -127,8 +127,8 @@
 
                                     //swal("Exito", "El registro se elimino correctamente!", "success");
                                     swal({
-                                        title: "Exito",
-                                        text: "El registro se elimino correctamente!",
+                                        title: "Éxito",
+                                        text: "El registro se eliminó correctamente",
                                         type: "success"
                                     }, function () {
                                         window.location.reload();
@@ -136,7 +136,7 @@
 
                                 },
                                 error: function (er) {
-                                    swal("Oops!", "Ha Ocurrido un problema y no se pudo eliminar el registro!", "error");
+                                    swal("¡Oops!", "Ha ocurrido un problema y no se pudo eliminar el registro", "error");
                                 }
                             });
                         }

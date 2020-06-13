@@ -8,10 +8,6 @@
     <img src="~/img/Logi2.png" />
     <h2>Listado de Usuarios</h2>
 </div>
-
-<p class="btn btn-primary">
-    @Html.ActionLink("Crear Nuevo Curso", "CrearCurso")
-</p>
 <table class="table table-striped">
     <tr>
         <th>
@@ -43,7 +39,10 @@
             </td>
             <td>
                 @*@Html.DisplayFor(modelItem => item.tipo)*@
-
+                @if (item.tipo == 1)
+                {
+                    <p>Administrador</p>
+                }
                 @if (item.tipo == 2)
                 {
                     <p>Docente</p>
