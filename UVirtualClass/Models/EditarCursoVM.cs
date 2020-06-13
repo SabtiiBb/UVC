@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using UVirtualClass.DataContext;
 
 namespace UVirtualClass.Models
 {
@@ -31,9 +32,13 @@ namespace UVirtualClass.Models
         [Required(ErrorMessage = "El campo Foto está vacio")]
         public String Foto { get; set; }
 
+        public List <Temario> temario { get; set; }
+
+        public int idTema { get; set; }
         public String VideoTema { get; set; }
 
         public String VideoIntro { get; set; }
+        public String NombreDocente { get; set; }
 
         public String DescripcionTema { get; set; }
 

@@ -9,8 +9,17 @@
       <Column Name="genero" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
       <Column Name="idUsuario" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Alumno_CursoAlumno" Member="CursoAlumno" ThisKey="IdAlumno" OtherKey="IdAlumno" Type="CursoAlumno" />
-      <Association Name="Alumno_Pagos" Member="Pagos" ThisKey="IdAlumno" OtherKey="IdAlumno" Type="Pagos" />
       <Association Name="Usuario_Alumno" Member="Usuario" ThisKey="idUsuario" OtherKey="IdUsuario" Type="Usuario" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Carrito" Member="Carrito">
+    <Type Name="Carrito">
+      <Column Name="id_Carrito" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Nombre" Type="System.String" DbType="VarChar(25)" CanBeNull="true" />
+      <Column Name="descripcion" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="valorcompra" Type="System.Decimal" DbType="Decimal(8,2)" CanBeNull="true" />
+      <Column Name="Id_UsuarioC" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Id_CursoC" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </Type>
   </Table>
   <Table Name="dbo.compras" Member="compras">
@@ -18,15 +27,10 @@
       <Column Name="id_Compra" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="fecha" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="valorcompra" Type="System.Decimal" DbType="Money" CanBeNull="true" />
-      <Column Name="tipotc" Type="System.String" DbType="VarChar(25)" CanBeNull="true" />
-      <Column Name="nombretc" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="bancotc" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="numerotc" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="ccv" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="mestc" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="aniotc" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="IdUsuario" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="compras_detallecompra" Member="detallecompra" ThisKey="id_Compra" OtherKey="idcompradetalle" Type="detallecompra" />
+      <Column Name="idtarjetac" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="idCursoComprado" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Tarjeta_compras" Member="Tarjeta" ThisKey="idtarjetac" OtherKey="idtarjeta" Type="Tarjeta" IsForeignKey="true" />
       <Association Name="Usuario_compras" Member="Usuario" ThisKey="IdUsuario" OtherKey="IdUsuario" Type="Usuario" IsForeignKey="true" />
     </Type>
   </Table>
@@ -35,7 +39,6 @@
       <Column Name="IdCurso_Alumno" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="IdCurso" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="IdAlumno" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="CursoAlumno_Notas" Member="Notas" ThisKey="IdCurso_Alumno" OtherKey="idCursoAlumno" Type="Notas" />
       <Association Name="Alumno_CursoAlumno" Member="Alumno" ThisKey="IdAlumno" OtherKey="IdAlumno" Type="Alumno" IsForeignKey="true" />
       <Association Name="Cursos_CursoAlumno" Member="Cursos" ThisKey="IdCurso" OtherKey="IdCurso" Type="Cursos" IsForeignKey="true" />
     </Type>
@@ -51,10 +54,23 @@
       <Column Name="Foto" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
       <Column Name="Videointro" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
       <Association Name="Cursos_CursoAlumno" Member="CursoAlumno" ThisKey="IdCurso" OtherKey="IdCurso" Type="CursoAlumno" />
-      <Association Name="Cursos_detallecompra" Member="detallecompra" ThisKey="IdCurso" OtherKey="idcursodetalle" Type="detallecompra" />
-      <Association Name="Cursos_Pagos" Member="Pagos" ThisKey="IdCurso" OtherKey="IdCurso" Type="Pagos" />
       <Association Name="Cursos_Temario" Member="Temario" ThisKey="IdCurso" OtherKey="IdCurso" Type="Temario" />
       <Association Name="Docentes_Cursos" Member="Docentes" ThisKey="idDocente" OtherKey="IdDocente" Type="Docentes" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Tarjeta" Member="Tarjeta">
+    <Type Name="Tarjeta">
+      <Column Name="idtarjeta" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="tipotc" Type="System.String" DbType="VarChar(25)" CanBeNull="true" />
+      <Column Name="nombretc" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="bancotc" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="numerotc" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="ccv" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="mestc" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="aniotc" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IdUsuariot" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Tarjeta_compras" Member="compras" ThisKey="idtarjeta" OtherKey="idtarjetac" Type="compras" />
+      <Association Name="Usuario_Tarjeta" Member="Usuario" ThisKey="IdUsuariot" OtherKey="IdUsuario" Type="Usuario" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Docentes" Member="Docentes">
@@ -67,35 +83,6 @@
       <Column Name="idUsuario" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Docentes_Cursos" Member="Cursos" ThisKey="IdDocente" OtherKey="idDocente" Type="Cursos" />
       <Association Name="Usuario_Docentes" Member="Usuario" ThisKey="idUsuario" OtherKey="IdUsuario" Type="Usuario" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.detallecompra" Member="detallecompra">
-    <Type Name="detallecompra">
-      <Column Name="id_detallecompra" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="curso" Type="System.String" DbType="VarChar(60)" CanBeNull="true" />
-      <Column Name="precio" Type="System.Decimal" DbType="Money" CanBeNull="true" />
-      <Column Name="idcompradetalle" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="idcursodetalle" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="compras_detallecompra" Member="compras" ThisKey="idcompradetalle" OtherKey="id_Compra" Type="compras" IsForeignKey="true" />
-      <Association Name="Cursos_detallecompra" Member="Cursos" ThisKey="idcursodetalle" OtherKey="IdCurso" Type="Cursos" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Notas" Member="Notas">
-    <Type Name="Notas">
-      <Column Name="IdNota" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Nota" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
-      <Column Name="Estado" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
-      <Column Name="idCursoAlumno" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="CursoAlumno_Notas" Member="CursoAlumno" ThisKey="idCursoAlumno" OtherKey="IdCurso_Alumno" Type="CursoAlumno" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Pagos" Member="Pagos">
-    <Type Name="Pagos">
-      <Column Name="IdPago" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="IdCurso" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="IdAlumno" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="Alumno_Pagos" Member="Alumno" ThisKey="IdAlumno" OtherKey="IdAlumno" Type="Alumno" IsForeignKey="true" />
-      <Association Name="Cursos_Pagos" Member="Cursos" ThisKey="IdCurso" OtherKey="IdCurso" Type="Cursos" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Temario" Member="Temario">
@@ -118,6 +105,7 @@
       <Column Name="Activo" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Usuario_Alumno" Member="Alumno" ThisKey="IdUsuario" OtherKey="idUsuario" Type="Alumno" />
       <Association Name="Usuario_compras" Member="compras" ThisKey="IdUsuario" OtherKey="IdUsuario" Type="compras" />
+      <Association Name="Usuario_Tarjeta" Member="Tarjeta" ThisKey="IdUsuario" OtherKey="IdUsuariot" Type="Tarjeta" />
       <Association Name="Usuario_Docentes" Member="Docentes" ThisKey="IdUsuario" OtherKey="idUsuario" Type="Docentes" />
     </Type>
   </Table>
@@ -189,16 +177,7 @@
     <Parameter Name="apellido" Type="System.String" DbType="VarChar(30)" />
     <Parameter Name="fecha_n" Type="System.DateTime" DbType="DateTime" />
     <Parameter Name="genero" Type="System.Char" DbType="Char(1)" />
-    <Parameter Name="IdUsuario" Parameter="idUsuario" Type="System.Int32" DbType="Int" />
     <ElementType Name="SP_ModificaDocenteResult">
-      <Column Name="Mensaje" Type="System.String" DbType="VarChar(31) NOT NULL" CanBeNull="false" />
-    </ElementType>
-  </Function>
-  <Function Name="dbo.SP_ModificaNotas" Method="SP_ModificaNotas">
-    <Parameter Name="idNota" Type="System.Int32" DbType="Int" />
-    <Parameter Name="Nota" Parameter="nota" Type="System.Decimal" DbType="Decimal(18,0)" />
-    <Parameter Name="Estado" Parameter="estado" Type="System.String" DbType="VarChar(15)" />
-    <ElementType Name="SP_ModificaNotasResult">
       <Column Name="Mensaje" Type="System.String" DbType="VarChar(31) NOT NULL" CanBeNull="false" />
     </ElementType>
   </Function>

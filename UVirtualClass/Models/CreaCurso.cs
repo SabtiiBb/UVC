@@ -34,14 +34,18 @@ namespace UVirtualClass.Models
         [Required(ErrorMessage = "El campo Foto está vacio")]
         public String Foto { get; set; }
 
+        [Required(ErrorMessage = "El campo video está vacio")]
         public String VideoIntro { get; set; }
 
         public int idCurso { get; set; }
 
+        public int idTema { get; set; }
+
+        [Required(ErrorMessage = "El campo nombre está vacio")]
         public String NombreTema { get; set; }
-
+        [Required(ErrorMessage = "El campo descripcion está vacio")]
         public String DescripcionTema { get; set; }
-
+        [Required(ErrorMessage = "El campo video está vacio")]
         public String VideoTema { get; set; }
 
     }

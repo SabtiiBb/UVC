@@ -57,9 +57,10 @@ namespace UVirtualClass.Controllers
                     Alumno Alum = new Alumno();
 
                     User.Usuario1 = MyModel.Usuario1;
+                    User.correo = MyModel.correo;
                     User.contraseña = MyModel.contraseña;
                     User.Activo = 1;
-                    User.tipo = 2;
+                    User.tipo = 3;
                     dbContext.Usuario.InsertOnSubmit(User);
                     dbContext.SubmitChanges();
 
@@ -259,7 +260,7 @@ namespace UVirtualClass.Controllers
                     Docen.fecha_n = Convert.ToDateTime(MyModel.fecha_n);
                     Docen.genero = Convert.ToChar(MyModel.genero);
 
-                    dbContext.SP_ModificaDocente(Docen.IdDocente, Docen.nombre, Docen.apellido, Docen.fecha_n, Docen.genero, Docen.idUsuario);
+                    dbContext.SP_ModificaDocente(Docen.IdDocente, Docen.nombre, Docen.apellido, Docen.fecha_n, Docen.genero);
                     dbContext.SP_ModificaUsuario(User.IdUsuario, User.Usuario1, User.correo, User.contraseña, User.Activo, User.tipo);
                 }
             }
@@ -378,14 +379,19 @@ namespace UVirtualClass.Controllers
             using (var dbContext = new ContextDbDataContext())
             {
                 Cursos Curs = (from dbD in dbContext.Cursos where dbD.IdCurso == idCurso select dbD).Single();
+                List <Temario> temario = (from dbD in dbContext.Temario where dbD.IdCurso == idCurso select dbD).ToList();
+                Docentes doc = (from dbD in dbContext.Docentes where dbD.IdDocente == Curs.idDocente select dbD).Single();
+
                 MyModel.IdCurso = idCurso;
                 MyModel.Nombre = Curs.Nombre;
                 MyModel.Descripcion = Curs.Descripcion;
                 MyModel.Costo = Convert.ToDecimal(Curs.Costo);
                 MyModel.idDocente = Convert.ToInt32(Curs.idDocente);
                 MyModel.Recursos = Curs.Recursos;
+                MyModel.NombreDocente = doc.apellido + ", " +doc.nombre;
                 MyModel.Foto = Curs.Foto;
                 MyModel.VideoIntro = Curs.Videointro;
+                MyModel.temario = temario;
             }
             return View(MyModel);
         }
@@ -410,18 +416,18 @@ namespace UVirtualClass.Controllers
 
 
 
-        //******************************PAGO'S METHODS**********************************
+        ////******************************PAGO'S METHODS**********************************
 
-        [HttpGet]
-        public ActionResult ListadoPago()
-        {
-            List<Pagos> ListadoPagos;
-            using (var dbContext = new ContextDbDataContext())
-            {
-                ListadoPagos = (from db in dbContext.Pagos select db).ToList();
-            }
-            return View(ListadoPagos);
-        }
+        //[HttpGet]
+        //public ActionResult ListadoPago()
+        //{
+        //    List<Pagos> ListadoPagos;
+        //    using (var dbContext = new ContextDbDataContext())
+        //    {
+        //        ListadoPagos = (from db in dbContext.Pagos select db).ToList();
+        //    }
+        //    return View(ListadoPagos);
+        //}
 
         //--------------------------- VALIDATIONS CLIENT'S SIDE ---------------------------
         [HttpPost]
